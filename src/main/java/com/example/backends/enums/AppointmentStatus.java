@@ -1,4 +1,4 @@
-package com.example.backends.enum;
+package com.example.backends.enums;
 
 public enum AppointmentStatus {
     AGENDADO("Agendado", "Agendamento confirmado"),

@@ -3,6 +3,7 @@ package com.example.backends.classes;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import com.example.backends.enums.AppointmentStatus; // ← Import corrigido!
 
 public class Appointment {
     private Long id;
@@ -16,11 +17,10 @@ public class Appointment {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
-    // Construtores
     public Appointment() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-        this.status = AppointmentStatus.AGENDADO; // Usando enum
+        this.status = AppointmentStatus.AGENDADO;
     }
     
     public Appointment(Long clientId, LocalDateTime appointmentDateTime) {
@@ -29,7 +29,6 @@ public class Appointment {
         this.appointmentDateTime = appointmentDateTime;
     }
     
-    // Getters e Setters
     public Long getId() {
         return id;
     }
