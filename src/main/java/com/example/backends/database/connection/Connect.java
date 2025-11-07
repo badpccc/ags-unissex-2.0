@@ -136,7 +136,8 @@ public class Connect {
         try (Connection conn = getConnection()) {
             if (conn != null && !conn.isClosed()) {
                 System.out.println("✅ Teste de conexão bem-sucedido!");
-                return true;
+                return true;                return true;
+
             }
         } catch (SQLException e) {
             System.err.println("❌ Teste de conexão falhou: " + e.getMessage());
