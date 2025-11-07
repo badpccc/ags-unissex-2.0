@@ -6,9 +6,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * Classe para gerenciar conexões com banco PostgreSQL usando pool HikariCP
- */
 public class Connect {
     private static HikariDataSource dataSource;
     private static final Dotenv dotenv = Dotenv.configure()
@@ -20,35 +17,27 @@ public class Connect {
         initializeConnectionPool();
     }
 
-    /**
-     * Inicializa o pool de conexões HikariCP
-     */
     private static void initializeConnectionPool() {
         try {
             HikariConfig config = new HikariConfig();
             
-            // Configurações básicas de conexão
             config.setJdbcUrl(dotenv.get("DATABASE_URL_JDBC"));
             config.setUsername(dotenv.get("POSTGRES_USER"));
             config.setPassword(dotenv.get("POSTGRES_PASSWORD"));
             config.setDriverClassName("org.postgresql.Driver");
             
-            // Configurações do pool
             config.setMaximumPoolSize(Integer.parseInt(dotenv.get("DB_MAX_POOL_SIZE", "10")));
             config.setMinimumIdle(Integer.parseInt(dotenv.get("DB_MIN_IDLE", "2")));
             config.setConnectionTimeout(Long.parseLong(dotenv.get("DB_CONNECTION_TIMEOUT", "30000")));
             config.setIdleTimeout(Long.parseLong(dotenv.get("DB_IDLE_TIMEOUT", "600000")));
             config.setMaxLifetime(Long.parseLong(dotenv.get("DB_MAX_LIFETIME", "1800000")));
             
-            // Configurações de performance e segurança
-            config.setLeakDetectionThreshold(60000); // 60 segundos para detectar vazamentos
-            config.setAutoCommit(false); // Melhor controle de transações
-            config.setConnectionTestQuery("SELECT 1"); // Teste de conexão simples
+            config.setLeakDetectionThreshold(60000); 
+            config.setAutoCommit(false); 
+            config.setConnectionTestQuery("SELECT 1"); 
             
-            // Pool name para logs
             config.setPoolName("AgsUnissexDB-Pool");
             
-            // Propriedades específicas do PostgreSQL
             config.addDataSourceProperty("cachePrepStmts", "true");
             config.addDataSourceProperty("prepStmtCacheSize", "250");
             config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -70,10 +59,6 @@ public class Connect {
         }
     }
 
-    /**
-     * Obtém uma conexão do pool
-     * @return Connection do pool ou null se houver erro
-     */
     public static Connection getConnection() {
         try {
             if (dataSource == null || dataSource.isClosed()) {
@@ -93,18 +78,11 @@ public class Connect {
         }
     }
 
-    /**
-     * Método para compatibilidade com código antigo
-     * @deprecated Use getConnection() em vez disso
-     */
     @Deprecated
     public static Connection startConnection() {
         return getConnection();
     }
 
-    /**
-     * Fecha o pool de conexões (usar apenas no shutdown da aplicação)
-     */
     public static void closePool() {
         if (dataSource != null && !dataSource.isClosed()) {
             System.out.println("🔒 Fechando pool de conexões...");
@@ -113,9 +91,6 @@ public class Connect {
         }
     }
 
-    /**
-     * Obtém informações sobre o estado atual do pool
-     */
     public static void printPoolStatus() {
         if (dataSource != null && !dataSource.isClosed()) {
             var mxBean = dataSource.getHikariPoolMXBean();
@@ -129,9 +104,6 @@ public class Connect {
         }
     }
 
-    /**
-     * Testa a conectividade com o banco
-     */
     public static boolean testConnection() {
         try (Connection conn = getConnection()) {
             if (conn != null && !conn.isClosed()) {
