@@ -15,7 +15,7 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-//john passou aqui
+//antonio passou aqui
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("primary"), 800, 600);
