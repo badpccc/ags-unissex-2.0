@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.ClientesController"
+      spacing="25"
+      alignment="TOP_CENTER"
+      stylesheets="@style.css"
+      styleClass="container-fundo">
+
+    <!-- Cabeçalho -->
+    <HBox spacing="15"
+          alignment="CENTER_LEFT"
+          styleClass="header-clientes">
+
+        <Label text="Clientes"
+               styleClass="titulo-clientes" />
+
+        <Button text="Adicionar Cliente"
+                fx:id="btnAdicionarCliente"
+                styleClass="btn-add" />
+    </HBox>
+
+    <!-- Lista de clientes (nova versão, estilo 3) -->
+    <ScrollPane fitToWidth="true"
+                pannable="true"
+                hbarPolicy="NEVER"
+                vbarPolicy="AS_NEEDED"
+                styleClass="scroll-base"
+                style="-fx-padding: 0 15 15 15;">
+
+        <VBox fx:id="listaClientes"
+              spacing="12"
+              styleClass="lista-tabela"
+              prefWidth="700" />
+    </ScrollPane>
+
+</VBox>

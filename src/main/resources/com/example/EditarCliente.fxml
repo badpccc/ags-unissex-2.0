@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="12" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.EditarClienteController"
+      stylesheets="@style.css"
+      styleClass="modal">
+
+    <Label text="Editar Cliente" styleClass="modal-title"/>
+
+    <TextField fx:id="txtNome" promptText="Nome completo" styleClass="text-field"/>
+    <TextField fx:id="txtTelefone" promptText="Telefone" styleClass="text-field"/>
+    <TextField fx:id="txtEmail" promptText="E-mail" styleClass="text-field"/>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Button text="Salvar Alterações" fx:id="btnSalvar" styleClass="btn-primary"/>
+        <Button text="Cancelar" fx:id="btnCancelar" styleClass="btn-danger"/>
+    </HBox>
+
+</VBox>

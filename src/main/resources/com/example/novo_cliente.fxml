@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Pos?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.NovoClienteController"
+      spacing="15"
+      alignment="CENTER"
+      stylesheets="@style.css"
+      style="-fx-padding: 25;">
+
+    <Label text="Novo Cliente" styleClass="titulo-clientes"/>
+
+    <TextField fx:id="txtNome" promptText="Nome"/>
+    <TextField fx:id="txtTelefone" promptText="Telefone"/>
+    <TextField fx:id="txtEmail" promptText="E-mail"/>
+
+    <HBox spacing="10">
+        <Button text="Salvar" fx:id="btnSalvar" styleClass="btn-add"/>
+        <Button text="Cancelar" fx:id="btnCancelar" styleClass="btn-delete"/>
+    </HBox>
+
+</VBox>

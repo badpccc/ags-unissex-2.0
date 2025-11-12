@@ -1,11 +1,11 @@
 module com.example {
     requires transitive javafx.controls;
     requires transitive javafx.fxml;
-    
+
     // Dependências para banco de dados
     requires java.sql;
     requires java.desktop;
-    
+
     // Dependências das bibliotecas adicionadas
     requires org.postgresql.jdbc;
     requires com.zaxxer.hikari;

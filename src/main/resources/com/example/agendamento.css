@@ -1,0 +1,60 @@
+/* ===== CONTAINER DO MODAL ===== */
+.modal-container {
+    -fx-background-color: #0D0D0D;
+    -fx-background-radius: 14;
+    -fx-padding: 25;
+}
+
+/* ===== TÍTULO ===== */
+.modal-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F8D648;
+}
+
+/* ===== CAMPOS ===== */
+.modal-container .text-field,
+.modal-container .text-input,
+.modal-container .combo-box,
+.modal-container .date-picker,
+.modal-container .text-area {
+    -fx-background-color: #1b1b1b;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #333;
+    -fx-border-width: 1;
+    -fx-padding: 8 10;
+}
+
+.modal-container .text-field:focused,
+.modal-container .combo-box:focused,
+.modal-container .date-picker:focused,
+.modal-container .text-area:focused {
+    -fx-background-color: #262626;
+    -fx-border-color: #F8D648;
+}
+
+/* ===== BOTÃO CONFIRMAR ===== */
+.btn-primary {
+    -fx-background-color: #F8D648;
+    -fx-text-fill: #000;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 18;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #ffd84c;
+}
+
+/* ===== BOTÃO CANCELAR ===== */
+.btn-cancel {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #fff;
+    -fx-background-radius: 10;
+}
+
+.btn-cancel:hover {
+    -fx-background-color: #3a3a3a;
+}
