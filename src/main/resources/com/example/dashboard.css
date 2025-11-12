@@ -1,0 +1,37 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #F3F4F6;
+}
+
+/* CONTAINER */
+.dashboard-container {
+    -fx-padding: 30;
+}
+
+/* CABEÇALHO */
+.dashboard-header {
+    -fx-background-color: #292943;
+    -fx-padding: 15;
+    -fx-background-radius: 10;
+    -fx-alignment: center-left;
+    -fx-pref-width: 100%;
+}
+
+.dashboard-title {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* TABELA */
+.dashboard-table {
+    -fx-background-color: white;
+    -fx-border-color: #DDD;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.table-column {
+    -fx-font-size: 14px;
+}

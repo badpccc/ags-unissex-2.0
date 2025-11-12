@@ -9,7 +9,7 @@
       fx:controller="com.example.ClientesController"
       spacing="25"
       alignment="TOP_CENTER"
-      stylesheets="@style.css"
+      stylesheets="@clientes.css"
       styleClass="container-fundo">
 
     <!-- Cabeçalho -->

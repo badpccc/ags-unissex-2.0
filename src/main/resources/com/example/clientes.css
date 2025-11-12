@@ -1,0 +1,76 @@
+/* ===== LISTA DE CLIENTES ===== */
+.linha-cliente {
+    -fx-background-color: #222222;
+    -fx-padding: 15px 20px;
+    -fx-border-color: #222222;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 40;
+    -fx-pref-width: 700;
+}
+
+.linha-cliente:hover {
+    -fx-background-color: #222222;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+/* ===== TEXTOS ===== */
+.cliente-nome {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-min-width: 150px;
+}
+
+.cliente-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffffff;
+    -fx-min-width: 150px;
+}
+
+/* ===== BOTÕES ===== */
+.btn-edit {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-edit:hover {
+    -fx-background-color: #43A047;
+}
+
+.btn-delete {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-delete:hover {
+    -fx-background-color: #E53935;
+}
+
+/* ===== BOTÃO ADICIONAR ===== */
+#btnAdicionarCliente {
+    -fx-background-color: #f2c94c;
+    -fx-text-fill: #000000;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+#btnAdicionarCliente:hover {
+    -fx-background-color: #f2c94c;
+}

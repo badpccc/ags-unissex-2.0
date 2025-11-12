@@ -4,44 +4,66 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.SecondaryController"
-            stylesheets="@style.css">
+            stylesheets="@style.css"
+            prefHeight="720.0" prefWidth="1280.0">
 
     <!-- MENU LATERAL -->
     <left>
-        <VBox spacing="12" styleClass="sidebar">
-            <Label text="Menu" styleClass="sidebar-title"/>
+        <BorderPane styleClass="sidebar">
 
-            <Button text="Clientes"
-                    fx:id="menuClientes"
-                    styleClass="sidebar-item"/>
+            <!-- Título do menu -->
+            <top>
+                <VBox alignment="CENTER">
+                    <Label text="Menu" styleClass="sidebar-title"/>
+                </VBox>
+            </top>
 
-            <Button text="Agendamentos"
-                    fx:id="menuAgendamentos"
-                    styleClass="sidebar-item"/>
+            <!-- Botões centrais -->
+            <center>
 
-            <Button text="Serviços"
-                    fx:id="menuServicos"
-                    styleClass="sidebar-item"/>
+                <VBox alignment="CENTER" spacing="20">
+                    <Button text="Dashboard"
+                            fx:id="menuDashboard"
+                            styleClass="sidebar-itemdev"/>
 
-            <Button text="Sair"
-                    onAction="#switchToPrimary"
-                    styleClass="sidebar-exit"/>
-        </VBox>
+                    <Button text="Clientes"
+                            fx:id="menuClientes"
+                            styleClass="sidebar-item"/>
+
+                    <Button text="Agendamentos"
+                            fx:id="menuAgendamentos"
+                            styleClass="sidebar-item"/>
+
+                    <Button text="Serviços"
+                            fx:id="menuServicos"
+                            styleClass="sidebar-item"/>
+                </VBox>
+            </center>
+
+
+            <!-- Botão sair fixado embaixo -->
+            <bottom>
+                <VBox alignment="BOTTOM_CENTER" spacing="0" prefWidth="200" style="-fx-background-color: transparent;">
+                    <Button text="Logout"
+                            onAction="#switchToPrimary"
+                            styleClass="sidebar-exit"
+                            maxWidth="Infinity" />
+                </VBox>
+            </bottom>
+
+        </BorderPane>
     </left>
 
     <!-- TOPO -->
-    <top>
-        <HBox alignment="CENTER_LEFT" styleClass="header">
-            <Label text="Dashboard" styleClass="header-title"/>
-        </HBox>
-    </top>
+
 
     <!-- CONTEÚDO PRINCIPAL -->
     <center>

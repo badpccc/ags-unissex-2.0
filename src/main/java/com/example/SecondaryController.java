@@ -18,7 +18,7 @@ public class SecondaryController {
     @FXML
     private void initialize() {
         // Carrega uma tela inicial (opcional)
-        carregarTela("clientes");
+        carregarTela("dashboard");
 
         // Eventos dos botões
         menuClientes.setOnAction(e -> carregarTela("clientes"));
