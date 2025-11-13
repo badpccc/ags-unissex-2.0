@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
 public class SecondaryController {
-
+    @FXML private Button menuDashboard;
     @FXML private Button menuClientes;
     @FXML private Button menuAgendamentos;
     @FXML private Button menuServicos;
@@ -21,6 +21,7 @@ public class SecondaryController {
         carregarTela("dashboard");
 
         // Eventos dos botões
+        menuDashboard.setOnAction(e -> carregarTela("dashboard"));
         menuClientes.setOnAction(e -> carregarTela("clientes"));
         menuAgendamentos.setOnAction(e -> carregarTela("agendamentos"));
         menuServicos.setOnAction(e -> carregarTela("servicos"));
