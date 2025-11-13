@@ -1,60 +1,181 @@
-/* ===== CONTAINER DO MODAL ===== */
-.modal-container {
-    -fx-background-color: #0D0D0D;
-    -fx-background-radius: 14;
+/* ----------------------------------------------- */
+/*   TEMA GERAL                                    */
+/* ----------------------------------------------- */
+
+* {
+    -fx-font-family: "Inter";
+    -fx-text-fill: #111111;
+}
+
+.root, .border-pane {
+    -fx-background-color: #1f1f1f;
+}
+
+/* ----------------------------------------------- */
+/*   CABEÇALHO DA TELA DE AGENDAMENTOS             */
+/* ----------------------------------------------- */
+
+.header-agendamentos {
+    -fx-background-color: #141414;
     -fx-padding: 25;
+    -fx-spacing: 25;
+    -fx-pref-width: 90%;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 18, 0, 0, 4);
+    -fx-alignment: center-left;
 }
 
-/* ===== TÍTULO ===== */
-.modal-title {
-    -fx-font-size: 22px;
+.titulo-agendamentos {
+    -fx-font-size: 2.2em;
     -fx-font-weight: bold;
-    -fx-text-fill: #F8D648;
+    -fx-text-fill: #f9d94a;
 }
 
-/* ===== CAMPOS ===== */
-.modal-container .text-field,
-.modal-container .text-input,
-.modal-container .combo-box,
-.modal-container .date-picker,
-.modal-container .text-area {
-    -fx-background-color: #1b1b1b;
+/* Botão “Novo Agendamento” */
+.btn-novo-agendamento {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #111111;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
+    -fx-padding: 14 24;
+    -fx-background-radius: 14;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 3);
+    -fx-transition: 0.3s;
+}
+
+.btn-novo-agendamento:hover {
+    -fx-background-color: #49e68b;
+}
+
+/* ----------------------------------------------- */
+/*   LISTA DE AGENDAMENTOS                         */
+/* ----------------------------------------------- */
+
+.scroll-base {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.scroll-base .viewport {
+    -fx-background-color: transparent;
+}
+
+.lista-agendamentos {
+    -fx-spacing: 16;
+    -fx-padding: 20;
+    -fx-alignment: top-center;
+}
+
+/* ----------------------------------------------- */
+/*   CARD DE AGENDAMENTO                           */
+/* ----------------------------------------------- */
+
+.agendamento-card {
+    -fx-background-color: #111111;
+    -fx-background-radius: 14;
+    -fx-padding: 20;
+    -fx-pref-width: 750;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 14, 0, 0, 4);
+    -fx-transition: 0.3s;
+}
+
+.agendamento-card:hover {
+    -fx-background-color: #333333;
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+/* Nome do cliente */
+.agendamento-nome {
+    -fx-font-size: 1.4em;
+    -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-border-color: #333;
-    -fx-border-width: 1;
-    -fx-padding: 8 10;
 }
 
-.modal-container .text-field:focused,
-.modal-container .combo-box:focused,
-.modal-container .date-picker:focused,
-.modal-container .text-area:focused {
-    -fx-background-color: #262626;
-    -fx-border-color: #F8D648;
+/* Informações do agendamento */
+.agendamento-info {
+    -fx-font-size: 1.1em;
+    -fx-text-fill: #cfcfcf;
 }
 
-/* ===== BOTÃO CONFIRMAR ===== */
-.btn-primary {
-    -fx-background-color: #F8D648;
-    -fx-text-fill: #000;
+/* Status (confirmado, pendente, cancelado) */
+.status-confirmado {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-background-radius: 10;
-    -fx-padding: 10 18;
+    -fx-padding: 6 12;
+    -fx-background-radius: 8;
 }
 
-.btn-primary:hover {
-    -fx-background-color: #ffd84c;
+.status-pendente {
+    -fx-background-color: #f9d94a;
+    -fx-text-fill: #111111;
+    -fx-font-weight: bold;
+    -fx-padding: 6 12;
+    -fx-background-radius: 8;
 }
 
-/* ===== BOTÃO CANCELAR ===== */
-.btn-cancel {
-    -fx-background-color: #2b2b2b;
-    -fx-text-fill: #fff;
-    -fx-background-radius: 10;
+.status-cancelado {
+    -fx-background-color: #d64040;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 6 12;
+    -fx-background-radius: 8;
 }
 
-.btn-cancel:hover {
-    -fx-background-color: #3a3a3a;
+/* ----------------------------------------------- */
+/*   BOTÕES DE AÇÃO EM CADA CARD                   */
+/* ----------------------------------------------- */
+
+.btn-editar {
+    -fx-background-color: #4d9ceb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 0.95em;
+    -fx-padding: 8 14;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-editar:hover {
+    -fx-background-color: #63b2ff;
+}
+
+.btn-excluir {
+    -fx-background-color: #d64040;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 0.95em;
+    -fx-padding: 8 14;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-excluir:hover {
+    -fx-background-color: #f55a5a;
+}
+
+/* ----------------------------------------------- */
+/*   RESPONSIVIDADE                                */
+/* ----------------------------------------------- */
+
+@media screen and (max-width: 900px) {
+    .agendamento-card {
+        -fx-pref-width: 95%;
+    }
+
+    .header-agendamentos {
+        -fx-padding: 18;
+        -fx-spacing: 15;
+    }
+
+    .titulo-agendamentos {
+        -fx-font-size: 1.8em;
+    }
+
+    .btn-novo-agendamento {
+        -fx-font-size: 1em;
+        -fx-padding: 10 18;
+    }
 }

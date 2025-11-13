@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.AgendamentosController"
+            stylesheets="@agendamento.css"
+            prefWidth="1100" prefHeight="700">
+
+    <!-- TOPO -->
+    <top>
+        <HBox styleClass="header-agendamentos">
+            <Label text="📅 Agendamentos" styleClass="titulo-agendamentos" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="+ Novo Agendamento" styleClass="btn-novo-agendamento" onAction="#novoAgendamento"/>
+        </HBox>
+
+
+
+    </top>
+
+    <!-- LISTA DE AGENDAMENTOS -->
+    <center>
+        <ScrollPane styleClass="scroll-base" fitToWidth="true">
+            <VBox fx:id="listaAgendamentos" styleClass="lista-agendamentos" spacing="15">
+                <!-- Cards adicionados via código -->
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
