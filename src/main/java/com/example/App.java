@@ -33,7 +33,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Connection connection = Connect.startConnection();
+        Connection connection = Connect.getConnection();
         System.out.println("Connection object: " + connection);
         launch();
     }

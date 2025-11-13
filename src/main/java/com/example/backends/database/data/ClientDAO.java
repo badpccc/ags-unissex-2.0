@@ -1,11 +1,9 @@
 package com.example.backends.database.data;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.example.backends.classes.Client;
 import com.example.backends.database.connection.Connect;
