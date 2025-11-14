@@ -3,22 +3,121 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Pos?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<!-- AQUI: Configurações adicionais -->
+<?import javafx.scene.control.DatePicker?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.NovoClienteController"
-      spacing="15"
-      alignment="CENTER"
-      stylesheets="@style.css"
-      style="-fx-padding: 25;">
+      spacing="20"
+      alignment="TOP_CENTER"
+      stylesheets="@css/modal.css"
+      style="-fx-padding: 25; -fx-background-color: #202020;">
 
     <Label text="Novo Cliente" styleClass="titulo-clientes"/>
 
-    <TextField fx:id="txtNome" promptText="Nome"/>
-    <TextField fx:id="txtTelefone" promptText="Telefone"/>
-    <TextField fx:id="txtEmail" promptText="E-mail"/>
+    <!-- DADOS BÁSICOS -->
+    <GridPane hgap="15" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
 
-    <HBox spacing="10">
+        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtNome" promptText="Nome completo"
+                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Telefone:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtTelefone" promptText="(00) 00000-0000"
+                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="E-mail:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtEmail" promptText="email@exemplo.com"
+                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Endereço:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtAddress" promptText="Rua, Número, Bairro"
+                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Cliente é Ativo:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <CheckBox fx:id="chkAtivo" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <!-- DADOS CAPILARES / CABELEIREIRO -->
+    <Label text="Informações Capilares" styleClass="subtitulo-clientes"/>
+
+    <GridPane hgap="15" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Tipo de cabelo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbHairType"
+                  GridPane.rowIndex="0" GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Liso"/>
+                    <String fx:value="Ondulado"/>
+                    <String fx:value="Cacheado"/>
+                    <String fx:value="Crespo"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Label text="Textura:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbHairTexture"
+                  GridPane.rowIndex="1" GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Fino"/>
+                    <String fx:value="Médio"/>
+                    <String fx:value="Grosso"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Label text="Couro cabeludo:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="cbScalp"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Oleoso"/>
+                    <String fx:value="Seco"/>
+                    <String fx:value="Misto"/>
+                    <String fx:value="Sensível"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Label text="Alergias:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtAllergies"
+                   promptText="Alergias ou sensibilidades"
+                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Cabeleireiro preferido:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtPreferredStylist"
+                   promptText="Nome do profissional"
+                   GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Última Visita:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpLastVisit" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    </GridPane>
+
+    <!-- OBSERVAÇÕES -->
+    <Label text="Observações:" styleClass="subtitulo-clientes"/>
+    <TextArea fx:id="txtObservations"
+              promptText="Observações gerais"
+              prefRowCount="4"
+              maxWidth="350"/>
+
+    <!-- BOTÕES -->
+    <HBox spacing="10" alignment="CENTER">
         <Button text="Salvar" fx:id="btnSalvar" styleClass="btn-add"/>
         <Button text="Cancelar" fx:id="btnCancelar" styleClass="btn-delete"/>
     </HBox>

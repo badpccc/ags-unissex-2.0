@@ -25,21 +25,20 @@ public class EditarClienteController {
         txtEmail.setText(cliente.getEmail());
     }
 
+
+
     @FXML
     public void initialize() {
-
         btnSalvar.setOnAction(e -> salvar());
         btnCancelar.setOnAction(e -> fechar());
     }
 
     private void salvar() {
-
         cliente.setNome(txtNome.getText());
         cliente.setTelefone(txtTelefone.getText());
         cliente.setEmail(txtEmail.getText());
 
         ClienteDAO.atualizar(cliente);
-
         fechar();
     }
 

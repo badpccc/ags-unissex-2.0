@@ -1,0 +1,253 @@
+/* ----------------------------------------------- */
+/*   MODAL – ESTILO PREMIUM / FORMULÁRIO LIMPO     */
+/* ----------------------------------------------- */
+
+* {
+    -fx-font-family: "Inter";
+    -fx-text-fill: #EDEDED;
+}
+
+.root {
+    -fx-background-color: rgba(0, 0, 0, 0.55); /* fundo escurecido */
+}
+
+/* Container principal do modal */
+.modal-container {
+    -fx-background-color: #1b1b1b;
+    -fx-padding: 40;
+    -fx-spacing: 30;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 40, 0, 0, 6);
+    -fx-pref-width: 720;
+}
+
+/* ----------------------------------------------- */
+/*   TÍTULO                                         */
+/* ----------------------------------------------- */
+
+.modal-title {
+    -fx-font-size: 2.1em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f9d94a;
+    -fx-padding: 0 0 20 0;
+}
+
+/* ----------------------------------------------- */
+/*   LABELS DO FORMULÁRIO                           */
+/* ----------------------------------------------- */
+
+.form-label {
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d6d6d6;
+}
+
+/* ----------------------------------------------- */
+/*   CAMPOS DE TEXTO                                */
+/* ----------------------------------------------- */
+
+.text-field, .text-input {
+    -fx-background-color: #262626;
+    -fx-background-radius: 14;
+    -fx-padding: 14 18;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #8b8b8b;
+    -fx-border-color: transparent;
+}
+
+.text-field:focused, .text-input:focused {
+    -fx-background-color: #2f2f2f;
+    -fx-border-color: #f9d94a;
+    -fx-border-width: 2;
+    -fx-border-radius: 14;
+}
+
+/* ----------------------------------------------- */
+/*   DATEPICKER                                     */
+/* ----------------------------------------------- */
+
+.date-picker {
+    -fx-background-color: #262626;
+    -fx-background-radius: 14;
+}
+
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-padding: 14 18;
+}
+
+.date-picker:focused .text-field {
+    -fx-background-color: #2f2f2f;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 0 14 14 0;
+    -fx-cursor: hand;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #4a4a4a;
+}
+
+.date-picker .arrow {
+    -fx-background-color: #f9d94a;
+}
+
+/* ----------------------------------------------- */
+/*   TEXTAREA                                       */
+/* ----------------------------------------------- */
+
+.text-area {
+    -fx-background-color: #262626;
+    -fx-control-inner-background: #262626;
+    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    -fx-padding: 14;
+    -fx-background-radius: 14;
+}
+
+.text-area:focused {
+    -fx-control-inner-background: #2f2f2f;
+    -fx-border-color: #f9d94a;
+    -fx-border-width: 2;
+    -fx-border-radius: 14;
+}
+
+/* Scrollbar do textarea */
+.text-area .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+/* ----------------------------------------------- */
+/*   BOTÕES SALVAR / CANCELAR                       */
+/* ----------------------------------------------- */
+
+.btn-salvar {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 14;
+    -fx-padding: 14 26;
+    -fx-cursor: hand;
+}
+.btn-salvar:hover {
+    -fx-background-color: #43a047;
+}
+
+.btn-cancelar {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 14;
+    -fx-padding: 14 26;
+    -fx-cursor: hand;
+}
+.btn-cancelar:hover {
+    -fx-background-color: #b71c1c;
+}
+
+/* ----------------------------------------------- */
+/*   GRID E ORGANIZAÇÃO DO FORMULÁRIO               */
+/* ----------------------------------------------- */
+
+.form-grid {
+    -fx-hgap: 25;
+    -fx-vgap: 18;
+}
+
+.section-title {
+    -fx-font-size: 1.6em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f9d94a;
+    -fx-padding: 20 0 10 0;
+}
+
+/* ----------------------------------------------- */
+/*   RESPONSIVO                                      */
+/* ----------------------------------------------- */
+
+@media screen and (max-width: 780px) {
+    .modal-container {
+        -fx-pref-width: 95%;
+        -fx-padding: 30;
+    }
+
+    .modal-title {
+        -fx-font-size: 1.8em;
+    }
+
+    .form-grid {
+        -fx-hgap: 15;
+        -fx-vgap: 14;
+    }
+}
+/* ----------------------------------------------- */
+/*   COMBOBOX – ESTILO PREMIUM DARK                */
+/* ----------------------------------------------- */
+
+.combo-box {
+    -fx-background-color: #262626;
+    -fx-background-radius: 14;
+    -fx-padding: 0;
+    -fx-font-size: 1.2em;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10 15;
+}
+
+/* Caixa fechada */
+.combo-box .arrow-button {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 0 14 14 0;
+    -fx-padding: 0 10;
+}
+
+.combo-box .arrow-button:hover {
+    -fx-background-color: #4a4a4a;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #f9d94a; /* seta dourada */
+}
+
+/* Texto dentro da caixa */
+.combo-box .text-field,
+.combo-box .label {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 12 18;
+}
+
+/* Lista suspensa (popup) */
+.combo-box-popup .list-view {
+    -fx-background-color: #1e1e1e;
+    -fx-background-radius: 14;
+    -fx-control-inner-background: #1e1e1e;
+    -fx-border-color: #f9d94a;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 14;
+}
+
+/* Itens da lista */
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: white;
+    -fx-padding: 10 15;
+}
+
+/* Hover nos itens */
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #333333;
+}
+
+/* Item selecionado */
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #444444;
+    -fx-text-fill: #f9d94a; /* destaque */
+}

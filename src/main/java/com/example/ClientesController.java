@@ -25,13 +25,13 @@ public class ClientesController {
     @FXML
     public void initialize() {
 
-        // Carrega do banco
+        // Carrega todos os clientes do banco
         ClienteDAO.listar().forEach(this::adicionarCliente);
 
         btnAdicionarCliente.setOnAction(e -> abrirModalNovoCliente());
     }
 
-    // Modal para adicionar
+    // ------------ MODAL NOVO CLIENTE ----------------
     private void abrirModalNovoCliente() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("novo_cliente.fxml"));
@@ -57,51 +57,75 @@ public class ClientesController {
         }
     }
 
-    // Adiciona visualmente usando o objeto Cliente inteiro
+    // ------------ ADICIONAR ITEM NA LISTA --------------
     public void adicionarCliente(Cliente c) {
         listaClientes.getChildren().add(criarItemCliente(c));
     }
 
-    // Cria card do cliente
-    // Cria card do cliente
+    // ------------ CRIA O CARD COMPLETO DO CLIENTE --------
     public HBox criarItemCliente(Cliente c) {
 
         HBox linha = new HBox();
-        linha.getStyleClass().add("linha-cliente");
-        linha.setSpacing(20);
+        linha.getStyleClass().add("cliente-card");
+        linha.setSpacing(40);
 
-        Label lblNome = new Label(c.getNome());
-        lblNome.getStyleClass().add("cliente-nome");
+        // ----------- COLUNA 1 (DADOS PESSOAIS) -----------------
+        VBox col1 = new VBox(
+                criarLabel("Nome: ", c.getNome()),
+                criarLabel("Telefone: ", c.getTelefone()),
+                criarLabel("Email: ", c.getEmail()),
+                criarLabel("Endereço: ", c.getAddress()),
+                criarLabel("Ativo: ", c.isActive() ? "Sim" : "Não"),
+                criarLabel("Cadastro: ", c.getRegistrationDate() != null ? c.getRegistrationDate().toString() : "—")
+        );
+        col1.setSpacing(6);
 
-        Label lblTelefone = new Label(c.getTelefone());
-        lblTelefone.getStyleClass().add("cliente-info");
+        // ----------- COLUNA 2 (DADOS CAPILARES + VISITA) ---------
+        VBox col2 = new VBox(
+                criarLabel("Tipo de cabelo: ", c.getHairType()),
+                criarLabel("Textura: ", c.getHairTexture()),
+                criarLabel("Couro cabeludo: ", c.getScalp()),
+                criarLabel("Alergias: ", getOr(c.getAllergies(), "Nenhuma")),
+                criarLabel("Profissional preferido: ", c.getPreferredStylist()),
+                criarLabel("Última visita: ",
+                        c.getLastVisit() != null ? c.getLastVisit().toLocalDate().toString() : "—"),
+                criarLabel("Observações: ", getOr(c.getNotes(), "—"))
+        );
+        col2.setSpacing(6);
 
-        Label lblEmail = new Label(c.getEmail());
-        lblEmail.getStyleClass().add("cliente-info");
-
+        // --------------------- BOTÕES ----------------------------
         Button editar = new Button("Editar");
         editar.getStyleClass().add("btn-edit");
-        editar.setOnAction(e -> abrirEditarCliente(c));   // ✅ Agora funciona
+        editar.setOnAction(e -> abrirEditarCliente(c));
 
         Button excluir = new Button("Excluir");
         excluir.getStyleClass().add("btn-delete");
-
         excluir.setOnAction(e -> {
             ClienteDAO.excluirPorId(c.getId());
             listaClientes.getChildren().remove(linha);
         });
 
-        HBox acoes = new HBox(10, editar, excluir);
+        VBox boxAcoes = new VBox(10, editar, excluir);
+        boxAcoes.setStyle("-fx-alignment: center-right;");
 
-        linha.getChildren().addAll(lblNome, lblTelefone, lblEmail, acoes);
+        // Adiciona tudo ao card
+        linha.getChildren().addAll(col1, col2, boxAcoes);
 
         return linha;
     }
-    private void atualizarLista() {
-        listaClientes.getChildren().clear();
-        ClienteDAO.listar().forEach(this::adicionarCliente);
+
+    // ------------ CRIA LABEL FORMATADA ---------------
+    private Label criarLabel(String titulo, String conteudo) {
+        Label lbl = new Label(titulo + (conteudo != null ? conteudo : "—"));
+        lbl.getStyleClass().add("cliente-info");
+        return lbl;
     }
 
+    private String getOr(String valor, String padrao) {
+        return (valor != null && !valor.isEmpty()) ? valor : padrao;
+    }
+
+    // ------------ MODAL EDITAR CLIENTE -----------------
     @FXML
     private void abrirEditarCliente(Cliente cliente) {
         try {
@@ -116,11 +140,16 @@ public class ClientesController {
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-            atualizarLista(); // recarrega os clientes na tela
+            atualizarLista();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // ------------ ATUALIZAR LISTA COMPLETA -------------
+    private void atualizarLista() {
+        listaClientes.getChildren().clear();
+        ClienteDAO.listar().forEach(this::adicionarCliente);
+    }
 }

@@ -6,20 +6,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.example.backends.database.connection.Connect;
+
 import java.sql.Connection;
 import java.io.IOException;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
 
     private static Scene scene;
-//antonio passou aqui
+
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 800, 600);
+        scene = new Scene(loadFXML("primary"), 900, 550);
         stage.setScene(scene);
+        stage.setTitle("AGS-Unissex");
         stage.show();
     }
 
@@ -37,5 +36,4 @@ public class App extends Application {
         System.out.println("Connection object: " + connection);
         launch();
     }
-
 }

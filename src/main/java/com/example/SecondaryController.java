@@ -1,34 +1,44 @@
 package com.example;
 
-import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import java.io.IOException;
 
 public class SecondaryController {
-    @FXML private Button menuDashboard;
-    @FXML private Button menuClientes;
-    @FXML private Button menuAgendamentos;
-    @FXML private Button menuServicos;
+
+    @FXML private HBox menuClientes;
+    @FXML private HBox menuAgendamentos;
+    @FXML private HBox menuServicos;
+    @FXML private HBox menuLogout;
+
     @FXML private StackPane conteudoArea;
 
     @FXML
     private void initialize() {
-        // Carrega uma tela inicial (opcional)
-        carregarTela("dashboard");
-
-        // Eventos dos botões
-        menuDashboard.setOnAction(e -> carregarTela("dashboard"));
-        menuClientes.setOnAction(e -> carregarTela("clientes"));
-        menuAgendamentos.setOnAction(e -> carregarTela("agendamentos"));
-        menuServicos.setOnAction(e -> carregarTela("servicos"));
+        carregarTela("dashboard"); // opcional
     }
 
     @FXML
-    private void switchToPrimary() throws IOException {
+    private void showClientes(MouseEvent e) {
+        carregarTela("clientes");
+    }
+
+    @FXML
+    private void showAgendamentos(MouseEvent e) {
+        carregarTela("agendamentos");
+    }
+
+    @FXML
+    private void showServicos(MouseEvent e) {
+        carregarTela("servicos");
+    }
+
+    @FXML
+    private void handleLogout(MouseEvent e) throws IOException {
         App.setRoot("primary");
     }
 

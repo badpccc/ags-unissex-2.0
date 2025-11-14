@@ -1,0 +1,115 @@
+.root-pane {
+  -fx-background-color: linear-gradient(to bottom right, #0e0e0e, #1a1a1a);
+  -fx-font-family: "Segoe UI", "Arial", sans-serif;
+  -fx-alignment: center;
+}
+
+.form-container {
+  -fx-background-color: #1c1c1c;
+  -fx-padding: 40;
+  -fx-background-radius: 20;
+  -fx-border-radius: 20;
+  -fx-border-color: #efbf3a;
+  -fx-border-width: 1.5px;
+  -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.25), 25, 0.3, 0, 0);
+
+  /* 🧱 Tamanho adaptável */
+  -fx-pref-width: 420;
+  -fx-pref-height: 480;
+  -fx-min-width: 380;
+  -fx-min-height: 440;
+  -fx-max-width: 600;
+  -fx-max-height: 700;
+
+  /* Centralização */
+  -fx-alignment: center;
+}
+
+.login-box {
+  -fx-alignment: center;
+  -fx-spacing: 20;
+}
+
+.title-label {
+  -fx-text-fill: #efbf3a;
+  -fx-font-size: 26px;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.4), 10, 0.5, 0, 0);
+}
+
+.field-label {
+  -fx-text-fill: #cccccc;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+.text-field,
+.password-field {
+  -fx-background-color: #111111;
+  -fx-text-fill: #ffffff;
+  -fx-prompt-text-fill: #777777;
+  -fx-background-radius: 6;
+  -fx-border-radius: 6;
+  -fx-border-color: #3c3c3c;
+  -fx-border-width: 1.2px;
+  -fx-padding: 10 12 10 12;
+  -fx-pref-width: -1;
+  -fx-min-width: 300px;
+  -fx-max-width: -1;
+  -fx-font-size: 13px;
+  -fx-transition: all 0.2s ease-in-out;
+}
+
+.text-field:focused,
+.password-field:focused {
+  -fx-border-color: #efbf3a;
+  -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.25), 8, 0.3, 0, 0);
+}
+
+.button {
+  -fx-background-color: #efbf3a;
+  -fx-text-fill: #1a1a1a;
+  -fx-font-weight: bold;
+  -fx-background-radius: 6;
+  -fx-border-radius: 6;
+  -fx-border-color: transparent;
+  -fx-border-width: 1px;
+  -fx-padding: 8 20 8 20;
+  -fx-cursor: hand;
+  -fx-font-size: 13px;
+  -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.3), 8, 0.4, 0, 0);
+  -fx-transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+  -fx-background-color: #ffd75e;
+  -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.5), 12, 0.5, 0, 0);
+}
+
+.button:pressed {
+  -fx-background-color: #cfaf30;
+  -fx-translate-y: 1px;
+}
+
+/* ===== Box de botões ===== */
+.button-box {
+  -fx-spacing: 25;
+  -fx-alignment: center;
+}
+
+.dialog-pane {
+  -fx-background-color: #1e1e1e;
+  -fx-font-size: 12pt;
+}
+
+.dialog-pane .content.label,
+.dialog-pane .header-panel .label {
+  -fx-text-fill: #efbf3a;
+}
+
+.subtitle-label {
+  -fx-text-fill: #cccccc;
+  -fx-font-size: 16px;
+  -fx-font-weight: normal;
+  -fx-opacity: 0.85;
+}

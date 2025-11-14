@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -25,7 +28,7 @@
                 styleClass="btn-add" />
     </HBox>
 
-    <!-- Lista de clientes (nova versão, estilo 3) -->
+    <!-- Lista de Clientes -->
     <ScrollPane fitToWidth="true"
                 pannable="true"
                 hbarPolicy="NEVER"
@@ -33,10 +36,16 @@
                 styleClass="scroll-base"
                 style="-fx-padding: 0 15 15 15;">
 
-        <VBox fx:id="listaClientes"
-              spacing="12"
-              styleClass="lista-tabela"
-              prefWidth="700" />
+        <AnchorPane>
+            <VBox fx:id="listaClientes"
+                  spacing="20"
+                  styleClass="lista-tabela"
+                  layoutX="0"
+                  layoutY="0"
+                  AnchorPane.leftAnchor="0"
+                  AnchorPane.rightAnchor="0" />
+        </AnchorPane>
+
     </ScrollPane>
 
 </VBox>

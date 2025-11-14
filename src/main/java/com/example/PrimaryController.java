@@ -10,9 +10,18 @@ public class PrimaryController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
 
+    @FXML private TextField txtUser;
+    @FXML private PasswordField txtPass;
+
+    // Qualquer login entra
     @FXML
     private void switchToSecondary() throws IOException {
-        // Aqui você pode futuramente validar login
         App.setRoot("secondary");
     }
+
+    @FXML
+    private void handleRegister() throws IOException {
+        App.setRoot("registro");
+    }
+
 }

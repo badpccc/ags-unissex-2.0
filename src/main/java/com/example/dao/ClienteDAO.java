@@ -9,12 +9,13 @@ public class ClienteDAO {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/local_db";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "1234"; // ajuste
+    private static final String PASSWORD = "1234";
 
     private static Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
+    // LISTAR
     public static List<Cliente> listar() {
         List<Cliente> lista = new ArrayList<>();
 
@@ -31,6 +32,7 @@ public class ClienteDAO {
                         rs.getString("telefone"),
                         rs.getString("email")
                 );
+
                 lista.add(c);
             }
 
@@ -41,6 +43,7 @@ public class ClienteDAO {
         return lista;
     }
 
+    // SALVAR
     public static void salvar(Cliente c) {
         String sql = "INSERT INTO clientes (nome, telefone, email) VALUES (?, ?, ?)";
 
@@ -56,6 +59,8 @@ public class ClienteDAO {
             e.printStackTrace();
         }
     }
+
+    // EXCLUIR POR ID
     public static void excluirPorId(int id) {
         String sql = "DELETE FROM clientes WHERE id = ?";
 
@@ -70,21 +75,9 @@ public class ClienteDAO {
         }
     }
 
-
-    public static void excluirPorNome(String nome) {
-        String sql = "DELETE FROM clientes WHERE nome = ?";
-
-        try (Connection conn = conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, nome);
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    // ATUALIZAR
     public static void atualizar(Cliente c) {
+
         String sql = "UPDATE clientes SET nome = ?, telefone = ?, email = ? WHERE id = ?";
 
         try (Connection conn = conectar();
@@ -101,5 +94,4 @@ public class ClienteDAO {
             e.printStackTrace();
         }
     }
-
 }
