@@ -4,41 +4,78 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.ClientesController"
-      spacing="25"
-      alignment="TOP_CENTER"
-      stylesheets="@clientes.css"
-      styleClass="container-fundo">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ClientesController"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@css/clientes.css">
 
-    <!-- ===================== CABEÇALHO ===================== -->
-    <HBox spacing="15"
-          alignment="CENTER_LEFT"
-          styleClass="header-clientes">
+    <!-- ===================================================== -->
+    <!--                     CABEÇALHO                         -->
+    <!-- ===================================================== -->
+    <top>
+        <HBox spacing="20"
+              alignment="CENTER_LEFT"
+              styleClass="clientes-header">
 
-        <Label text="Clientes"
-               styleClass="titulo-clientes" />
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-        <Button fx:id="btnAdicionarCliente"
-                text="Adicionar Cliente"
-                styleClass="btn-add" />
-    </HBox>
+            <!-- Título -->
+            <Label text="Clientes" styleClass="clientes-title"/>
 
-    <!-- ===================== LISTA DE CLIENTES ===================== -->
-    <ScrollPane fitToWidth="true"
-                pannable="true"
-                hbarPolicy="NEVER"
-                vbarPolicy="AS_NEEDED"
-                styleClass="scroll-base"
-                style="-fx-padding: 0 15 15 15;">
+            <!-- Espaçador -->
+            <Pane HBox.hgrow="ALWAYS"/>
 
-        <VBox fx:id="listaClientes"
-              spacing="20"
-              styleClass="lista-tabela"
-              AnchorPane.leftAnchor="0"
-              AnchorPane.rightAnchor="0" />
+            <!-- Campo de busca -->
+            <TextField fx:id="txtBuscarCliente"
+                       promptText="Pesquisar cliente..."
+                       styleClass="clientes-search"/>
 
-    </ScrollPane>
+            <!-- Botão adicionar -->
+            <Button fx:id="btnAdicionarCliente"
+                    text="Adicionar Cliente"
+                    styleClass="btn-primario"/>
+        </HBox>
+    </top>
 
-</VBox>
+    <!-- ===================================================== -->
+    <!--                    ÁREA PRINCIPAL                     -->
+    <!-- ===================================================== -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    pannable="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED"
+                    styleClass="scroll-clientes">
+
+            <VBox fx:id="listaClientes"
+                  spacing="12"
+                  styleClass="lista-clientes">
+
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <!-- CARD MODELO (remover quando integrar) -->
+                <HBox spacing="20" styleClass="cliente-card">
+
+                    <VBox spacing="4">
+                        <Label text="Arthur Silva" styleClass="cliente-nome"/>
+                        <Label text="Telefone: (31) 99999-9999" styleClass="cliente-info"/>
+                        <Label text="Email: exemplo@email.com" styleClass="cliente-info"/>
+                    </VBox>
+
+                    <Pane HBox.hgrow="ALWAYS"/>
+
+                    <Button text="Editar" styleClass="btn-editar"/>
+                    <Button text="Excluir" styleClass="btn-excluir"/>
+
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

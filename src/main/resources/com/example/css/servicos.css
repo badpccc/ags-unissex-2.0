@@ -1,6 +1,6 @@
-/* ======================================= */
-/*           TEMA GERAL DARK               */
-/* ======================================= */
+/* ========================================================= */
+/*                   TEMA GERAL DARK                         */
+/* ========================================================= */
 
 * {
     -fx-font-family: "Inter";
@@ -11,138 +11,113 @@
     -fx-background-color: #1f1f1f;
 }
 
-/* ======================================= */
-/*            CABEÇALHO SERVIÇOS           */
-/* ======================================= */
+/* ========================================================= */
+/*                       CABEÇALHO                           */
+/* ========================================================= */
 
-.header-servicos {
-    -fx-background-color: #141414;
-    -fx-padding: 25 30;
-    -fx-spacing: 30;
-    -fx-alignment: center-left;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0, 0, 6);
+.ag-header {
+    -fx-background-color: #2a2a2a;
+    -fx-padding: 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #ffffff22;
 }
 
-.titulo-servicos {
-    -fx-font-size: 2.3em;
+.ag-title {
+    -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: #4dd2ff;
 }
 
 /* Campo de busca */
-.text-field {
-    -fx-background-color: #222;
-    -fx-text-fill: #eaeaea;
+.ag-search {
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
     -fx-background-radius: 10;
-    -fx-padding: 10 14;
-    -fx-border-color: #333;
+    -fx-padding: 8 14;
+    -fx-font-size: 14px;
+    -fx-border-color: #ffffff22;
     -fx-border-radius: 10;
 }
 
-.text-field:focused {
-    -fx-border-color: #4dd2ff;
-}
-
-/* Botão Novo Serviço */
-.btn-novo-servico {
-    -fx-background-color: #2ecc71;
-    -fx-text-fill: #111;
-    -fx-font-size: 1.2em;
+/* Botão primário */
+.btn-primario {
+    -fx-background-color: #4a7dff;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-padding: 12 24;
-    -fx-background-radius: 10;
+    -fx-padding: 10 20;
+    -fx-background-radius: 12;
     -fx-cursor: hand;
 }
 
-.btn-novo-servico:hover {
-    -fx-background-color: #46e68a;
+.btn-primario:hover {
+    -fx-background-color: #6d94ff;
 }
 
-/* ======================================= */
-/*        LISTA DE SERVIÇOS / CONTAINER    */
-/* ======================================= */
+/* ========================================================= */
+/*                    ÁREA DE LISTAGEM                       */
+/* ========================================================= */
 
-.servicos-list {
-    -fx-padding: 10 20;
-    -fx-spacing: 14;
+.ag-scroll {
+    -fx-background: transparent;
 }
 
-/* ======================================= */
-/*           CARD DO SERVIÇO               */
-/* ======================================= */
-
-.servico-item {
-    -fx-background-color: #111;
+.ag-lista {
     -fx-padding: 20;
-    -fx-background-radius: 14;
-    -fx-spacing: 40;
-    -fx-alignment: center-left;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 15, 0, 0, 5);
 }
 
-.servico-item:hover {
-    -fx-background-color: #1a1a1a;
+/* ========================================================= */
+/*                           CARD                            */
+/* ========================================================= */
+
+.ag-card {
+    -fx-background-color: #ffffff11;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #ffffff22;
+    -fx-border-width: 1;
+    -fx-padding: 18;
+    -fx-spacing: 25;
 }
 
-/* Nome do serviço */
-.servico-nome {
-    -fx-font-size: 1.5em;
+/* Nome / Título */
+.ag-nome {
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
 }
 
-/* Preço e tempo */
-.servico-preco,
-.servico-tempo {
-    -fx-font-size: 1.2em;
-    -fx-text-fill: #bbbbbb;
+/* Informações secundárias */
+.ag-info {
+    -fx-font-size: 14px;
+    -fx-opacity: 0.7;
 }
 
-/* ======================================= */
-/*               BOTÕES                    */
-/* ======================================= */
+/* Preço */
+.ag-preco {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* ========================================================= */
+/*                     Botões do Card                        */
+/* ========================================================= */
 
 .btn-editar {
-    -fx-background-color: #3498db;
+    -fx-background-color: #3a8ef6;
     -fx-text-fill: white;
     -fx-background-radius: 10;
-    -fx-padding: 8 18;
-    -fx-font-size: 1.1em;
-    -fx-cursor: hand;
+    -fx-padding: 8 14;
 }
 
 .btn-editar:hover {
-    -fx-background-color: #5dade2;
+    -fx-background-color: #5aa1ff;
 }
 
 .btn-excluir {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: #d9534f;
     -fx-text-fill: white;
     -fx-background-radius: 10;
-    -fx-padding: 8 18;
-    -fx-font-size: 1.1em;
-    -fx-cursor: hand;
+    -fx-padding: 8 14;
 }
 
 .btn-excluir:hover {
-    -fx-background-color: #ff6b61;
-}
-
-/* ======================================= */
-/*            SCROLL INVISÍVEL             */
-/* ======================================= */
-
-.scroll-base {
-    -fx-background: transparent;
-    -fx-background-color: transparent;
-}
-
-.scroll-base .viewport {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:vertical,
-.scroll-bar:horizontal {
-    -fx-opacity: 0;      /* invisível */
-    -fx-padding: 0;
-    -fx-pref-width: 0;
+    -fx-background-color: #ff6b67;
 }

@@ -1,50 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.AgendamentosController"
-            stylesheets="@agendamento.css"
-            prefWidth="1100" prefHeight="700">
+            prefWidth="900" prefHeight="600"
+            stylesheets="@css/agendamentos.css">
 
-    <!-- ============================
-         CABEÇALHO DA PÁGINA
-         ============================ -->
+    <!-- ===================================================== -->
+    <!--                     CABEÇALHO                         -->
+    <!-- ===================================================== -->
     <top>
-        <VBox spacing="10" styleClass="header-container">
-            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header-agendamentos">
-                <Label text="📅 Agendamentos" styleClass="titulo-agendamentos"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button text="+ Novo Agendamento"
-                        styleClass="btn-novo-agendamento"
-                        onAction="#novoAgendamento"/>
-            </HBox>
+        <HBox spacing="20"
+              alignment="CENTER_LEFT"
+              styleClass="ag-header">
 
-            <!-- Linha divisória para igualar com "Usuários" -->
-            <Separator styleClass="header-separator"/>
-        </VBox>
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Agendamentos"
+                   styleClass="ag-title"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- Campo de busca -->
+            <TextField fx:id="txtBuscar"
+                       promptText="Buscar cliente ou serviço..."
+                       styleClass="ag-search"/>
+
+            <Button fx:id="btnNovoAgendamento"
+                    text="Novo Agendamento"
+                    styleClass="btn-primario"/>
+        </HBox>
     </top>
 
-
-    <!-- ============================
-         LISTA DE AGENDAMENTOS
-         ============================ -->
+    <!-- ===================================================== -->
+    <!--                    ÁREA PRINCIPAL                     -->
+    <!-- ===================================================== -->
     <center>
-        <ScrollPane styleClass="scroll-base"
-                    fitToWidth="true"
-                    pannable="true"
-                    hbarPolicy="NEVER">
+        <ScrollPane fitToWidth="true"
+                    styleClass="ag-scroll">
 
             <VBox fx:id="listaAgendamentos"
-                  spacing="15"
-                  fillWidth="true"
-                  styleClass="lista-agendamentos"
-                  BorderPane.alignment="TOP_CENTER">
+                  spacing="12"
+                  styleClass="ag-lista">
 
-                <!-- Os cards virão do Java -->
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <!-- CARD EXEMPLO (remover ao integrar backend) -->
+                <HBox spacing="20"
+                      styleClass="ag-card">
+
+                    <VBox spacing="4">
+                        <Label text="Arthur – Corte Masculino"
+                               styleClass="ag-nome"/>
+
+                        <Label text="Hoje • 15:30"
+                               styleClass="ag-info"/>
+                    </VBox>
+
+                    <Pane HBox.hgrow="ALWAYS"/>
+
+                    <Label text="R$ 25,00"
+                           styleClass="ag-preco"/>
+
+                    <Button text="Editar" styleClass="btn-editar"/>
+                    <Button text="Cancelar" styleClass="btn-excluir"/>
+
+                </HBox>
+
             </VBox>
         </ScrollPane>
     </center>

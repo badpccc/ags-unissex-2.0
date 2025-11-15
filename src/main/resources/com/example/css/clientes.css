@@ -1,0 +1,132 @@
+/* ======================================= */
+/*           TEMA GERAL DARK               */
+/* ======================================= */
+
+* {
+    -fx-font-family: "Inter";
+    -fx-text-fill: #f0f0f0;
+}
+
+.root, .border-pane {
+    -fx-background-color: #1f1f1f;
+}
+
+/* ======================================= */
+/*            CABEÇALHO CLIENTES           */
+/* ======================================= */
+
+.clientes-header {
+    -fx-background-color: #141414;
+    -fx-padding: 30;
+    -fx-spacing: 30;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0, 0, 5);
+}
+
+.clientes-title {
+    -fx-font-size: 2.4em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4dd2ff; /* azul padrão */
+}
+
+/* Campo de busca */
+.clientes-search {
+    -fx-background-color: #222;
+    -fx-text-fill: #fff;
+    -fx-prompt-text-fill: #777;
+    -fx-background-radius: 8;
+    -fx-padding: 8 14;
+    -fx-border-color: #333;
+    -fx-border-radius: 8;
+}
+
+.clientes-search:focused {
+    -fx-border-color: #4dd2ff;
+}
+
+/* Botão principal */
+.btn-primario {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #111;
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-padding: 12 26;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.btn-primario:hover {
+    -fx-background-color: #46e68a;
+}
+
+/* ======================================= */
+/*               LISTA                     */
+/* ======================================= */
+
+.scroll-clientes {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.scroll-clientes .viewport {
+    -fx-background-color: transparent;
+}
+
+.lista-clientes {
+    -fx-padding: 0 20;
+}
+
+/* ======================================= */
+/*           CARD DO CLIENTE               */
+/* ======================================= */
+
+.cliente-card {
+    -fx-background-color: #111;
+    -fx-padding: 20;
+    -fx-background-radius: 14;
+    -fx-spacing: 40;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 18, 0, 0, 6);
+}
+
+.cliente-card:hover {
+    -fx-background-color: #1a1a1a;
+}
+
+/* Nome e info */
+.cliente-nome {
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+}
+
+.cliente-info {
+    -fx-font-size: 1.1em;
+    -fx-text-fill: #bbbbbb;
+}
+
+/* Botões editar/excluir */
+.btn-editar {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 1.1em;
+    -fx-cursor: hand;
+}
+
+.btn-editar:hover {
+    -fx-background-color: #5dade2;
+}
+
+.btn-excluir {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 1.1em;
+    -fx-cursor: hand;
+}
+
+.btn-excluir:hover {
+    -fx-background-color: #ff6b61;
+}
