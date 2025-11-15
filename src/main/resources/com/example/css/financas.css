@@ -1,0 +1,142 @@
+/* ----------------------------------------------- */
+/*   ESTILO PREMIUM PARA BARBEARIA                 */
+/* ----------------------------------------------- */
+
+* {
+    -fx-font-family: "Inter";
+    -fx-text-fill: #eaeaea;
+}
+
+.root, .border-pane, .financas-container {
+    -fx-background-color: #1a1a1a; /* fundo mais escuro estilo barbearia */
+}
+
+/* ----------------------------------------------- */
+/*   CABEÇALHO                                     */
+/* ----------------------------------------------- */
+
+.header-financas {
+    -fx-background-color: #0f0f0f;
+    -fx-padding: 35;
+    -fx-spacing: 35;
+    -fx-alignment: center-left;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 22, 0, 0, 6);
+}
+
+.titulo-financas {
+    -fx-font-size: 3em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #c8a44b;   /* dourado barbearia */
+    -fx-letter-spacing: 1px;
+}
+
+/* ----------------------------------------------- */
+/*   CARDS                                         */
+/* ----------------------------------------------- */
+
+.cards-row {
+    -fx-spacing: 15; /* mais juntos */
+    -fx-padding: 25 40;
+}
+
+.card-financa {
+    -fx-background-color: #111111;
+    -fx-background-radius: 18;
+    -fx-padding: 26;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.50), 20, 0, 0, 8);
+    -fx-pref-width: 270;
+
+    -fx-border-color: #2b2b2b;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 18;
+}
+
+.card-financa:hover {
+    -fx-background-color: #1f1f1f;
+    -fx-scale-x: 1.015;
+    -fx-scale-y: 1.015;
+    -fx-cursor: hand;
+}
+
+.card-title {
+    -fx-font-size: 1.35em;
+    -fx-text-fill: #d2d2d2;
+}
+
+.card-value,
+.card-value-green,
+.card-value-red {
+    -fx-font-size: 2.2em;
+    -fx-font-weight: bold;
+}
+
+/* Valor padrão */
+.card-value {
+    -fx-text-fill: #ffffff;
+}
+
+/* Receitas */
+.card-value-green {
+    -fx-text-fill: #2ecc71; /* verde suave de barbearia */
+}
+
+/* Despesas */
+.card-value-red {
+    -fx-text-fill: #c94a4a; /* vermelho vinho elegante */
+}
+
+/* ----------------------------------------------- */
+/*   MOVIMENTAÇÕES / TABELA                        */
+/* ----------------------------------------------- */
+
+.section-title {
+    -fx-font-size: 2.3em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #c8a44b; /* dourado barbearia */
+    -fx-padding: 10 0;
+}
+
+.bloco-tabela {
+    -fx-padding: 25 40;
+    -fx-spacing: 20;
+}
+
+.table-view {
+    -fx-background-color: #111111;
+    -fx-padding: 20;
+    -fx-border-color: #2b2b2b;
+    -fx-border-width: 2;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.table-column {
+    -fx-font-size: 1.25em;
+    -fx-text-fill: #eaeaea;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-background-color: #161616;
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 1.2em;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #c8a44b; /* dourado */
+    -fx-text-fill: #111111;
+}
+
+/* ----------------------------------------------- */
+/*   SCROLL                                        */
+/* ----------------------------------------------- */
+
+.scroll-base {
+    -fx-background-color: transparent;
+}
+
+.scroll-base .viewport {
+    -fx-background-color: transparent;
+}

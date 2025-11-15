@@ -13,13 +13,14 @@ public class SecondaryController {
     @FXML private HBox menuClientes;
     @FXML private HBox menuAgendamentos;
     @FXML private HBox menuServicos;
+    @FXML private HBox menuFinancas;   // <-- ADICIONADO
     @FXML private HBox menuLogout;
 
     @FXML private StackPane conteudoArea;
 
     @FXML
     private void initialize() {
-        carregarTela("dashboard"); // opcional
+        carregarTela("dashboard"); // Tela inicial, opcional
     }
 
     @FXML
@@ -38,16 +39,23 @@ public class SecondaryController {
     }
 
     @FXML
+    private void showFinancas(MouseEvent e) {   // <-- NOVO MÉTODO
+        carregarTela("financas");
+    }
+
+    @FXML
     private void handleLogout(MouseEvent e) throws IOException {
         App.setRoot("primary");
     }
 
     private void carregarTela(String nome) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(nome + ".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/" + nome + ".fxml"));
             conteudoArea.getChildren().setAll(root);
         } catch (IOException e) {
+            System.out.println("Erro ao carregar: " + nome + ".fxml");
             e.printStackTrace();
         }
     }
+
 }

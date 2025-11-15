@@ -40,6 +40,17 @@
                     <Label fx:id="textServicos" text="Serviços" styleClass="menu-text"/>
                 </HBox>
 
+                <HBox fx:id="menuFinancas"
+                      styleClass="menu-item"
+                      onMouseClicked="#showFinancas">
+                    <Label text="💰" styleClass="menu-icon"/>
+                    <Label text="Finanças" styleClass="menu-text"/>
+                </HBox>
+
+                <HBox fx:id="menuServicos" styleClass="menu-item" onMouseClicked="#showServicos">
+                    <Label fx:id="iconServicos" text="✂️" styleClass="menu-icon"/>
+                    <Label fx:id="textServicos" text="Usuarios" styleClass="menu-text"/>
+                </HBox>
             </VBox>
 
             <!-- Empurra logout para baixo -->
