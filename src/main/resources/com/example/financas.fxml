@@ -15,15 +15,8 @@
     <!-- ========================= -->
     <top>
         <HBox styleClass="header-financas">
-            <Label text="💈 Finanças da Barbearia" styleClass="titulo-financas"/>
+            <Label text="💰 Finanças da Barbearia" styleClass="titulo-financas"/>
             <Region HBox.hgrow="ALWAYS"/>
-
-            <!-- Botão opcional -->
-            <!--
-            <Button text="+ Nova Movimentação"
-                    styleClass="btn-nova-mov"
-                    onAction="#novaMovimentacao"/>
-            -->
         </HBox>
     </top>
 
@@ -37,22 +30,22 @@
                 <!-- ========================= -->
                 <!--   CARDS SUPERIORES        -->
                 <!-- ========================= -->
-                <HBox spacing="18" alignment="CENTER" styleClass="cards-row">
+                <HBox spacing="20" alignment="CENTER" styleClass="cards-row">
 
                     <!-- SALDO -->
-                    <VBox styleClass="card-financa" spacing="10">
+                    <VBox styleClass="card-financa" spacing="8">
                         <Label text="Saldo Atual" styleClass="card-title"/>
                         <Label fx:id="lblSaldo" text="R$ 0,00" styleClass="card-value"/>
                     </VBox>
 
                     <!-- RECEITAS -->
-                    <VBox styleClass="card-financa" spacing="10">
+                    <VBox styleClass="card-financa" spacing="8">
                         <Label text="Receitas" styleClass="card-title"/>
                         <Label fx:id="lblReceitas" text="R$ 0,00" styleClass="card-value-green"/>
                     </VBox>
 
                     <!-- DESPESAS -->
-                    <VBox styleClass="card-financa" spacing="10">
+                    <VBox styleClass="card-financa" spacing="8">
                         <Label text="Despesas" styleClass="card-title"/>
                         <Label fx:id="lblDespesas" text="R$ 0,00" styleClass="card-value-red"/>
                     </VBox>
@@ -65,14 +58,15 @@
 
                     <Label text="Movimentações Recentes" styleClass="section-title"/>
 
-                    <TableView fx:id="tabelaMovimentacoes" prefHeight="450">
+                    <TableView fx:id="tabelaMovimentacoes" styleClass="tabela-financas" prefHeight="480">
                         <columns>
-                            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="160"/>
+                            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="150"/>
                             <TableColumn fx:id="colDescricao" text="Descrição" prefWidth="350"/>
-                            <TableColumn fx:id="colValor" text="Valor" prefWidth="160"/>
+                            <TableColumn fx:id="colValor" text="Valor" prefWidth="150"/>
                             <TableColumn fx:id="colData" text="Data" prefWidth="180"/>
                         </columns>
                     </TableView>
+
                 </VBox>
 
             </VBox>

@@ -1,25 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<ScrollPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.ServicosController"
-            fitToWidth="true"
-            stylesheets="@servicos.css">
+            prefWidth="900" prefHeight="600"
+            stylesheets="@css/servicos.css"
+            styleClass="root">
 
-    <VBox fx:id="listaServicos" spacing="12" styleClass="services-container">
-        <!-- Linha modelo (será clonada via código) -->
-        <HBox spacing="16" styleClass="service-item">
-            <Label text="Serviço" styleClass="service-name" />
-            <Label text="R$ 00,00" styleClass="service-price" />
-            <Label text="00 min" styleClass="service-time" />
-            <Button text="Editar" styleClass="btn-edit" />
-            <Button text="Excluir" styleClass="btn-delete" />
+    <!-- ===================================================== -->
+    <!--                     CABEÇALHO                         -->
+    <!-- ===================================================== -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="header-servicos">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Serviços" styleClass="titulo-servicos"/>
+
+            <!-- Espaçador -->
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- Campo de busca -->
+            <TextField fx:id="txtBuscar"
+                       promptText="Pesquisar serviço..."/>
+
+            <!-- Botão Novo Serviço -->
+            <Button fx:id="btnNovoServico"
+                    text="Novo Serviço"
+                    styleClass="btn-novo-servico"/>
         </HBox>
-    </VBox>
-</ScrollPane>
+    </top>
+
+    <!-- ===================================================== -->
+    <!--                    ÁREA PRINCIPAL                     -->
+    <!-- ===================================================== -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-base">
+            <VBox fx:id="listaServicos"
+                  spacing="12"
+                  styleClass="servicos-list">
+
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+
+                <!-- ============================= -->
+                <!--     CARD EXEMPLO (REMOVER)    -->
+                <!-- ============================= -->
+                <HBox spacing="20" styleClass="servico-item">
+
+                    <VBox spacing="4">
+                        <Label text="Corte Masculino" styleClass="servico-nome"/>
+                        <Label text="Duração: 30 min" styleClass="servico-tempo"/>
+                    </VBox>
+
+                    <Pane HBox.hgrow="ALWAYS"/>
+
+                    <Label text="R$ 25,00" styleClass="servico-preco"/>
+
+                    <Button text="Editar" styleClass="btn-editar"/>
+                    <Button text="Excluir" styleClass="btn-excluir"/>
+
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

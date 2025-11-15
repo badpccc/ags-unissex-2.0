@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.UsuariosController"
+            stylesheets="@css/usuarios.css"
+            prefWidth="1200" prefHeight="750">
+
+    <!-- ============================= -->
+    <!--  CABEÇALHO / TÍTULO DA TELA   -->
+    <!-- ============================= -->
+    <top>
+        <HBox styleClass="header-usuarios">
+            <Label text="👤 Usuários" styleClass="titulo-usuarios"/>
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="+ Novo Usuário"
+                    styleClass="btn-novo-usuario"
+                    onAction="#novoUsuario"/>
+        </HBox>
+    </top>
+
+    <!-- ============================= -->
+    <!--      ÁREA PRINCIPAL           -->
+    <!-- ============================= -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-base">
+
+            <VBox spacing="40" alignment="TOP_CENTER" styleClass="usuarios-wrapper">
+
+                <!-- CARDS DE NÚMEROS -->
+                <HBox spacing="25" alignment="CENTER" styleClass="cards-row">
+
+                    <VBox styleClass="card-usuario">
+                        <Label text="Total de Usuários" styleClass="card-title"/>
+                        <Label fx:id="lblTotalUsuarios" text="0" styleClass="card-value"/>
+                    </VBox>
+
+                    <VBox styleClass="card-usuario">
+                        <Label text="Administradores" styleClass="card-title"/>
+                        <Label fx:id="lblAdmins" text="0" styleClass="card-value-blue"/>
+                    </VBox>
+
+                    <VBox styleClass="card-usuario">
+                        <Label text="Funcionários" styleClass="card-title"/>
+                        <Label fx:id="lblFuncionarios" text="0" styleClass="card-value-green"/>
+                    </VBox>
+
+                </HBox>
+
+                <!-- LISTA DE USUÁRIOS -->
+                <VBox spacing="20" alignment="TOP_CENTER" styleClass="lista-wrapper">
+
+                    <Label text="Lista de Usuários" styleClass="section-title"/>
+
+                    <VBox fx:id="listaUsuarios"
+                          spacing="18"
+                          styleClass="usuarios-list"/>
+
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

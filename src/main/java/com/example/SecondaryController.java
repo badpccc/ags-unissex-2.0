@@ -47,6 +47,11 @@ public class SecondaryController {
     private void handleLogout(MouseEvent e) throws IOException {
         App.setRoot("primary");
     }
+    @FXML
+    private void showUsuarios() {
+        carregarTela("usuarios"); // usa usuarios.fxml
+    }
+
 
     private void carregarTela(String nome) {
         try {

@@ -1,0 +1,148 @@
+/* ======================================= */
+/*           TEMA GERAL DARK               */
+/* ======================================= */
+
+* {
+    -fx-font-family: "Inter";
+    -fx-text-fill: #f0f0f0;
+}
+
+.root, .border-pane {
+    -fx-background-color: #1f1f1f;
+}
+
+/* ======================================= */
+/*            CABEÇALHO SERVIÇOS           */
+/* ======================================= */
+
+.header-servicos {
+    -fx-background-color: #141414;
+    -fx-padding: 25 30;
+    -fx-spacing: 30;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0, 0, 6);
+}
+
+.titulo-servicos {
+    -fx-font-size: 2.3em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4dd2ff;
+}
+
+/* Campo de busca */
+.text-field {
+    -fx-background-color: #222;
+    -fx-text-fill: #eaeaea;
+    -fx-background-radius: 10;
+    -fx-padding: 10 14;
+    -fx-border-color: #333;
+    -fx-border-radius: 10;
+}
+
+.text-field:focused {
+    -fx-border-color: #4dd2ff;
+}
+
+/* Botão Novo Serviço */
+.btn-novo-servico {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #111;
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.btn-novo-servico:hover {
+    -fx-background-color: #46e68a;
+}
+
+/* ======================================= */
+/*        LISTA DE SERVIÇOS / CONTAINER    */
+/* ======================================= */
+
+.servicos-list {
+    -fx-padding: 10 20;
+    -fx-spacing: 14;
+}
+
+/* ======================================= */
+/*           CARD DO SERVIÇO               */
+/* ======================================= */
+
+.servico-item {
+    -fx-background-color: #111;
+    -fx-padding: 20;
+    -fx-background-radius: 14;
+    -fx-spacing: 40;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 15, 0, 0, 5);
+}
+
+.servico-item:hover {
+    -fx-background-color: #1a1a1a;
+}
+
+/* Nome do serviço */
+.servico-nome {
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+}
+
+/* Preço e tempo */
+.servico-preco,
+.servico-tempo {
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #bbbbbb;
+}
+
+/* ======================================= */
+/*               BOTÕES                    */
+/* ======================================= */
+
+.btn-editar {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 1.1em;
+    -fx-cursor: hand;
+}
+
+.btn-editar:hover {
+    -fx-background-color: #5dade2;
+}
+
+.btn-excluir {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-font-size: 1.1em;
+    -fx-cursor: hand;
+}
+
+.btn-excluir:hover {
+    -fx-background-color: #ff6b61;
+}
+
+/* ======================================= */
+/*            SCROLL INVISÍVEL             */
+/* ======================================= */
+
+.scroll-base {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.scroll-base .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-opacity: 0;      /* invisível */
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+}

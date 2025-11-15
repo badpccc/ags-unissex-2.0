@@ -12,4 +12,10 @@ public class ServicosController {
         // Aqui você futuramente carrega os serviços
         System.out.println("Tela SERVIÇOS carregada");
     }
+    @FXML
+    private void novoServico() {
+        System.out.println("Novo serviço clicado!");
+        // abrir modal, etc...
+    }
+
 }

@@ -10,23 +10,41 @@
             stylesheets="@agendamento.css"
             prefWidth="1100" prefHeight="700">
 
-    <!-- TOPO -->
+    <!-- ============================
+         CABEÇALHO DA PÁGINA
+         ============================ -->
     <top>
-        <HBox styleClass="header-agendamentos">
-            <Label text="📅 Agendamentos" styleClass="titulo-agendamentos" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Button text="+ Novo Agendamento" styleClass="btn-novo-agendamento" onAction="#novoAgendamento"/>
-        </HBox>
+        <VBox spacing="10" styleClass="header-container">
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header-agendamentos">
+                <Label text="📅 Agendamentos" styleClass="titulo-agendamentos"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Novo Agendamento"
+                        styleClass="btn-novo-agendamento"
+                        onAction="#novoAgendamento"/>
+            </HBox>
 
-
-
+            <!-- Linha divisória para igualar com "Usuários" -->
+            <Separator styleClass="header-separator"/>
+        </VBox>
     </top>
 
-    <!-- LISTA DE AGENDAMENTOS -->
+
+    <!-- ============================
+         LISTA DE AGENDAMENTOS
+         ============================ -->
     <center>
-        <ScrollPane styleClass="scroll-base" fitToWidth="true">
-            <VBox fx:id="listaAgendamentos" styleClass="lista-agendamentos" spacing="15">
-                <!-- Cards adicionados via código -->
+        <ScrollPane styleClass="scroll-base"
+                    fitToWidth="true"
+                    pannable="true"
+                    hbarPolicy="NEVER">
+
+            <VBox fx:id="listaAgendamentos"
+                  spacing="15"
+                  fillWidth="true"
+                  styleClass="lista-agendamentos"
+                  BorderPane.alignment="TOP_CENTER">
+
+                <!-- Os cards virão do Java -->
             </VBox>
         </ScrollPane>
     </center>
