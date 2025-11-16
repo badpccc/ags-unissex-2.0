@@ -22,6 +22,11 @@
             <!-- Itens do Menu -->
             <VBox fx:id="menuContainer" spacing="0">
 
+                <HBox fx:id="menuDashboard" styleClass="menu-item" onMouseClicked="#showDashboard">
+                    <Label fx:id="iconDashboard" text="👥" styleClass="menu-icon"/>
+                    <Label fx:id="textDashboard" text="Dashboard" styleClass="menu-text"/>
+                </HBox>
+
                 <!-- Clientes -->
                 <HBox fx:id="menuClientes" styleClass="menu-item" onMouseClicked="#showClientes">
                     <Label fx:id="iconClientes" text="👥" styleClass="menu-icon"/>

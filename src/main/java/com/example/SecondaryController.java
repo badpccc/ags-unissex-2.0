@@ -22,6 +22,10 @@ public class SecondaryController {
     private void initialize() {
         carregarTela("dashboard"); // Tela inicial, opcional
     }
+    @FXML
+    private void showDashboard(MouseEvent e) {
+        carregarTela("dashboard");
+    }
 
     @FXML
     private void showClientes(MouseEvent e) {

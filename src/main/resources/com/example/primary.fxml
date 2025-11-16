@@ -43,10 +43,10 @@
                 <PasswordField fx:id="passwordField" promptText="Digite sua senha"/>
             </VBox>
 
-            <!-- BOTÕES -->
+
             <HBox spacing="25" alignment="CENTER" styleClass="button-box">
                 <Button text="Entrar" onAction="#switchToSecondary"/>
-                <Button text="Registrar" onAction="#handleRegister"/>
+                <!-- BOTÕES  <Button text="Registrar" onAction="#handleRegister"/> -->
             </HBox>
 
         </VBox>
