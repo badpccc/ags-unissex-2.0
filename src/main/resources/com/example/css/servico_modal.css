@@ -1,0 +1,94 @@
+* {
+    -fx-font-family: "Inter";
+    -fx-text-fill: #EDEDED;
+}
+
+/* fundo do modal */
+.modal-root {
+    -fx-background-color: rgba(0, 0, 0, 0.55);
+}
+
+.form-wrapper {
+    -fx-background-color: #1b1b1b;
+    -fx-padding: 30;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 40, 0, 0, 6);
+}
+
+/* Título */
+.modal-title {
+    -fx-font-size: 1.9em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4ab3f9;
+}
+
+/* Campos */
+.field-label {
+    -fx-font-size: 1.05em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d6d6d6;
+}
+
+.input-field, .text-field {
+    -fx-background-color: #262626;
+    -fx-background-radius: 14;
+    -fx-padding: 12 18;
+    -fx-font-size: 1.15em;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #8b8b8b;
+}
+
+.input-area {
+    -fx-background-color: #000000;
+    -fx-background-radius: 14;
+    -fx-padding: 12;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: #8b8b8b;
+}
+
+/* Botões */
+.btn-salvar {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 14;
+    -fx-padding: 12 26;
+}
+.btn-salvar:hover {
+    -fx-background-color: #43a047;
+}
+
+.btn-cancelar {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 14;
+    -fx-padding: 12 26;
+}
+.btn-cancelar:hover {
+    -fx-background-color: #b71c1c;
+}
+.input-field, .text-field, .combo-field, .date-field {
+    -fx-background-color: #262626;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+
+    -fx-border-color: #ffffff22;
+    -fx-border-width: 1;
+
+    -fx-padding: 12 18;
+    -fx-font-size: 1.15em;
+
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #8b8b8b;
+}
+
+.input-field:focused,
+.text-field:focused,
+.combo-field:focused,
+.date-field:focused {
+    -fx-background-color: #303030;
+    -fx-border-color: #4ab3f9;
+}

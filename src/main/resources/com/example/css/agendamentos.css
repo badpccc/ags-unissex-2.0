@@ -10,6 +10,10 @@
 .root, .border-pane {
     -fx-background-color: #1f1f1f;
 }
+/* Deixa o fundo do modal cinza escuro */
+.anchor-pane, .root {
+    -fx-background-color: #2b2b2b; /* Ou qualquer cor que quiser */
+}
 
 /* ======================================= */
 /*           CABEÇALHO AGENDAMENTOS        */

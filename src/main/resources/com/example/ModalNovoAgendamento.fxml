@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane
+        xmlns="http://javafx.com/javafx/21"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.example.ModalNovoAgendamentoController"
+        stylesheets="@css/agendamento_modal.css"
+        styleClass="modal-root"
+        prefWidth="500" prefHeight="520">
+
+
+    <VBox spacing="25"
+          alignment="TOP_CENTER"
+          AnchorPane.topAnchor="20"
+          AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20"
+          AnchorPane.bottomAnchor="20">
+
+        <!-- TÍTULO -->
+        <Label text="📅 Novo Agendamento" styleClass="modal-title"/>
+
+        <!-- FORM -->
+        <VBox spacing="18" styleClass="form-wrapper">
+
+            <!-- Cliente -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Cliente" styleClass="field-label"/>
+                <TextField fx:id="txtCliente"
+                           promptText="Nome do cliente"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <!-- Serviço -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Serviço" styleClass="field-label"/>
+                <ComboBox fx:id="cmbServico"
+                          promptText="Selecione um serviço"
+                          styleClass="input-field"/>
+            </VBox>
+
+            <!-- Data -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Data" styleClass="field-label"/>
+                <DatePicker fx:id="dpData"
+                            styleClass="input-field"/>
+            </VBox>
+
+            <!-- Horário -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Horário" styleClass="field-label"/>
+                <TextField fx:id="txtHora"
+                           promptText="ex: 15:30"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <!-- Preço -->
+
+
+        </VBox>
+
+        <!-- BOTÕES -->
+        <HBox spacing="20"
+              alignment="CENTER_RIGHT"
+              styleClass="modal-buttons">
+
+            <Button text="Cancelar"
+                    styleClass="btn-cancelar"
+                    onAction="#fecharModal"/>
+
+            <Button text="Salvar"
+                    styleClass="btn-salvar"
+                    onAction="#salvarAgendamento"/>
+
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>

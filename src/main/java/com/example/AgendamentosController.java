@@ -1,140 +1,137 @@
 package com.example;
 
-
-import com.example.dao.AgendamentoDAO;
-import com.example.models.Agendamento;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-
 
 public class AgendamentosController {
 
-    @FXML
-    private VBox listaAgendamentos;
-
-    @FXML
-    private AnchorPane rootContainer; // container principal onde o card será aberto
+    @FXML private VBox listaAgendamentos;
 
     private final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+
+    // 🔹 Lista local (SEM BANCO)
+    private static final List<AgendamentoTemp> agendamentos = new ArrayList<>();
 
     @FXML
     public void initialize() {
         carregarAgendamentos();
     }
 
-    // 🔹 Abrir o card de novo agendamento
+    // 🔹 Abrir modal igual ao UsuariosController
     @FXML
-    private void abrirCardAgendamento() {
+    public void novoAgendamento() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/views/card_agendamento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModalNovoAgendamento.fxml"));
             Parent root = loader.load();
 
-            // Exemplo: abrir em novo Stage ou trocar dentro de um Pane
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+            // Controller do modal
+            ModalNovoAgendamentoController controller = loader.getController();
+            controller.setCallback(this::adicionarAgendamento);
 
-        } catch (IOException e) {
+            Stage stage = new Stage();
+            stage.setTitle("Novo Agendamento");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+
+            stage.showAndWait();
+
+            carregarAgendamentos();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    // 🔹 Adicionar agendamento na lista local
+    private void adicionarAgendamento(AgendamentoTemp a) {
+        agendamentos.add(a);
+        carregarAgendamentos();
+    }
 
-    // 🔹 Carregar lista de agendamentos
+    // 🔹 Carregar cards
     private void carregarAgendamentos() {
         listaAgendamentos.getChildren().clear();
-        List<Agendamento> agendamentos = AgendamentoDAO.listar();
 
         if (agendamentos.isEmpty()) {
-            Label vazio = new Label("Nenhum agendamento encontrado.");
-            vazio.setStyle("-fx-text-fill: #bbbbbb; -fx-font-size: 16px;");
-            listaAgendamentos.getChildren().add(vazio);
+            Label l = new Label("Nenhum agendamento encontrado.");
+            l.setStyle("-fx-text-fill: #bbbbbb; -fx-font-size: 16px;");
+            listaAgendamentos.getChildren().add(l);
             return;
         }
 
-        for (Agendamento ag : agendamentos) {
-            HBox card = criarCardAgendamento(ag);
-            listaAgendamentos.getChildren().add(card);
+        for (AgendamentoTemp ag : agendamentos) {
+            listaAgendamentos.getChildren().add(criarCardAgendamento(ag));
         }
     }
 
-    // 🔹 Criar um card visual para cada agendamento
-    private HBox criarCardAgendamento(Agendamento ag) {
+    // 🔹 Card visual
+    private HBox criarCardAgendamento(AgendamentoTemp ag) {
         HBox card = new HBox(20);
-        card.getStyleClass().add("agendamento-card");
-        card.setPrefWidth(900);
-        card.setStyle("-fx-background-color: #2a2a2a; -fx-padding: 20; -fx-background-radius: 12;");
+        card.setStyle("-fx-background-color: #2a2a2a; -fx-padding: 18; -fx-background-radius: 12;");
 
-        VBox info = new VBox(8);
-        Label nomeCliente = new Label("👤 " + ag.getClienteNome());
-        nomeCliente.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;");
+        VBox info = new VBox(6);
 
-        Label servico = new Label("💈 Serviço: " + ag.getServico());
+        Label nome = new Label("👤 " + ag.cliente);
+        nome.setStyle("-fx-font-size: 18; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        Label servico = new Label("💈 Serviço: " + ag.servico);
         servico.setStyle("-fx-text-fill: #cccccc;");
 
-        String dataHoraFormatada = "🕒 " + ag.getDataAgendamento().format(formatoData)
-                + " às " + ag.getHora().format(formatoHora);
-        Label data = new Label(dataHoraFormatada);
+        Label data = new Label(
+                "🕒 " + ag.data.format(formatoData) + " às " + ag.hora.format(formatoHora)
+        );
         data.setStyle("-fx-text-fill: #bbbbbb;");
 
-        Label status = new Label("📋 Status: " + ag.getStatus());
-        status.setStyle("-fx-text-fill: #f9d94a;");
+        Label preco = new Label("💵 R$ " + ag.preco);
+        preco.setStyle("-fx-text-fill: #90ee90;");
 
-        info.getChildren().addAll(nomeCliente, servico, data, status);
+        info.getChildren().addAll(nome, servico, data, preco);
 
-        HBox botoes = new HBox(10);
-        Button editar = new Button("Editar");
-        editar.getStyleClass().add("btn-edit");
-        editar.setOnAction(e -> editarAgendamento(ag));
-
+        // Botão excluir
         Button excluir = new Button("Excluir");
-        excluir.getStyleClass().add("btn-delete");
         excluir.setOnAction(e -> {
-            AgendamentoDAO.excluir(ag.getId());
+            agendamentos.remove(ag);
             carregarAgendamentos();
         });
 
-        botoes.getChildren().addAll(editar, excluir);
-        botoes.setStyle("-fx-alignment: center-right;");
+        HBox botoes = new HBox(10, excluir);
 
         Region espaco = new Region();
         HBox.setHgrow(espaco, Priority.ALWAYS);
 
         card.getChildren().addAll(info, espaco, botoes);
+
         return card;
     }
 
-    // 🔹 Criar agendamento rápido (modo texto)
+    // 🔹 CLASSE INTERNA para salvar temporariamente
+    public static class AgendamentoTemp {
+        public String cliente;
+        public String servico;
+        public LocalDate data;
+        public LocalTime hora;
+        public double preco;
 
-    @FXML
-    private void novoAgendamento() throws IOException {
-        abrirCardAgendamento(); // chama o card bonito
-    }
-
-
-    // 🔹 Editar agendamento (apenas nome)
-    private void editarAgendamento(Agendamento ag) {
-        TextInputDialog dialog = new TextInputDialog(ag.getClienteNome());
-        dialog.setTitle("Editar Agendamento");
-        dialog.setHeaderText("Editar nome do cliente");
-        dialog.setContentText("Novo nome:");
-
-        dialog.showAndWait().ifPresent(novoNome -> {
-            ag.setClienteNome(novoNome);
-            AgendamentoDAO.atualizar(ag);
-            carregarAgendamentos();
-        });
+        public AgendamentoTemp(String cliente, String servico, LocalDate data, LocalTime hora, double preco) {
+            this.cliente = cliente;
+            this.servico = servico;
+            this.data = data;
+            this.hora = hora;
+            this.preco = preco;
+        }
     }
 }

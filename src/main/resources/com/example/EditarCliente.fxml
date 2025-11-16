@@ -6,7 +6,7 @@
 <VBox spacing="12" alignment="CENTER" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.EditarClienteController"
-      stylesheets="@style.css"
+      stylesheets="@css/style.css"
       styleClass="modal">
 
     <Label text="Editar Cliente" styleClass="modal-title"/>

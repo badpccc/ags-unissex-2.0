@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ModalNovoServicoController"
+            stylesheets="@css/servico_modal.css"
+            styleClass="modal-root"
+            prefWidth="520" prefHeight="540">
+
+    <VBox spacing="25"
+          alignment="TOP_CENTER"
+          AnchorPane.topAnchor="20"
+          AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20"
+          AnchorPane.bottomAnchor="20">
+
+        <!-- TÍTULO -->
+        <Label text="💈 Novo Serviço" styleClass="modal-title"/>
+
+        <!-- FORM -->
+        <VBox spacing="18" styleClass="form-wrapper">
+
+            <!-- Nome -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Nome do Serviço" styleClass="field-label"/>
+                <TextField fx:id="txtNome"
+                           promptText="Ex: Corte Masculino"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <!-- Preço -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Preço" styleClass="field-label"/>
+                <TextField fx:id="txtPreco"
+                           promptText="Ex: 25.00"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <!-- Duração -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Duração (minutos)" styleClass="field-label"/>
+                <TextField fx:id="txtDuracao"
+                           promptText="Ex: 30"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <!-- Descrição -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Descrição" styleClass="field-label"/>
+                <TextArea fx:id="txtDescricao"
+                          promptText="Descrição opcional..."
+                          prefRowCount="3"
+                          styleClass="input-area"/>
+            </VBox>
+
+        </VBox>
+
+        <!-- BOTÕES -->
+        <HBox spacing="20"
+              alignment="CENTER_RIGHT"
+              styleClass="modal-buttons">
+
+            <Button text="Cancelar"
+                    styleClass="btn-cancelar"
+                    onAction="#fecharModal"/>
+
+            <Button text="Salvar"
+                    styleClass="btn-salvar"
+                    onAction="#salvarServico"/>
+
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.ModalNovoUsuarioController"
+            stylesheets="@css/funcionarios.css"
+            styleClass="modal-root"
+            prefWidth="480" prefHeight="420">
+
+    <VBox spacing="25"
+          alignment="TOP_CENTER"
+          styleClass="modal-container"
+          AnchorPane.topAnchor="20"
+          AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20"
+          AnchorPane.bottomAnchor="20">
+
+        <!-- TÍTULO DO MODAL -->
+        <Label text="➕ Novo Usuário" styleClass="modal-title"/>
+
+        <!-- FORM -->
+        <VBox spacing="18" styleClass="form-wrapper">
+
+            <!-- Campo Nome -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Nome" styleClass="field-label"/>
+                <TextField fx:id="txtNome"
+                           promptText="Digite o nome completo"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <!-- Campo Email -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Email" styleClass="field-label"/>
+                <TextField fx:id="txtEmail"
+                           promptText="exemplo@empresa.com"
+                           styleClass="input-field"/>
+            </VBox>
+
+            <!-- Campo Senha -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Senha" styleClass="field-label"/>
+                <PasswordField fx:id="txtSenha"
+                               promptText="Digite uma senha"
+                               styleClass="input-field"/>
+            </VBox>
+
+            <!-- Tipo -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Tipo de Usuário" styleClass="field-label"/>
+                <ComboBox fx:id="cmbTipo"
+                          promptText="Selecione"
+                          styleClass="input-field">
+                </ComboBox>
+            </VBox>
+
+        </VBox>
+
+        <!-- BOTÕES -->
+        <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="modal-buttons">
+
+            <Button text="Cancelar"
+                    styleClass="btn-cancelar"
+                    onAction="#fecharModal"/>
+
+            <Button text="Salvar"
+                    styleClass="btn-salvar"
+                    onAction="#salvarUsuario"/>
+
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>

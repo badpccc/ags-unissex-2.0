@@ -21,6 +21,7 @@
             <Button text="+ Novo Usuário"
                     styleClass="btn-novo-usuario"
                     onAction="#novoUsuario"/>
+
         </HBox>
     </top>
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.FuncionariosController"
+            prefWidth="1200" prefHeight="750"
+            stylesheets="@css/funcionarios.css">
+
+    <!-- ============================= -->
+    <!--            CABEÇALHO          -->
+    <!-- ============================= -->
+    <top>
+        <HBox styleClass="header-funcionarios">
+            <Label text="👥 Funcionários" styleClass="titulo"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="+ Novo Funcionário"
+                    styleClass="btn-novo"
+                    onAction="#novoFuncionario"/>
+        </HBox>
+    </top>
+
+    <!-- ============================= -->
+    <!--       ÁREA PRINCIPAL          -->
+    <!-- ============================= -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    styleClass="scroll-base">
+
+            <VBox spacing="40" alignment="TOP_CENTER" styleClass="wrapper">
+
+                <!-- CARDS -->
+                <HBox spacing="25" alignment="CENTER" styleClass="cards-row">
+
+                    <VBox styleClass="card">
+                        <Label text="Total Funcionários" styleClass="card-title"/>
+                        <Label fx:id="lblTotal" text="0" styleClass="card-value"/>
+                    </VBox>
+
+                    <VBox styleClass="card">
+                        <Label text="Ativos" styleClass="card-title"/>
+                        <Label fx:id="lblAtivos" text="0" styleClass="card-value-green"/>
+                    </VBox>
+
+                    <VBox styleClass="card">
+                        <Label text="Inativos" styleClass="card-title"/>
+                        <Label fx:id="lblInativos" text="0" styleClass="card-value-red"/>
+                    </VBox>
+
+                </HBox>
+
+                <!-- LISTA -->
+                <VBox spacing="25" alignment="TOP_CENTER" styleClass="lista-wrapper">
+
+                    <Label text="Lista de Funcionários" styleClass="section-title"/>
+
+                    <VBox fx:id="listaFuncionarios"
+                          spacing="18"
+                          styleClass="lista"/>
+                </VBox>
+
+            </VBox>
+
+        </ScrollPane>
+    </center>
+
+</BorderPane>

@@ -34,7 +34,9 @@
 
             <Button fx:id="btnNovoAgendamento"
                     text="Novo Agendamento"
-                    styleClass="btn-primario"/>
+                    styleClass="btn-primario"
+                    onAction="#novoAgendamento"/>
+
         </HBox>
     </top>
 
