@@ -94,7 +94,7 @@
 
 .content-header {
     -fx-text-fill: #efbf3a;
-    -fx-font-size: 28px;
+    -fx-font-size: 88px;
     -fx-font-weight: bold;
     -fx-padding: 0 0 20 0;
 }
@@ -111,7 +111,7 @@
 
 .welcome-text {
     -fx-text-fill: #cccccc;
-    -fx-font-size: 16px;
+    -fx-font-size: 56px;
     -fx-line-spacing: 5;
 }
 
@@ -145,4 +145,34 @@
     -fx-text-fill: #e74c3c;
     -fx-font-size: 14px;
     -fx-padding: 0 0 0 15;
-}
+}/* ===========================
+       ESTILOS DO DASHBOARD
+    =========================== */
+
+ /* Fundo vazio do dashboard */
+ .dashboard-empty {
+     -fx-background-color: transparent;
+     -fx-padding: 40 20;
+ }
+
+ /* Título principal */
+ .dashboard-title {
+     -fx-font-size: 26px;
+     -fx-font-weight: bold;
+     -fx-text-fill: #f5f5f5;
+     -fx-opacity: 0.95;
+ }
+
+ /* Texto informativo */
+ .dashboard-empty-text {
+     -fx-font-size: 16px;
+     -fx-text-fill: #cccccc;
+     -fx-opacity: 0.8;
+ }
+
+ /* Opcional: animação suave ao aparecer */
+ .dashboard-empty > * {
+     -fx-translate-y: 0;
+     -fx-opacity: 1;
+     -fx-transition: 0.35s ease-in-out;
+ }
