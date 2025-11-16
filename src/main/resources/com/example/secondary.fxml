@@ -56,6 +56,13 @@
                     <Label fx:id="iconUsuarios" text="👤" styleClass="menu-icon"/>
                     <Label fx:id="textUsuarios" text="Usuários" styleClass="menu-text"/>
                 </HBox>
+                <HBox fx:id="menuPaginaNeutra"
+                      styleClass="menu-item"
+                      onMouseClicked="#showPaginaNeutra">
+                    <Label text="🧩" styleClass="menu-icon"/>
+                    <Label text="Página Neutra" styleClass="menu-text"/>
+                </HBox>
+
 
             </VBox>
 
