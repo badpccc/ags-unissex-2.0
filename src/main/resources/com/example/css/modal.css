@@ -124,31 +124,54 @@
 /*   BOTÕES SALVAR / CANCELAR                       */
 /* ----------------------------------------------- */
 
-.btn-salvar {
-    -fx-background-color: #4caf50;
+/* ========================================== */
+/*        BOTÕES DO MODAL (Salvar/Cancelar)   */
+/* ========================================== */
+
+.btn-add {
+    -fx-background-color: #28c76f;
     -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-font-size: 1.2em;
-    -fx-background-radius: 14;
-    -fx-padding: 14 26;
+    -fx-font-size: 15px;
+    -fx-padding: 10 22;
+    -fx-background-radius: 8;
     -fx-cursor: hand;
-}
-.btn-salvar:hover {
-    -fx-background-color: #43a047;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);
+    -fx-font-weight: bold;
+
+    /* Suavização ao alterar estados */
+    -fx-transition: 0.2s;
 }
 
-.btn-cancelar {
-    -fx-background-color: #d32f2f;
+.btn-add:hover {
+    -fx-background-color: #20b863;
+}
+
+.btn-add:pressed {
+    -fx-background-color: #1a9d55;
+}
+
+
+/* CANCELAR */
+.btn-delete {
+    -fx-background-color: #ff4d4d;
     -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-font-size: 1.2em;
-    -fx-background-radius: 14;
-    -fx-padding: 14 26;
+    -fx-font-size: 15px;
+    -fx-padding: 10 22;
+    -fx-background-radius: 8;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);
+    -fx-font-weight: bold;
 }
-.btn-cancelar:hover {
-    -fx-background-color: #b71c1c;
+
+.btn-delete:hover {
+    -fx-background-color: #e64545;
 }
+
+.btn-delete:pressed {
+    -fx-background-color: #cc3d3d;
+}
+
+
 
 /* ----------------------------------------------- */
 /*   GRID E ORGANIZAÇÃO DO FORMULÁRIO               */
