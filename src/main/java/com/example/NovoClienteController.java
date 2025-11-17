@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.models.Cliente;
+import com.example.backends.classes.Client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -35,7 +35,7 @@ public class NovoClienteController {
     @FXML private Button btnSalvar;
     @FXML private Button btnCancelar;
 
-    private Consumer<Cliente> onClienteSalvo;
+    private Consumer<Client> onClienteSalvo;
 
 
 
@@ -96,27 +96,32 @@ public class NovoClienteController {
     // SALVAR CLIENTE
     // ===============================================================
     private void salvar() {
+        System.out.println("=== INICIANDO SALVAMENTO ===");
 
         String nome = txtNome.getText();
         String telefone = txtTelefone.getText();
         String email = txtEmail.getText();
 
+        System.out.println("Dados coletados - Nome: " + nome + ", Telefone: " + telefone + ", Email: " + email);
+
         // Validação simples
         if (nome.isEmpty() || telefone.isEmpty()) {
-            System.out.println("Nome e telefone são obrigatórios!");
+            System.out.println("ERRO: Nome e telefone são obrigatórios!");
             return;
         }
 
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            System.out.println("Email inválido!");
+            System.out.println("ERRO: Email inválido!");
             return;
         }
 
-        Cliente cliente = new Cliente();
+        System.out.println("Validação passou. Criando objeto Client...");
+
+        Client cliente = new Client();
 
         // CAMPOS BÁSICOS
-        cliente.setNome(nome);
-        cliente.setTelefone(telefone);
+        cliente.setName(nome);
+        cliente.setPhoneNumber(telefone);
         cliente.setEmail(email);
         cliente.setAddress(txtAddress.getText());
         cliente.setActive(chkAtivo.isSelected());
@@ -134,12 +139,16 @@ public class NovoClienteController {
         );
 
         // OBSERVAÇÕES
-        cliente.setNotes(txtObservations.getText());
+        cliente.setObservations(txtObservations.getText());
 
         // RETORNAR O CLIENTE PARA O CONTROLLER PRINCIPAL
+        System.out.println("Cliente criado com sucesso. Executando callback...");
         if (onClienteSalvo != null)
             onClienteSalvo.accept(cliente);
+        else
+            System.out.println("ERRO: Callback não foi definido!");
 
+        System.out.println("Fechando modal...");
         fechar();
     }
 
@@ -156,7 +165,7 @@ public class NovoClienteController {
     // ===============================================================
     // CALLBACK
     // ===============================================================
-    public void setOnClienteSalvo(Consumer<Cliente> callback) {
+    public void setOnClienteSalvo(Consumer<Client> callback) {
         this.onClienteSalvo = callback;
     }
 }

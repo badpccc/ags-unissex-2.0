@@ -1,7 +1,7 @@
 package com.example;
 
-import com.example.dao.ClienteDAO;
-import com.example.models.Cliente;
+import com.example.backends.classes.Client;
+import com.example.backends.database.data.ClientDAO;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -26,7 +27,7 @@ public class ClientesController {
     public void initialize() {
 
         // Carrega todos os clientes do banco
-        ClienteDAO.listar().forEach(this::adicionarCliente);
+        ClientDAO.getAllClients().forEach(this::adicionarCliente);
 
         btnAdicionarCliente.setOnAction(e -> abrirModalNovoCliente());
     }
@@ -39,15 +40,39 @@ public class ClientesController {
 
             NovoClienteController controller = loader.getController();
 
+            // Criar ScrollPane para permitir rolagem
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setContent(root);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setFitToHeight(true);
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
             Stage modal = new Stage();
-            modal.setScene(new Scene(root));
+            Scene scene = new Scene(scrollPane, 600, 500); // Tamanho fixo: 600x500
+            modal.setScene(scene);
             modal.setTitle("Novo Cliente");
+            modal.setResizable(true);
             modal.initOwner(btnAdicionarCliente.getScene().getWindow());
             modal.initModality(Modality.APPLICATION_MODAL);
 
             controller.setOnClienteSalvo(cliente -> {
-                ClienteDAO.salvar(cliente);
-                adicionarCliente(cliente);
+                System.out.println("=== CALLBACK EXECUTADO ===");
+                System.out.println("Nome: " + cliente.getName());
+                System.out.println("Telefone: " + cliente.getPhoneNumber());
+                System.out.println("Email: " + cliente.getEmail());
+                
+                boolean sucesso = ClientDAO.insert(cliente);
+                System.out.println("Inserção no banco: " + sucesso);
+                System.out.println("ID gerado: " + cliente.getId());
+                
+                if (sucesso) {
+                    adicionarCliente(cliente);
+                    System.out.println("Cliente adicionado na interface");
+                } else {
+                    System.out.println("ERRO: Falha ao inserir no banco!");
+                }
+                System.out.println("=== FIM CALLBACK ===");
             });
 
             modal.showAndWait();
@@ -58,12 +83,12 @@ public class ClientesController {
     }
 
     // ------------ ADICIONAR ITEM NA LISTA --------------
-    public void adicionarCliente(Cliente c) {
+    public void adicionarCliente(Client c) {
         listaClientes.getChildren().add(criarItemCliente(c));
     }
 
     // ------------ CRIA O CARD COMPLETO DO CLIENTE --------
-    public HBox criarItemCliente(Cliente c) {
+    public HBox criarItemCliente(Client c) {
 
         HBox linha = new HBox();
         linha.getStyleClass().add("cliente-card");
@@ -71,8 +96,8 @@ public class ClientesController {
 
         // ----------- COLUNA 1 (DADOS PESSOAIS) -----------------
         VBox col1 = new VBox(
-                criarLabel("Nome: ", c.getNome()),
-                criarLabel("Telefone: ", c.getTelefone()),
+                criarLabel("Nome: ", c.getName()),
+                criarLabel("Telefone: ", c.getPhoneNumber()),
                 criarLabel("Email: ", c.getEmail()),
                 criarLabel("Endereço: ", c.getAddress()),
                 criarLabel("Ativo: ", c.isActive() ? "Sim" : "Não"),
@@ -88,7 +113,7 @@ public class ClientesController {
                 criarLabel("Alergias: ", getOr(c.getAllergies(), "Nenhuma")),
                 criarLabel("Última visita: ",
                         c.getLastVisit() != null ? c.getLastVisit().toLocalDate().toString() : "—"),
-                criarLabel("Observações: ", getOr(c.getNotes(), "—"))
+                criarLabel("Observações: ", getOr(c.getObservations(), "—"))
         );
         col2.setSpacing(6);
 
@@ -100,7 +125,7 @@ public class ClientesController {
         Button excluir = new Button("Excluir");
         excluir.getStyleClass().add("btn-delete");
         excluir.setOnAction(e -> {
-            ClienteDAO.excluirPorId(c.getId());
+            ClientDAO.delete(c.getId());
             listaClientes.getChildren().remove(linha);
         });
 
@@ -126,13 +151,14 @@ public class ClientesController {
 
     // ------------ MODAL EDITAR CLIENTE -----------------
     @FXML
-    private void abrirEditarCliente(Cliente cliente) {
+    private void abrirEditarCliente(Client client) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarCliente.fxml"));
             Parent root = loader.load();
 
             EditarClienteController controller = loader.getController();
-            controller.setCliente(cliente);
+            // TODO: Implementar EditarClienteController.setClient(client);
+            // controller.setClient(client);
 
             Stage stage = new Stage();
             stage.setTitle("Editar Cliente");
@@ -149,6 +175,6 @@ public class ClientesController {
     // ------------ ATUALIZAR LISTA COMPLETA -------------
     private void atualizarLista() {
         listaClientes.getChildren().clear();
-        ClienteDAO.listar().forEach(this::adicionarCliente);
+        ClientDAO.getAllClients().forEach(this::adicionarCliente);
     }
 }
