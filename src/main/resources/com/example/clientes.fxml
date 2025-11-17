@@ -7,7 +7,6 @@
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ClientesController"
-            prefWidth="900" prefHeight="600"
             stylesheets="@css/clientes.css">
 
     <!-- ===================================================== -->
@@ -60,12 +59,6 @@
 
                 <!-- CARD MODELO (remover quando integrar) -->
                 <HBox spacing="20" styleClass="cliente-card">
-
-                    <VBox spacing="4">
-                        <Label text="Arthur Silva" styleClass="cliente-nome"/>
-                        <Label text="Telefone: (31) 99999-9999" styleClass="cliente-info"/>
-                        <Label text="Email: exemplo@email.com" styleClass="cliente-info"/>
-                    </VBox>
 
                     <Pane HBox.hgrow="ALWAYS"/>
 

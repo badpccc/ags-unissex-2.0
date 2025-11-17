@@ -8,8 +8,6 @@
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.example.PrimaryController"
            stylesheets="@css/login.css"
-           prefWidth="900"
-           prefHeight="550"
            alignment="CENTER"
            styleClass="root-pane">
 

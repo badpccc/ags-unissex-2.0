@@ -3,10 +3,13 @@ package com.example.backends.database.connection;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Connect {
+    private static final Logger logger = LoggerFactory.getLogger(Connect.class);
     private static HikariDataSource dataSource;
     private static final Dotenv dotenv = Dotenv.configure()
                                                .filename(".env.development")
@@ -45,16 +48,15 @@ public class Connect {
             
             dataSource = new HikariDataSource(config);
             
-            System.out.println("✅ Pool de conexões HikariCP inicializado com sucesso!");
-            System.out.println("📊 Pool Info:");
-            System.out.println("   - URL: " + dotenv.get("DATABASE_URL_JDBC"));
-            System.out.println("   - Usuário: " + dotenv.get("POSTGRES_USER"));
-            System.out.println("   - Pool máximo: " + config.getMaximumPoolSize());
-            System.out.println("   - Pool mínimo: " + config.getMinimumIdle());
+            logger.info("✅ Pool de conexões HikariCP inicializado com sucesso!");
+            logger.info("📊 Pool Info:");
+            logger.info("   - URL: {}", dotenv.get("DATABASE_URL_JDBC"));
+            logger.info("   - Usuário: {}", dotenv.get("POSTGRES_USER"));
+            logger.info("   - Pool máximo: {}", config.getMaximumPoolSize());
+            logger.info("   - Pool mínimo: {}", config.getMinimumIdle());
             
         } catch (Exception e) {
-            System.err.println("❌ Erro ao inicializar pool de conexões: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("❌ Erro ao inicializar pool de conexões: {}", e.getMessage(), e);
             throw new RuntimeException("Falha na inicialização do pool de conexões", e);
         }
     }
@@ -62,18 +64,18 @@ public class Connect {
     public static Connection getConnection() {
         try {
             if (dataSource == null || dataSource.isClosed()) {
+                logger.warn("⚠️ DataSource é null ou fechado, reinicializando...");
                 initializeConnectionPool();
             }
             
             Connection connection = dataSource.getConnection();
-            System.out.println("🔗 Conexão obtida do pool (Ativas: " + 
-                             dataSource.getHikariPoolMXBean().getActiveConnections() + 
-                             "/" + dataSource.getMaximumPoolSize() + ")");
+            logger.debug("🔗 Conexão obtida do pool (Ativas: {}/{})", 
+                        dataSource.getHikariPoolMXBean().getActiveConnections(),
+                        dataSource.getMaximumPoolSize());
             return connection;
             
         } catch (SQLException e) {
-            System.err.println("❌ Erro ao obter conexão do pool: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("❌ Erro ao obter conexão do pool: {}", e.getMessage(), e);
             return null;
         }
     }
@@ -85,22 +87,22 @@ public class Connect {
 
     public static void closePool() {
         if (dataSource != null && !dataSource.isClosed()) {
-            System.out.println("🔒 Fechando pool de conexões...");
+            logger.info("🔒 Fechando pool de conexões...");
             dataSource.close();
-            System.out.println("✅ Pool de conexões fechado com sucesso!");
+            logger.info("✅ Pool de conexões fechado com sucesso!");
         }
     }
 
     public static void printPoolStatus() {
         if (dataSource != null && !dataSource.isClosed()) {
             var mxBean = dataSource.getHikariPoolMXBean();
-            System.out.println("📊 Status do Pool de Conexões:");
-            System.out.println("   - Conexões ativas: " + mxBean.getActiveConnections());
-            System.out.println("   - Conexões inativas: " + mxBean.getIdleConnections());
-            System.out.println("   - Total de conexões: " + mxBean.getTotalConnections());
-            System.out.println("   - Threads aguardando: " + mxBean.getThreadsAwaitingConnection());
+            logger.info("📊 Status do Pool de Conexões:");
+            logger.info("   - Conexões ativas: {}", mxBean.getActiveConnections());
+            logger.info("   - Conexões inativas: {}", mxBean.getIdleConnections());
+            logger.info("   - Total de conexões: {}", mxBean.getTotalConnections());
+            logger.info("   - Threads aguardando: {}", mxBean.getThreadsAwaitingConnection());
         } else {
-            System.out.println("❌ Pool de conexões não está ativo!");
+            logger.warn("❌ Pool de conexões não está ativo!");
         }
     }
 

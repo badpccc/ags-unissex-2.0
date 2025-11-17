@@ -25,6 +25,9 @@ public class AppointmentDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setLong(1, appointment.getClientId());
             
             if (appointment.getStylistId() != null) {
@@ -48,6 +51,7 @@ public class AppointmentDAO {
             pstmt.setString(6, appointment.getNotes());
             
             int affectedRows = pstmt.executeUpdate();
+            System.out.println("Linhas afetadas na inserção de agendamento: " + affectedRows);
             
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
@@ -55,9 +59,14 @@ public class AppointmentDAO {
                         appointment.setId(generatedKeys.getLong(1));
                     }
                 }
+                
+                conn.commit();
+                System.out.println("Transação commitada! Agendamento inserido com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
             }
-            
-            return affectedRows > 0;
             
         } catch (SQLException e) {
             System.err.println("Erro ao inserir agendamento: " + e.getMessage());
@@ -77,6 +86,9 @@ public class AppointmentDAO {
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // Configura transação manual
+            conn.setAutoCommit(false);
             
             pstmt.setLong(1, appointment.getClientId());
             
@@ -102,7 +114,16 @@ public class AppointmentDAO {
             pstmt.setLong(7, appointment.getId());
             
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na atualização de agendamento: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Agendamento atualizado com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar agendamento: " + e.getMessage());
@@ -118,9 +139,21 @@ public class AppointmentDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setLong(1, appointmentID);
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na remoção de agendamento: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Agendamento removido com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao remover agendamento: " + e.getMessage());
@@ -281,11 +314,23 @@ public class AppointmentDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setString(1, newStatus.name());
             pstmt.setLong(2, appointmentID);
             
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na atualização de status: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Status atualizado com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar status do agendamento: " + e.getMessage());
@@ -304,6 +349,9 @@ public class AppointmentDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             for (int i = 0; i < serviceIDs.size(); i++) {
                 pstmt.setLong(1, appointmentID);
                 pstmt.setLong(2, serviceIDs.get(i));
@@ -312,14 +360,24 @@ public class AppointmentDAO {
             }
             
             int[] results = pstmt.executeBatch();
+            System.out.println("Serviços adicionados ao agendamento: " + results.length);
             
+            boolean allSuccess = true;
             for (int result : results) {
                 if (result <= 0) {
-                    return false;
+                    allSuccess = false;
+                    break;
                 }
             }
             
-            return true;
+            if (allSuccess) {
+                conn.commit();
+                System.out.println("Transação commitada! Serviços adicionados com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao adicionar serviços ao agendamento: " + e.getMessage());
@@ -334,8 +392,15 @@ public class AppointmentDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            pstmt.setLong(1, appointmentID);
-            pstmt.executeUpdate(); // Não precisa verificar affectedRows, pode ser 0
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
+            int affectedRows = pstmt.executeUpdate();
+            System.out.println("Linhas afetadas na remoção de serviços: " + affectedRows);
+            
+            // Commit mesmo se affectedRows for 0 (pode ser normal não haver serviços)
+            conn.commit();
+            System.out.println("Transação commitada! Serviços removidos com sucesso.");
             return true;
             
         } catch (SQLException e) {

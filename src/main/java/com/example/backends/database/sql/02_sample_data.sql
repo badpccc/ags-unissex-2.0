@@ -56,22 +56,22 @@ INSERT INTO employees (name, email, phone_number, cpf, position, experience_leve
 -- DADOS DE EXEMPLO - CLIENTES
 -- =============================================
 
-INSERT INTO clients (name, email, phone_number, address, hair_type, hair_texture, scalp, preferred_stylist, observations) VALUES
-('Julia Rodrigues', 'julia.rodrigues@email.com', '(11) 99111-2222', 'Rua das Flores, 123 - São Paulo/SP', 'cacheado', 'médio', 'oleoso', 'Maria Silva', 'Prefere produtos naturais'),
+INSERT INTO clients (name, email, phone_number, address, hair_type, hair_texture, scalp, observations) VALUES
+('Julia Rodrigues', 'julia.rodrigues@email.com', '(11) 99111-2222', 'Rua das Flores, 123 - São Paulo/SP', 'cacheado', 'médio', 'oleoso', 'Prefere produtos naturais'),
 
-('Carlos Pereira', 'carlos.pereira@email.com', '(11) 99333-4444', 'Av. Paulista, 456 - São Paulo/SP', 'liso', 'grosso', 'seco', 'João Santos', 'Corta sempre muito baixo'),
+('Carlos Pereira', 'carlos.pereira@email.com', '(11) 99333-4444', 'Av. Paulista, 456 - São Paulo/SP', 'liso', 'grosso', 'seco', 'Corta sempre muito baixo'),
 
-('Fernanda Lima', 'fernanda.lima@email.com', '(11) 99555-6666', 'Rua do Comércio, 789 - São Paulo/SP', 'ondulado', 'fino', 'sensível', 'Ana Costa', 'Alérgica a amônia'),
+('Fernanda Lima', 'fernanda.lima@email.com', '(11) 99555-6666', 'Rua do Comércio, 789 - São Paulo/SP', 'ondulado', 'fino', 'sensível', 'Alérgica a amônia'),
 
-('Roberto Silva', 'roberto.silva@email.com', '(11) 99777-8888', 'Rua da Liberdade, 321 - São Paulo/SP', 'liso', 'médio', 'misto', 'Pedro Oliveira', 'Cliente há 5 anos'),
+('Roberto Silva', 'roberto.silva@email.com', '(11) 99777-8888', 'Rua da Liberdade, 321 - São Paulo/SP', 'liso', 'médio', 'misto', 'Cliente há 5 anos'),
 
-('Amanda Santos', 'amanda.santos@email.com', '(11) 99999-0000', 'Av. Brigadeiro, 654 - São Paulo/SP', 'crespo', 'grosso', 'seco', 'Carla Mendes', 'Gosta de penteados elaborados'),
+('Amanda Santos', 'amanda.santos@email.com', '(11) 99999-0000', 'Av. Brigadeiro, 654 - São Paulo/SP', 'crespo', 'grosso', 'seco', 'Gosta de penteados elaborados'),
 
-('Marcos Costa', 'marcos.costa@email.com', '(11) 98888-1111', 'Rua Augusta, 987 - São Paulo/SP', 'liso', 'fino', 'oleoso', 'João Santos', 'Vem sempre nas sextas'),
+('Marcos Costa', 'marcos.costa@email.com', '(11) 98888-1111', 'Rua Augusta, 987 - São Paulo/SP', 'liso', 'fino', 'oleoso', 'Vem sempre nas sextas'),
 
-('Luciana Alves', 'luciana.alves@email.com', '(11) 97777-2222', 'Rua Oscar Freire, 159 - São Paulo/SP', 'ondulado', 'médio', 'seco', 'Maria Silva', 'Executiva, horários flexíveis'),
+('Luciana Alves', 'luciana.alves@email.com', '(11) 97777-2222', 'Rua Oscar Freire, 159 - São Paulo/SP', 'ondulado', 'médio', 'seco', 'Executiva, horários flexíveis'),
 
-('Thiago Ferreira', 'thiago.ferreira@email.com', '(11) 96666-3333', 'Rua Consolação, 753 - São Paulo/SP', 'cacheado', 'grosso', 'misto', 'Pedro Oliveira', 'Cabelo com química anterior');
+('Thiago Ferreira', 'thiago.ferreira@email.com', '(11) 96666-3333', 'Rua Consolação, 753 - São Paulo/SP', 'cacheado', 'grosso', 'misto', 'Cabelo com química anterior');
 
 -- =============================================
 -- DADOS DE EXEMPLO - AGENDAMENTOS

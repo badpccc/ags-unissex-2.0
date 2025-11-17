@@ -23,6 +23,9 @@ public class ServicesDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setString(1, service.getName());
             pstmt.setString(2, service.getDescription());
             pstmt.setBigDecimal(3, service.getPrice());
@@ -36,6 +39,7 @@ public class ServicesDAO {
             pstmt.setString(5, service.getCategory());
             
             int affectedRows = pstmt.executeUpdate();
+            System.out.println("Linhas afetadas na inserção de serviço: " + affectedRows);
             
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
@@ -43,9 +47,14 @@ public class ServicesDAO {
                         service.setId(generatedKeys.getLong(1));
                     }
                 }
+                
+                conn.commit();
+                System.out.println("Transação commitada! Serviço inserido com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
             }
-            
-            return affectedRows > 0;
             
         } catch (SQLException e) {
             System.err.println("Erro ao inserir serviço: " + e.getMessage());
@@ -66,6 +75,9 @@ public class ServicesDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setString(1, service.getName());
             pstmt.setString(2, service.getDescription());
             pstmt.setBigDecimal(3, service.getPrice());
@@ -81,7 +93,16 @@ public class ServicesDAO {
             pstmt.setLong(6, service.getId());
             
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na atualização de serviço: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Serviço atualizado com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar serviço: " + e.getMessage());
@@ -97,9 +118,21 @@ public class ServicesDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setLong(1, serviceID);
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na remoção de serviço: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Serviço removido com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao remover serviço: " + e.getMessage());

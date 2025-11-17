@@ -26,6 +26,9 @@ public class EmployeeDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setString(1, employee.getName());
             pstmt.setString(2, employee.getEmail());
             pstmt.setString(3, employee.getPhoneNumber());
@@ -58,6 +61,7 @@ public class EmployeeDAO {
             pstmt.setString(15, employee.getPreferredClientType());
             
             int affectedRows = pstmt.executeUpdate();
+            System.out.println("Linhas afetadas na inserção de funcionário: " + affectedRows);
             
             // Pega o ID gerado e atualiza o objeto
             if (affectedRows > 0) {
@@ -66,9 +70,14 @@ public class EmployeeDAO {
                         employee.setId(generatedKeys.getLong(1));
                     }
                 }
+                
+                conn.commit();
+                System.out.println("Transação commitada! Funcionário inserido com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
             }
-            
-            return affectedRows > 0;
             
         } catch (SQLException e) {
             System.err.println("Erro ao inserir funcionário: " + e.getMessage());
@@ -91,6 +100,9 @@ public class EmployeeDAO {
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // Configura transação manual
+            conn.setAutoCommit(false);
             
             pstmt.setString(1, employee.getName());
             pstmt.setString(2, employee.getEmail());
@@ -126,7 +138,16 @@ public class EmployeeDAO {
             pstmt.setLong(16, employee.getId());
             
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na atualização de funcionário: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Funcionário atualizado com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar funcionário: " + e.getMessage());
@@ -142,9 +163,21 @@ public class EmployeeDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setLong(1, employeeID);
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na remoção de funcionário: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Funcionário removido com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao remover funcionário: " + e.getMessage());
@@ -275,11 +308,23 @@ public class EmployeeDAO {
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
+            // Configura transação manual
+            conn.setAutoCommit(false);
+            
             pstmt.setTimestamp(1, Timestamp.valueOf(lastTrainingDate));
             pstmt.setLong(2, employeeID);
             
             int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
+            System.out.println("Linhas afetadas na atualização de último treinamento: " + affectedRows);
+            
+            if (affectedRows > 0) {
+                conn.commit();
+                System.out.println("Transação commitada! Último treinamento atualizado com sucesso.");
+                return true;
+            } else {
+                conn.rollback();
+                return false;
+            }
             
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar último treinamento: " + e.getMessage());
