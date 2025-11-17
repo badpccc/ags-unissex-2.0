@@ -16,7 +16,9 @@
       spacing="20"
       alignment="TOP_CENTER"
       stylesheets="@css/modal.css"
-      style="-fx-padding: 25; -fx-background-color: #202020;">
+      style="-fx-padding: 25; -fx-background-color: #202020;"
+      VBox.vgrow="ALWAYS"
+      HBox.hgrow="ALWAYS">
 
     <Label text="Novo Cliente" styleClass="titulo-clientes"/>
 
@@ -99,13 +101,8 @@
                    promptText="Alergias ou sensibilidades"
                    GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-        <Label text="Cabeleireiro preferido:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtPreferredStylist"
-                   promptText="Nome do profissional"
-                   GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-        <Label text="Última Visita:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dpLastVisit" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <Label text="Última Visita:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dpLastVisit" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
     </GridPane>
 
@@ -114,7 +111,8 @@
     <TextArea fx:id="txtObservations"
               promptText="Observações gerais"
               prefRowCount="4"
-              maxWidth="350"/>
+              minHeight="100"
+              VBox.vgrow="SOMETIMES"/>
 
     <!-- BOTÕES -->
     <HBox spacing="10" alignment="CENTER">

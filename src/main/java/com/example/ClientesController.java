@@ -49,10 +49,22 @@ public class ClientesController {
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
             Stage modal = new Stage();
-            Scene scene = new Scene(scrollPane, 600, 500); // Tamanho fixo: 600x500
+            Scene scene = new Scene(scrollPane, 800, 600); // Tamanho inicial maior
             modal.setScene(scene);
             modal.setTitle("Novo Cliente");
             modal.setResizable(true);
+            
+            // Configura tamanhos mínimo e permite maximização
+            modal.setMinWidth(600);
+            modal.setMinHeight(500);
+            
+            // Permite fullscreen com F11 no modal
+            scene.setOnKeyPressed(event -> {
+                if (event.getCode().toString().equals("F11")) {
+                    modal.setFullScreen(!modal.isFullScreen());
+                }
+            });
+            
             modal.initOwner(btnAdicionarCliente.getScene().getWindow());
             modal.initModality(Modality.APPLICATION_MODAL);
 
@@ -75,7 +87,8 @@ public class ClientesController {
                 System.out.println("=== FIM CALLBACK ===");
             });
 
-            modal.showAndWait();
+            modal.show();
+            modal.setMaximized(true);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,8 +138,18 @@ public class ClientesController {
         Button excluir = new Button("Excluir");
         excluir.getStyleClass().add("btn-delete");
         excluir.setOnAction(e -> {
-            ClientDAO.delete(c.getId());
-            listaClientes.getChildren().remove(linha);
+            System.out.println("=== BOTÃO EXCLUIR CLICADO ===");
+            System.out.println("Cliente: " + c.getName() + " (ID: " + c.getId() + ")");
+            
+            boolean sucesso = ClientDAO.delete(c.getId());
+            System.out.println("Resultado da exclusão: " + sucesso);
+            
+            if (sucesso) {
+                listaClientes.getChildren().remove(linha);
+                System.out.println("Cliente removido da interface");
+            } else {
+                System.out.println("ERRO: Não foi possível excluir o cliente!");
+            }
         });
 
         VBox boxAcoes = new VBox(10, editar, excluir);

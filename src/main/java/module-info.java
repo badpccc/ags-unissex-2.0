@@ -10,6 +10,11 @@ module com.example {
     requires org.postgresql.jdbc;
     requires com.zaxxer.hikari;
     requires io.github.cdimascio.dotenv.java;
+    
+    // Dependências para logging
+    requires org.slf4j;
+    requires ch.qos.logback.classic;
+    requires ch.qos.logback.core;
 
     // Exportar todos os pacotes necessários
     exports com.example;

@@ -7,8 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.SecondaryController"
-            stylesheets="@css/dashboard.css"
-            prefHeight="720.0" prefWidth="1280.0">
+            stylesheets="@css/dashboard.css">
 
     <!-- MENU LATERAL NOVO -->
     <left>
