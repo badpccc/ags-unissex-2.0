@@ -18,7 +18,6 @@ public class Client {
     private String hairTexture; // Textura (fino, médio, grosso)
     private String scalp; // Couro cabeludo (oleoso, seco, misto, sensível)
     private String allergies; // Alergias ou sensibilidades
-    private String preferredStylist; // Cabeleireiro preferido
     private LocalDateTime lastVisit; // Última visita
     private String observations; // Observações sobre o cliente
     
@@ -129,14 +128,6 @@ public class Client {
         this.allergies = allergies;
     }
     
-    public String getPreferredStylist() {
-        return preferredStylist;
-    }
-    
-    public void setPreferredStylist(String preferredStylist) {
-        this.preferredStylist = preferredStylist;
-    }
-    
     public LocalDateTime getLastVisit() {
         return lastVisit;
     }
@@ -161,7 +152,6 @@ public class Client {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", isActive=" + isActive +
-                ", preferredStylist='" + preferredStylist + '\'' +
                 ", lastVisit=" + lastVisit +
                 '}';
     }

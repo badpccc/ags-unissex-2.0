@@ -86,7 +86,6 @@ public class ClientesController {
                 criarLabel("Textura: ", c.getHairTexture()),
                 criarLabel("Couro cabeludo: ", c.getScalp()),
                 criarLabel("Alergias: ", getOr(c.getAllergies(), "Nenhuma")),
-                criarLabel("Profissional preferido: ", c.getPreferredStylist()),
                 criarLabel("Última visita: ",
                         c.getLastVisit() != null ? c.getLastVisit().toLocalDate().toString() : "—"),
                 criarLabel("Observações: ", getOr(c.getNotes(), "—"))

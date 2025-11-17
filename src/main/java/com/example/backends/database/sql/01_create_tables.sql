@@ -28,7 +28,6 @@ CREATE TABLE IF NOT EXISTS clients (
     hair_texture VARCHAR(50), -- fino, médio, grosso
     scalp VARCHAR(50), -- oleoso, seco, misto, sensível
     allergies TEXT,
-    preferred_stylist VARCHAR(255),
     last_visit TIMESTAMP,
     observations TEXT,
     

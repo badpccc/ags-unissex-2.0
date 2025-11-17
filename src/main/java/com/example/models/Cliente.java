@@ -19,7 +19,6 @@ public class Cliente {
     private String hairTexture;
     private String scalp;
     private String allergies;
-    private String preferredStylist;
     private LocalDateTime lastVisit;
 
     // ---------------------- CONSTRUTOR VAZIO (OBRIGATÓRIO!) ----------------------
@@ -39,7 +38,6 @@ public class Cliente {
         this.hairTexture = null;
         this.scalp = null;
         this.allergies = null;
-        this.preferredStylist = null;
         this.lastVisit = null;
     }
 
@@ -47,7 +45,7 @@ public class Cliente {
     public Cliente(String nome, String telefone, String email,
                    String address, LocalDate registrationDate, boolean isActive, String notes,
                    String hairType, String hairTexture, String scalp, String allergies,
-                   String preferredStylist, LocalDateTime lastVisit) {
+                   LocalDateTime lastVisit) {
 
         this.nome = nome;
         this.telefone = telefone;
@@ -60,17 +58,16 @@ public class Cliente {
         this.hairTexture = hairTexture;
         this.scalp = scalp;
         this.allergies = allergies;
-        this.preferredStylist = preferredStylist;
         this.lastVisit = lastVisit;
     }
 
     public Cliente(int id, String nome, String telefone, String email,
                    String address, LocalDate registrationDate, boolean isActive, String notes,
                    String hairType, String hairTexture, String scalp, String allergies,
-                   String preferredStylist, LocalDateTime lastVisit) {
+                   LocalDateTime lastVisit) {
 
         this(nome, telefone, email, address, registrationDate, isActive, notes,
-                hairType, hairTexture, scalp, allergies, preferredStylist, lastVisit);
+                hairType, hairTexture, scalp, allergies, lastVisit);
 
         this.id = id;
     }
@@ -113,9 +110,6 @@ public class Cliente {
 
     public String getAllergies() { return allergies; }
     public void setAllergies(String allergies) { this.allergies = allergies; }
-
-    public String getPreferredStylist() { return preferredStylist; }
-    public void setPreferredStylist(String preferredStylist) { this.preferredStylist = preferredStylist; }
 
     public LocalDateTime getLastVisit() { return lastVisit; }
     public void setLastVisit(LocalDateTime lastVisit) { this.lastVisit = lastVisit; }

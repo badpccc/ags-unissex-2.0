@@ -16,8 +16,8 @@ public class ClientDAO {
             INSERT INTO clients (
                 name, email, phone_number, address, notes,
                 hair_type, hair_texture, scalp, allergies,
-                preferred_stylist, observations
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                observations
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
         try (Connection conn = Connect.getConnection();
@@ -33,8 +33,7 @@ public class ClientDAO {
             pstmt.setString(7, client.getHairTexture());
             pstmt.setString(8, client.getScalp());
             pstmt.setString(9, client.getAllergies());
-            pstmt.setString(10, client.getPreferredStylist());
-            pstmt.setString(11, client.getObservations());
+            pstmt.setString(10, client.getObservations());
             
             int affectedRows = pstmt.executeUpdate();
             
@@ -61,7 +60,7 @@ public class ClientDAO {
             UPDATE clients SET 
                 name = ?, email = ?, phone_number = ?, address = ?, notes = ?,
                 hair_type = ?, hair_texture = ?, scalp = ?, allergies = ?,
-                preferred_stylist = ?, observations = ?,
+                observations = ?,
                 updated_at = CURRENT_TIMESTAMP
             WHERE id = ? AND is_active = true
             """;
@@ -79,10 +78,9 @@ public class ClientDAO {
             pstmt.setString(7, client.getHairTexture());
             pstmt.setString(8, client.getScalp());
             pstmt.setString(9, client.getAllergies());
-            pstmt.setString(10, client.getPreferredStylist());
-            pstmt.setString(11, client.getObservations());
+            pstmt.setString(10, client.getObservations());
             
-            pstmt.setLong(12, client.getId());
+            pstmt.setLong(11, client.getId());
             
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
@@ -242,7 +240,6 @@ public class ClientDAO {
         client.setHairTexture(rs.getString("hair_texture"));
         client.setScalp(rs.getString("scalp"));
         client.setAllergies(rs.getString("allergies"));
-        client.setPreferredStylist(rs.getString("preferred_stylist"));
         client.setObservations(rs.getString("observations"));
         
         Timestamp lastVisitTs = rs.getTimestamp("last_visit");

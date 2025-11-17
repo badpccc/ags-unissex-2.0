@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 public class NovoClienteController {
@@ -26,7 +25,6 @@ public class NovoClienteController {
     @FXML private ComboBox<String> cbScalp;
 
     @FXML private TextField txtAllergies;
-    @FXML private TextField txtPreferredStylist;
 
     @FXML private DatePicker dpLastVisit;
 
@@ -129,7 +127,6 @@ public class NovoClienteController {
         cliente.setHairTexture(cbHairTexture.getValue());
         cliente.setScalp(cbScalp.getValue());
         cliente.setAllergies(txtAllergies.getText());
-        cliente.setPreferredStylist(txtPreferredStylist.getText());
         cliente.setLastVisit(
                 dpLastVisit.getValue() != null
                         ? dpLastVisit.getValue().atStartOfDay()
