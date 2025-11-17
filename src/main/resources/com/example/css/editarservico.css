@@ -1,0 +1,120 @@
+/* ----------------------------------------------- */
+/*   ESTILO PREMIUM – MODAL EDITAR SERVIÇO         */
+/* ----------------------------------------------- */
+
+* {
+    -fx-font-family: "Inter";
+    -fx-text-fill: #EDEDED;
+}
+
+.root {
+    -fx-background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* Container principal */
+.editar-container {
+    -fx-background-color: #1b1b1b;
+    -fx-padding: 35;
+    -fx-spacing: 25;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 40, 0, 0, 6);
+
+    -fx-fill-width: true;
+}
+
+/* ----------------------------------------------- */
+/*                    TÍTULO                       */
+/* ----------------------------------------------- */
+
+.editar-title {
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f9d94a;
+    -fx-padding: 0 0 15 0;
+}
+
+/* ----------------------------------------------- */
+/*                 LABELS DO FORM                  */
+/* ----------------------------------------------- */
+
+.editar-label {
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d6d6d6;
+}
+
+/* ----------------------------------------------- */
+/*                 CAMPOS DE TEXTO                 */
+/* ----------------------------------------------- */
+
+.text-field, .text-input {
+    -fx-background-color: #262626;
+    -fx-background-radius: 14;
+    -fx-padding: 12 16;
+    -fx-font-size: 1.2em;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #8b8b8b;
+    -fx-border-color: transparent;
+}
+
+.text-field:focused, .text-input:focused {
+    -fx-background-color: #2f2f2f;
+    -fx-border-color: #f9d94a;
+    -fx-border-width: 2;
+    -fx-border-radius: 14;
+}
+
+/* ----------------------------------------------- */
+/*                      BOTÕES                     */
+/* ----------------------------------------------- */
+
+.btn-salvar {
+    -fx-background-color: #28c76f;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 10 24;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 10, 0, 0, 2);
+}
+
+.btn-salvar:hover {
+    -fx-background-color: #20b863;
+}
+
+.btn-salvar:pressed {
+    -fx-background-color: #1a9d55;
+}
+
+.btn-cancelar {
+    -fx-background-color: #ff4d4d;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-padding: 10 24;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 10, 0, 0, 2);
+}
+
+.btn-cancelar:hover {
+    -fx-background-color: #e64545;
+}
+.editar-container {
+    -fx-alignment: center;
+    -fx-padding: 40;
+}
+
+.btn-cancelar:pressed {
+    -fx-background-color: #cc3d3d;
+}
+
+/* ----------------------------------------------- */
+/*                ORGANIZAÇÃO DO FORM              */
+/* ----------------------------------------------- */
+
+.form-box {
+    -fx-spacing: 16;
+}
+

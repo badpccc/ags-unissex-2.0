@@ -18,8 +18,11 @@
     -fx-spacing: 30;
     -fx-background-radius: 16;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 40, 0, 0, 6);
-    -fx-pref-width: 720;
+
+    /* ESSA LINHA É ESSENCIAL! */
+    -fx-fill-width: true;
 }
+
 
 /* ----------------------------------------------- */
 /*   TÍTULO                                         */

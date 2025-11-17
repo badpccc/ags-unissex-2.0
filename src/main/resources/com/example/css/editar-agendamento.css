@@ -1,0 +1,82 @@
+/* =============================== */
+/*         ESTILO GERAL           */
+/* =============================== */
+
+.root {
+    -fx-background-color: linear-gradient(to bottom, #3b3b3b, #2b2b2b);
+    -fx-padding: 20;
+    -fx-font-family: "Inter";
+}
+
+/* =============================== */
+/*             TÍTULO             */
+/* =============================== */
+
+.titulo {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 0 0 10 0;
+}
+
+/* =============================== */
+/*        LABELS DOS CAMPOS       */
+/* =============================== */
+
+.label {
+    -fx-text-fill: #d1d1d1;
+    -fx-font-size: 14px;
+}
+
+/* =============================== */
+/*            INPUTS              */
+/* =============================== */
+
+.input, .date-picker {
+    -fx-background-color: #1f1f1f;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #888;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #4a4a4a;
+    -fx-border-width: 1;
+    -fx-padding: 10 14;
+    -fx-font-size: 14px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #333;
+    -fx-background-radius: 0 10 10 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #444;
+}
+
+/* =============================== */
+/*          BOTÕES                */
+/* =============================== */
+
+.btn-salvar {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20;
+}
+
+.btn-salvar:hover {
+    -fx-background-color: #45a049;
+}
+
+.btn-cancelar {
+    -fx-background-color: #bb2d3b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20;
+}
+
+.btn-cancelar:hover {
+    -fx-background-color: #a52834;
+}

@@ -27,8 +27,21 @@ public class AgendamentosController {
 
     @FXML
     public void initialize() {
+
+        // Criar agendamento inicial somente uma vez
+        if (agendamentos.isEmpty()) {
+            agendamentos.add(new AgendamentoTemp(
+                    "Arthur",
+                    "Corte Masculino",
+                    LocalDate.now(),
+                    LocalTime.of(15, 30),
+                    25.00
+            ));
+        }
+
         carregarAgendamentos();
     }
+
 
     // 🔹 Abrir modal igual ao UsuariosController
     @FXML
@@ -78,7 +91,6 @@ public class AgendamentosController {
         }
     }
 
-    // 🔹 Card visual
     private HBox criarCardAgendamento(AgendamentoTemp ag) {
         HBox card = new HBox(20);
         card.setStyle("-fx-background-color: #2a2a2a; -fx-padding: 18; -fx-background-radius: 12;");
@@ -101,14 +113,22 @@ public class AgendamentosController {
 
         info.getChildren().addAll(nome, servico, data, preco);
 
-        // Botão excluir
+// 🔵 Botão editar
+        Button editar = new Button("Editar");
+        editar.getStyleClass().add("btn-editar");
+        editar.setOnAction(e -> abrirEdicao(ag));
+
+// 🔴 Botão excluir
         Button excluir = new Button("Excluir");
+        excluir.getStyleClass().add("btn-excluir");
         excluir.setOnAction(e -> {
             agendamentos.remove(ag);
             carregarAgendamentos();
         });
 
-        HBox botoes = new HBox(10, excluir);
+
+        // Caixa de botões (✔ AGORA CORRETO)
+        HBox botoes = new HBox(10, editar, excluir);
 
         Region espaco = new Region();
         HBox.setHgrow(espaco, Priority.ALWAYS);
@@ -117,6 +137,30 @@ public class AgendamentosController {
 
         return card;
     }
+
+    private void abrirEdicao(AgendamentoTemp ag) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/EditarAgendamento.fxml"));
+            Parent root = loader.load();
+
+            EditarAgendamentoController controller = loader.getController();
+
+            controller.carregarAgendamento(ag, atualizado -> {
+                agendamentos.remove(ag);
+                agendamentos.add(atualizado);
+                carregarAgendamentos();
+            });
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Agendamento");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // 🔹 CLASSE INTERNA para salvar temporariamente
     public static class AgendamentoTemp {

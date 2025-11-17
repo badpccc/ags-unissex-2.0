@@ -72,7 +72,8 @@
                     <Label text="R$ 25,00"
                            styleClass="ag-preco"/>
 
-                    <Button text="Editar" styleClass="btn-editar"/>
+                    <Button text="Editar" styleClass="btn-editar" onAction="#editarServico"/>
+
                     <Button text="Excluir" styleClass="btn-excluir"/>
 
                 </HBox>

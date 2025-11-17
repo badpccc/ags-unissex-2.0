@@ -55,28 +55,6 @@
                     <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
 
-                <!-- CARD EXEMPLO (remover ao integrar backend) -->
-                <HBox spacing="20"
-                      styleClass="ag-card">
-
-                    <VBox spacing="4">
-                        <Label text="Arthur – Corte Masculino"
-                               styleClass="ag-nome"/>
-
-                        <Label text="Hoje • 15:30"
-                               styleClass="ag-info"/>
-                    </VBox>
-
-                    <Pane HBox.hgrow="ALWAYS"/>
-
-                    <Label text="R$ 25,00"
-                           styleClass="ag-preco"/>
-
-                    <Button text="Editar" styleClass="btn-editar"/>
-                    <Button text="Cancelar" styleClass="btn-excluir"/>
-
-                </HBox>
-
             </VBox>
         </ScrollPane>
     </center>

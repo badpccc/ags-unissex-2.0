@@ -112,35 +112,92 @@
 /*               BOTÕES                    */
 /* ======================================= */
 
+/* =============================== */
+/*           BOTÕES CRUD           */
+/* =============================== */
+
 .btn-editar {
-    -fx-background-color: #3498db;
+    -fx-background-color: #3b82f6;
     -fx-text-fill: white;
-    -fx-background-radius: 10;
-    -fx-padding: 8 18;
-    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 8;
     -fx-cursor: hand;
 }
 
 .btn-editar:hover {
-    -fx-background-color: #5dade2;
+    -fx-background-color: #2563eb;
 }
 
 .btn-excluir {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: #ef4444;
     -fx-text-fill: white;
-    -fx-background-radius: 10;
-    -fx-padding: 8 18;
-    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 8;
     -fx-cursor: hand;
 }
 
 .btn-excluir:hover {
-    -fx-background-color: #ff6b61;
+    -fx-background-color: #dc2626;
 }
+
 
 /* ======================================= */
 /*            SCROLL INVISÍVEL             */
 /* ======================================= */
+/* ============================= */
+/*        BOTÕES DO MODAL        */
+/* ============================= */
+
+.modal-button {
+    -fx-background-color: #3a3a3a;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 18px;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #ffffff22;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+    -fx-transition: 0.3s;
+}
+
+.modal-button:hover {
+    -fx-background-color: #505050;
+}
+
+.modal-button:pressed {
+    -fx-background-color: #2d2d2d;
+}
+
+/* Botão principal (Salvar) */
+.modal-button-primary {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: #ffffff;
+}
+
+.modal-button-primary:hover {
+    -fx-background-color: #5fcb63;
+}
+
+.modal-button-primary:pressed {
+    -fx-background-color: #3f9c41;
+}
+
+/* Botão de cancelar / fechar */
+.modal-button-danger {
+    -fx-background-color: #d9534f;
+    -fx-text-fill: #ffffff;
+}
+
+.modal-button-danger:hover {
+    -fx-background-color: #e46b67;
+}
+
+.modal-button-danger:pressed {
+    -fx-background-color: #b44440;
+}
 
 .ag-scroll {
     -fx-background: transparent;

@@ -29,6 +29,14 @@ public class ModalNovoAgendamentoController {
         Stage stage = (Stage) txtCliente.getScene().getWindow();
         stage.close();
     }
+    public void preencherCampos(String cliente, String servico, LocalDate data, LocalTime hora, double preco) {
+        txtCliente.setText(cliente);
+        cmbServico.setValue(servico);     // ComboBox recebe o serviço
+        dpData.setValue(data);            // DatePicker recebe a data
+        txtHora.setText(hora.toString()); // TextField recebe a hora
+        txtPreco.setText(String.valueOf(preco));
+    }
+
 
     @FXML
     private void salvarAgendamento() {

@@ -8,6 +8,8 @@ import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException; // <-- IMPORT QUE FALTAVA
+
 public class ServicosController {
 
     @FXML private TableView<?> tabelaServicos;
@@ -23,10 +25,8 @@ public class ServicosController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("modal_novoservico.fxml"));
             Parent root = loader.load();
 
-            // pega controller do modal
             ModalNovoServicoController controller = loader.getController();
 
-            // callback quando salvar
             controller.setCallback(() -> {
                 System.out.println("SERVIÇO SALVO → atualizar tabela");
                 carregarServicos();
@@ -44,8 +44,25 @@ public class ServicosController {
         }
     }
 
+    @FXML
+    public void editarServico() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("editarservico.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Serviço");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.showAndWait();
+
+        } catch (Exception e) {  // <-- trocado para Exception (igual novoServico)
+            e.printStackTrace();
+        }
+    }
+
     private void carregarServicos() {
-        // Aqui você vai buscar no banco
         System.out.println("Carregando serviços...");
     }
 }

@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.SVGPath?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -10,79 +10,109 @@
             stylesheets="@css/dashboard.css"
             prefHeight="720.0" prefWidth="1280.0">
 
-    <!-- MENU LATERAL NOVO -->
+    <!-- MENU LATERAL -->
     <left>
         <VBox fx:id="sidebar" styleClass="sidebar">
 
-            <!-- Header do Menu -->
+            <!-- Header -->
             <HBox styleClass="sidebar-header">
                 <Label fx:id="sidebarTitle" text="💈 AGS" styleClass="sidebar-title"/>
             </HBox>
 
-            <!-- Itens do Menu -->
+            <!-- MENU -->
             <VBox fx:id="menuContainer" spacing="0">
 
+                <!-- DASHBOARD -->
                 <HBox fx:id="menuDashboard" styleClass="menu-item" onMouseClicked="#showDashboard">
-                    <Label fx:id="iconDashboard" text="👥" styleClass="menu-icon"/>
+                    <Label fx:id="iconDashboard" styleClass="menu-icon">
+                        <graphic>
+                            <SVGPath content="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+                        </graphic>
+                    </Label>
                     <Label fx:id="textDashboard" text="Dashboard" styleClass="menu-text"/>
                 </HBox>
 
-                <!-- Clientes -->
+                <!-- CLIENTES -->
                 <HBox fx:id="menuClientes" styleClass="menu-item" onMouseClicked="#showClientes">
-                    <Label fx:id="iconClientes" text="👥" styleClass="menu-icon"/>
+                    <Label styleClass="menu-icon">
+                        <graphic>
+                            <SVGPath content="M16 14s6 0 6 6v2H2v-2c0-6 6-6 6-6m4-8a4 4 0 110 8 4 4 0 010-8z"/>
+                        </graphic>
+                    </Label>
                     <Label fx:id="textClientes" text="Clientes" styleClass="menu-text"/>
                 </HBox>
 
-                <!-- Agendamentos -->
+                <!-- AGENDAMENTOS -->
                 <HBox fx:id="menuAgendamentos" styleClass="menu-item" onMouseClicked="#showAgendamentos">
-                    <Label fx:id="iconAgendamentos" text="📅" styleClass="menu-icon"/>
+                    <Label styleClass="menu-icon">
+                        <graphic>
+                            <SVGPath content="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 00-2 2v14a2 2 0 002 2h14
+                                              a2 2 0 002-2V6a2 2 0 00-2-2zm1 16H4V9h16z"/>
+                        </graphic>
+                    </Label>
                     <Label fx:id="textAgendamentos" text="Agendamentos" styleClass="menu-text"/>
                 </HBox>
 
-                <!-- Serviços -->
+                <!-- SERVIÇOS -->
                 <HBox fx:id="menuServicos" styleClass="menu-item" onMouseClicked="#showServicos">
-                    <Label fx:id="iconServicos" text="✂️" styleClass="menu-icon"/>
+                    <Label styleClass="menu-icon">
+                        <graphic>
+                            <SVGPath content="M7 3a3 3 0 110 6 3 3 0 010-6zm10 0a3 3 0 110 6 3 3 0 010-6z
+                                              M7 9l10 10m0-10L7 19"/>
+                        </graphic>
+                    </Label>
                     <Label fx:id="textServicos" text="Serviços" styleClass="menu-text"/>
                 </HBox>
 
-                <HBox fx:id="menuFinancas"
-                      styleClass="menu-item"
-                      onMouseClicked="#showFinancas">
-                    <Label text="💰" styleClass="menu-icon"/>
+                <!-- FINANÇAS -->
+                <HBox fx:id="menuFinancas" styleClass="menu-item" onMouseClicked="#showFinancas">
+                    <Label styleClass="menu-icon">
+                        <graphic>
+                            <SVGPath content="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/>
+                        </graphic>
+                    </Label>
                     <Label text="Finanças" styleClass="menu-text"/>
                 </HBox>
 
+                <!-- USUÁRIOS -->
                 <HBox fx:id="menuUsuarios" styleClass="menu-item" onMouseClicked="#showUsuarios">
-                    <Label fx:id="iconUsuarios" text="👤" styleClass="menu-icon"/>
+                    <Label styleClass="menu-icon">
+                        <graphic>
+                            <SVGPath content="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4 0-8 2-8 5v3h16v-3c0-3-4-5-8-5z"/>
+                        </graphic>
+                    </Label>
                     <Label fx:id="textUsuarios" text="Usuários" styleClass="menu-text"/>
                 </HBox>
-                <HBox fx:id="menuPaginaNeutra"
-                      styleClass="menu-item"
-                      onMouseClicked="#showPaginaNeutra">
-                    <Label text="🧩" styleClass="menu-icon"/>
+
+                <!-- PAGINA NEUTRA
+                <HBox fx:id="menuPaginaNeutra" styleClass="menu-item" onMouseClicked="#showPaginaNeutra">
+                    <Label styleClass="menu-icon">
+                        <graphic>
+                            <SVGPath content="M19 3h-4a3 3 0 11-6 0H5a2 2 0 00-2 2v4a3 3 0 110 6v4a2 2 0 002 2h4
+                                              a3 3 0 116 0h4a2 2 0 002-2v-4a3 3 0 110-6V5a2 2 0 00-2-2z"/>
+                        </graphic>
+                    </Label>
                     <Label text="Página Neutra" styleClass="menu-text"/>
                 </HBox>
-
-
+ -->
             </VBox>
 
-            <!-- Empurra logout para baixo -->
+            <!-- empurra o logout -->
             <Region VBox.vgrow="ALWAYS"/>
 
-            <!-- Logout -->
+            <!-- LOGOUT -->
             <HBox fx:id="menuLogout" styleClass="logout-item" onMouseClicked="#handleLogout">
-                <Label fx:id="iconLogout" text="🚪" styleClass="logout-icon"/>
-                <Label fx:id="textLogout" text="Sair" styleClass="logout-text"/>
+                <Label text="🚪" styleClass="logout-icon"/>
+                <Label text="Sair" styleClass="logout-text"/>
             </HBox>
 
         </VBox>
     </left>
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- ÁREA PRINCIPAL -->
     <center>
         <StackPane fx:id="conteudoArea" styleClass="content-area">
-            <Label text="Selecione uma opção no menu"
-                   styleClass="placeholder-text"/>
+            <Label text="Selecione uma opção no menu" styleClass="placeholder-text"/>
         </StackPane>
     </center>
 

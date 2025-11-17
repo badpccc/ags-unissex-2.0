@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.EditarAgendamentoController"
+      alignment="TOP_CENTER"
+      spacing="18"
+      stylesheets="@css/editar-agendamento.css">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label text="Editar Agendamento"
+           styleClass="titulo"/>
+
+    <!-- Campo Cliente -->
+    <VBox spacing="6" maxWidth="350">
+        <Label text="Cliente" styleClass="label"/>
+        <TextField fx:id="txtCliente" styleClass="input"/>
+    </VBox>
+
+    <!-- Campo Serviço -->
+    <VBox spacing="6" maxWidth="350">
+        <Label text="Serviço" styleClass="label"/>
+        <TextField fx:id="txtServico" styleClass="input"/>
+    </VBox>
+
+    <!-- Campo Data -->
+    <VBox spacing="6" maxWidth="350">
+        <Label text="Data" styleClass="label"/>
+        <DatePicker fx:id="dpData" styleClass="input"/>
+    </VBox>
+
+    <!-- Campo Hora -->
+    <VBox spacing="6" maxWidth="350">
+        <Label text="Hora" styleClass="label"/>
+        <TextField fx:id="txtHora" styleClass="input"/>
+    </VBox>
+
+    <!-- Campo Preço -->
+    <VBox spacing="6" maxWidth="350">
+        <Label text="Preço" styleClass="label"/>
+        <TextField fx:id="txtPreco" styleClass="input"/>
+    </VBox>
+
+    <!-- Botões -->
+    <HBox spacing="15" alignment="CENTER" maxWidth="350">
+        <Button text="Salvar" fx:id="btnSalvar" onAction="#salvar" styleClass="btn-salvar"/>
+        <Button text="Cancelar" fx:id="btnCancelar" onAction="#cancelar" styleClass="btn-cancelar"/>
+    </HBox>
+
+</VBox>

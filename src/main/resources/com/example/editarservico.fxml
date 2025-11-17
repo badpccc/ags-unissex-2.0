@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefWidth="600" prefHeight="420"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@css/editarservico.css">
+
+    <children>
+        <VBox styleClass="editar-container"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0"
+              AnchorPane.topAnchor="0"
+              AnchorPane.bottomAnchor="0"
+              alignment="CENTER"
+              spacing="20">
+
+            <Label text="Editar Serviço" styleClass="editar-title"/>
+
+            <!-- Nome -->
+            <VBox spacing="8">
+                <Label text="Nome do Serviço" styleClass="editar-label"/>
+                <TextField styleClass="text-field"/>
+            </VBox>
+
+            <!-- Preço -->
+            <VBox spacing="8">
+                <Label text="Preço" styleClass="editar-label"/>
+                <TextField styleClass="text-field"/>
+            </VBox>
+
+            <!-- Duração -->
+            <VBox spacing="8">
+                <Label text="Duração (minutos)" styleClass="editar-label"/>
+                <TextField styleClass="text-field"/>
+            </VBox>
+
+            <!-- Botões -->
+            <HBox spacing="12" alignment="CENTER_RIGHT">
+                <Button text="Cancelar" styleClass="btn-cancelar"/>
+                <Button text="Salvar" styleClass="btn-salvar"/>
+            </HBox>
+
+        </VBox>
+    </children>
+</AnchorPane>

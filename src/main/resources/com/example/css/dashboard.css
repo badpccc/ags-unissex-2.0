@@ -31,6 +31,11 @@
     -fx-padding: 15;
     -fx-pref-height: 70;
 }
+.menu-icon SVGPath {
+    -fx-fill: #ffffff;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
 
 .sidebar-title {
     -fx-text-fill: #1a1a1a;

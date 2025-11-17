@@ -54,20 +54,21 @@
                 <!-- ========================= -->
                 <!--   TABELA DE MOVIMENTOS    -->
                 <!-- ========================= -->
-                <VBox spacing="20" styleClass="bloco-tabela">
+                <!-- ========================= -->
+                <!--   LINHA DO TEMPO          -->
+                <!-- ========================= -->
+                <VBox spacing="20" styleClass="timeline-bloco">
 
                     <Label text="Movimentações Recentes" styleClass="section-title"/>
 
-                    <TableView fx:id="tabelaMovimentacoes" styleClass="tabela-financas" prefHeight="480">
-                        <columns>
-                            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="150"/>
-                            <TableColumn fx:id="colDescricao" text="Descrição" prefWidth="350"/>
-                            <TableColumn fx:id="colValor" text="Valor" prefWidth="150"/>
-                            <TableColumn fx:id="colData" text="Data" prefWidth="180"/>
-                        </columns>
-                    </TableView>
+                    <ScrollPane fitToWidth="true" styleClass="scroll-base">
+                        <VBox fx:id="listaTimeline" spacing="18" styleClass="timeline-container">
+                            <!-- Os cards serão carregados pelo controller -->
+                        </VBox>
+                    </ScrollPane>
 
                 </VBox>
+
 
             </VBox>
         </ScrollPane>
