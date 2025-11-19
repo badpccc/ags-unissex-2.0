@@ -1,0 +1,84 @@
+/* =============================== */
+/* SIDEBAR (MENU LATERAL)          */
+/* =============================== */
+.sidebar {
+    -fx-background-color: #1c1c1c;
+    -fx-border-color: #efbf3a;
+    -fx-border-width: 0 1 0 0;
+    -fx-pref-width: 60;
+    -fx-min-width: 60;
+    -fx-max-width: 250;
+}
+
+.sidebar:hover {
+    -fx-pref-width: 250;
+}
+
+/* =============================== */
+/* HEADER DO SIDEBAR               */
+/* =============================== */
+.sidebar-header {
+    -fx-background-color: #efbf3a;
+    -fx-alignment: center;
+    -fx-padding: 15;
+    -fx-pref-height: 70;
+}
+.menu-icon SVGPath {
+    -fx-fill: #ffffff;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.sidebar-title {
+    -fx-text-fill: #1a1a1a;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* =============================== */
+/* MENU ITEM                       */
+/* =============================== */
+.menu-item {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-alignment: center-left;
+    -fx-pref-height: 50;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-cursor: hand;
+        -fx-spacing: 14; /* Aumenta o espaço entre ícone e texto */
+        -fx-alignment: CENTER_LEFT;
+        -fx-padding: 10 0 10 18;
+    -fx-spacing: 10;
+}
+
+.menu-item:hover {
+    -fx-background-color: rgba(239, 191, 58, 0.12);
+    -fx-border-color: #efbf3a;
+    -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.4), 8, 0.2, 0, 0);
+}
+
+/* ATIVO */
+.menu-item-active {
+    -fx-background-color: rgba(239, 191, 58, 0.2);
+    -fx-border-color: #efbf3a;
+}
+
+/* =============================== */
+/* ÍCONES DO MENU                  */
+/* =============================== */
+.menu-icon {
+    -fx-text-fill: #efbf3a;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 20;
+    -fx-alignment: center;
+}
+
+/* =============================== */
+/* TEXTO DO MENU                   */
+/* =============================== */
+.menu-text {
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 0 10;
+}

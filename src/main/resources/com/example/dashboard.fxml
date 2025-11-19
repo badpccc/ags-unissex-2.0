@@ -1,28 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
+<BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.DashboardController"
             stylesheets="@css/dashboard.css"
-            prefHeight="600.0" prefWidth="900.0">
+            fx:id="rootDashboard"
+            styleClass="dashboard-root">
 
-    <children>
-        <VBox alignment="CENTER" spacing="20"
-              AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-              AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-              styleClass="dashboard-empty">
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="30" styleClass="dashboard-container">
 
-            <Label text="📊 Dashboard - Resumo de Agendamentos"
-                   styleClass="dashboard-title"/>
+            <Label text="📊 Dashboard - Resumo" styleClass="dashboard-title"/>
 
-            <Label text="Nenhum agendamento encontrado no momento."
-                   styleClass="dashboard-empty-text"/>
+            <HBox spacing="40" alignment="CENTER">
+
+                <!-- Card Clientes -->
+                <VBox alignment="CENTER" styleClass="dashboard-card">
+                    <Label text="Clientes cadastrados" styleClass="dash-label"/>
+                    <Label fx:id="lblTotalClientes" text="0" styleClass="dash-number"/>
+                </VBox>
+
+                <!-- Card Agendamentos -->
+                <VBox alignment="CENTER" styleClass="dashboard-card">
+                    <Label text="Agendamentos" styleClass="dash-label"/>
+                    <Label fx:id="lblTotalAgendamentos" text="0" styleClass="dash-number"/>
+                </VBox>
+
+                <!-- Card Serviços -->
+                <VBox alignment="CENTER" styleClass="dashboard-card">
+                    <Label text="Serviços" styleClass="dash-label"/>
+                    <Label fx:id="lblTotalServicos" text="0" styleClass="dash-number"/>
+                </VBox>
+
+            </HBox>
 
         </VBox>
-    </children>
-</AnchorPane>
+    </center>
+
+</BorderPane>

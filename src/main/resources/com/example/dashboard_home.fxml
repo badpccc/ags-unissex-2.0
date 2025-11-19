@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      alignment="CENTER"
+      spacing="20"
+      styleClass="dashboard-empty">
+
+    <Label text="📊 Dashboard - Resumo de Agendamentos"
+           styleClass="dashboard-title"/>
+
+    <Label text="Nenhum agendamento encontrado no momento."
+           styleClass="dashboard-empty-text"/>
+
+</VBox>
