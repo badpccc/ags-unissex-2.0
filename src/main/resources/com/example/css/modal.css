@@ -287,3 +287,94 @@
     -fx-text-fill: #ff5b5b;
     -fx-font-size: 12px;
 }
+/* =============================== */
+/* CAMPO DO DATEPICKER             */
+/* =============================== */
+.date-picker,
+.date-picker .editor,
+.date-picker .text-field {
+    -fx-background-color: #111;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255,255,255,0.4);
+    -fx-background-radius: 6;
+    -fx-border-color: #444;
+    -fx-border-radius: 6;
+}
+
+/* seta */
+.date-picker > .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+/* =============================== */
+/* POPUP DO CALENDÁRIO             */
+/* =============================== */
+.date-picker-popup {
+    -fx-background-color: #000;
+    -fx-border-color: #444;
+}
+
+.date-picker-popup > .calendar-pane {
+    -fx-background-color: #000;
+}
+
+/* cabeçalho (mês/ano + botões) */
+.date-picker-popup .calendar-pane > .top-pane {
+    -fx-background-color: #000;
+    -fx-border-color: #444;
+}
+
+.date-picker-popup .button {
+    -fx-background-color: #000;
+    -fx-text-fill: white;
+    -fx-border-radius: 4;
+}
+.date-picker-popup .button:hover {
+    -fx-background-color: #111;
+}
+
+/* =============================== */
+/* CÉLULAS DE DIA                  */
+/* =============================== */
+.date-picker .day-cell {
+    -fx-background-color: #000;
+    -fx-text-fill: white;
+    -fx-border-color: #222;
+    -fx-border-width: 1;
+}
+
+/* hover */
+.date-picker .day-cell:hover {
+    -fx-background-color: #111;
+}
+
+/* focado */
+.date-picker .day-cell:focused {
+    -fx-background-color: #111;
+}
+
+/* selecionado */
+.date-picker .day-cell:selected {
+    -fx-background-color: #222 !important;
+    -fx-text-fill: white !important;
+    -fx-border-color: #5a9bd6;
+    -fx-border-width: 1.5;
+}
+
+/* hoje */
+.date-picker .day-cell.today {
+    -fx-border-color: #5a9bd6;
+    -fx-border-width: 1.5;
+}
+
+/* desabilitados */
+.date-picker .day-cell:disabled {
+    -fx-background-color: #000;
+    -fx-text-fill: rgba(255,255,255,0.3);
+}
+
+/* dias do outro mês */
+.date-picker .day-cell.other-month {
+    -fx-background-color: #000;
+    -fx-text-fill: rgba(255,255,255,0.25);
+}
