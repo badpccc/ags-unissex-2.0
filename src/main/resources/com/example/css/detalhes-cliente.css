@@ -1,0 +1,92 @@
+/* ============================================= */
+/*               TEMA DARK MODERNO               */
+/* ============================================= */
+
+.root, .vbox {
+    -fx-background-color: #141414;
+    -fx-padding: 25;
+    -fx-spacing: 18;
+}
+
+/* ============================================= */
+/*                TÍTULO CLIENTE                 */
+/* ============================================= */
+
+.detalhes-nome {
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #4fc3f7;
+    -fx-padding: 0 0 10 0;
+}
+
+/* ============================================= */
+/*          CARDS DE INFORMAÇÃO                  */
+/* ============================================= */
+
+.detalhes-item {
+    -fx-font-size: 16px;
+    -fx-text-fill: #f1f1f1;
+
+    /* Card */
+    -fx-background-color: #1f1f1f;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+    /* Borda suave */
+    -fx-border-color: #2e2e2e;
+    -fx-border-width: 1;
+
+    /* espaçamento interno */
+    -fx-padding: 12 16;
+
+    /* sombra premium */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 10, 0.1, 0, 4);
+}
+
+/* Espaçamento maior entre itens */
+.vbox > .detalhes-item {
+    -fx-margin: 8 0;
+}
+
+/* ============================================= */
+/*                RÓTULOS CHAVES                 */
+/* ============================================= */
+/* caso queira adicionar "Telefone:", "Email:" no futuro */
+
+.detalhes-label {
+    -fx-text-fill: #9e9e9e;
+    -fx-font-size: 14px;
+}
+
+/* ============================================= */
+/*                    BOTÃO                      */
+/* ============================================= */
+
+.btn-info {
+    -fx-background-color: linear-gradient(to bottom, #4fc3f7, #0288d1);
+    -fx-text-fill: #000;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+
+    -fx-padding: 10 28;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 8, 0.1, 0, 3);
+}
+
+.btn-info:hover {
+    -fx-background-color: linear-gradient(to bottom, #6dd9ff, #039be5);
+}
+
+.btn-info:pressed {
+    -fx-background-color: linear-gradient(to bottom, #0277bd, #01579b);
+}
+
+/* ============================================= */
+/*             CONTAINER DO RODAPÉ               */
+/* ============================================= */
+
+.hbox {
+    -fx-padding: 20 0 0 0;
+}

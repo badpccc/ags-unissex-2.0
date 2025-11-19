@@ -49,11 +49,13 @@
 .menu-item {
     -fx-background-color: rgba(0, 0, 0, 0.4);
     -fx-alignment: center-left;
-    -fx-padding: 15 5;
     -fx-pref-height: 50;
     -fx-border-color: transparent;
     -fx-border-width: 0 0 1 0;
     -fx-cursor: hand;
+        -fx-spacing: 14; /* Aumenta o espaço entre ícone e texto */
+        -fx-alignment: CENTER_LEFT;
+        -fx-padding: 10 0 10 18;
     -fx-spacing: 10;
 }
 

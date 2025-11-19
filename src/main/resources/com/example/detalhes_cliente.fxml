@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.layout.Priority?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.DetalhesClienteController"
+      spacing="12"
+      prefWidth="500"
+      prefHeight="600"
+      stylesheets="@css/detalhes-cliente.css">
+
+    <Label fx:id="lblNome"
+           styleClass="detalhes-nome" />
+
+    <!-- Informações -->
+    <Label fx:id="lblTelefone" styleClass="detalhes-item"/>
+    <Label fx:id="lblEmail" styleClass="detalhes-item"/>
+    <Label fx:id="lblEndereco" styleClass="detalhes-item"/>
+    <Label fx:id="lblCabelo" styleClass="detalhes-item"/>
+    <Label fx:id="lblTextura" styleClass="detalhes-item"/>
+    <Label fx:id="lblCouro" styleClass="detalhes-item"/>
+    <Label fx:id="lblAlergias" styleClass="detalhes-item"/>
+    <Label fx:id="lblUltimaVisita" styleClass="detalhes-item"/>
+    <Label fx:id="lblObservacoes" styleClass="detalhes-item"/>
+
+    <!-- Rodapé -->
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="Fechar" onAction="#fechar" styleClass="btn-info"/>
+    </HBox>
+
+</VBox>

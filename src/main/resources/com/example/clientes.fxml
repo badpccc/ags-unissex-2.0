@@ -21,18 +21,14 @@
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-            <!-- Título -->
             <Label text="Clientes" styleClass="clientes-title"/>
 
-            <!-- Espaçador -->
             <Pane HBox.hgrow="ALWAYS"/>
 
-            <!-- Campo de busca -->
             <TextField fx:id="txtBuscarCliente"
                        promptText="Pesquisar cliente..."
                        styleClass="clientes-search"/>
 
-            <!-- Botão adicionar -->
             <Button fx:id="btnAdicionarCliente"
                     text="Adicionar Cliente"
                     styleClass="btn-primario"/>
@@ -40,35 +36,25 @@
     </top>
 
     <!-- ===================================================== -->
-    <!--                    ÁREA PRINCIPAL                     -->
+    <!--                   ÁREA PRINCIPAL                      -->
     <!-- ===================================================== -->
     <center>
-        <ScrollPane fitToWidth="true"
-                    pannable="true"
-                    hbarPolicy="NEVER"
-                    vbarPolicy="AS_NEEDED"
-                    styleClass="scroll-clientes">
+        <VBox styleClass="tabela-container">
 
-            <VBox fx:id="listaClientes"
-                  spacing="12"
-                  styleClass="lista-clientes">
 
-                <padding>
-                    <Insets top="20" right="20" bottom="20" left="20"/>
-                </padding>
+            <ScrollPane fitToWidth="true"
+                        pannable="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        styleClass="scroll-clientes">
 
-                <!-- CARD MODELO (remover quando integrar) -->
-                <HBox spacing="20" styleClass="cliente-card">
+                <VBox fx:id="listaClientes"
+                      spacing="8"
+                      styleClass="lista-clientes"/>
 
-                    <Pane HBox.hgrow="ALWAYS"/>
+            </ScrollPane>
 
-                    <Button text="Editar" styleClass="btn-editar"/>
-                    <Button text="Excluir" styleClass="btn-excluir"/>
-
-                </HBox>
-
-            </VBox>
-        </ScrollPane>
+        </VBox>
     </center>
 
 </BorderPane>

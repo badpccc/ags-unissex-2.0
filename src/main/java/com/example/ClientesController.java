@@ -2,6 +2,7 @@ package com.example;
 
 import com.example.backends.classes.Client;
 import com.example.backends.database.data.ClientDAO;
+import com.example.utils.TelegramNotifier;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,14 +26,13 @@ public class ClientesController {
 
     @FXML
     public void initialize() {
-
-        // Carrega todos os clientes do banco
         ClientDAO.getAllClients().forEach(this::adicionarCliente);
-
         btnAdicionarCliente.setOnAction(e -> abrirModalNovoCliente());
     }
 
-    // ------------ MODAL NOVO CLIENTE ----------------
+    // ---------------------------------------------------------------------
+    // ████ MODAL NOVO CLIENTE — COMPLETO, ORGANIZADO, EM TELA CHEIA ████
+    // ---------------------------------------------------------------------
     private void abrirModalNovoCliente() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("novo_cliente.fxml"));
@@ -40,7 +40,7 @@ public class ClientesController {
 
             NovoClienteController controller = loader.getController();
 
-            // Criar ScrollPane para permitir rolagem
+            // Scroll para telas menores
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(root);
             scrollPane.setFitToWidth(true);
@@ -49,130 +49,211 @@ public class ClientesController {
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
             Stage modal = new Stage();
-            Scene scene = new Scene(scrollPane, 800, 600); // Tamanho inicial maior
+            Scene scene = new Scene(scrollPane, 900, 650);
             modal.setScene(scene);
             modal.setTitle("Novo Cliente");
             modal.setResizable(true);
-            
-            // Configura tamanhos mínimo e permite maximização
-            modal.setMinWidth(600);
-            modal.setMinHeight(500);
-            
-            // Permite fullscreen com F11 no modal
+
+            // ------------------------------------------------------------------
+            // 🔵 ABRIR AUTOMATICAMENTE EM TELA CHEIA
+            // ------------------------------------------------------------------
+            modal.setMaximized(true); // ocupa toda a tela
+            modal.setFullScreen(false); // modo tela cheia real
+            modal.setFullScreenExitHint(""); // remove mensagem do JavaFX
+            modal.setFullScreenExitKeyCombination(javafx.scene.input.KeyCombination.NO_MATCH);
+
+            // Atalho opcional F11 para fullscreen
             scene.setOnKeyPressed(event -> {
                 if (event.getCode().toString().equals("F11")) {
                     modal.setFullScreen(!modal.isFullScreen());
                 }
             });
-            
+
             modal.initOwner(btnAdicionarCliente.getScene().getWindow());
             modal.initModality(Modality.APPLICATION_MODAL);
 
+            // ------------------------------------------------------------------
+            // 🔵 CALLBACK ÚNICO E COMPLETO
+            // ------------------------------------------------------------------
             controller.setOnClienteSalvo(cliente -> {
-                System.out.println("=== CALLBACK EXECUTADO ===");
-                System.out.println("Nome: " + cliente.getName());
-                System.out.println("Telefone: " + cliente.getPhoneNumber());
-                System.out.println("Email: " + cliente.getEmail());
-                
-                boolean sucesso = ClientDAO.insert(cliente);
-                System.out.println("Inserção no banco: " + sucesso);
-                System.out.println("ID gerado: " + cliente.getId());
-                
-                if (sucesso) {
+                try {
+
+                    // -------------------- 1. VALIDAÇÃO DE EMAIL --------------------
+                    if (cliente.getEmail() == null || !cliente.getEmail().contains("@")) {
+
+                        TelegramNotifier.sendError(
+                                "Tentativa de cadastro com email inválido:\n" +
+                                        "👤 Nome: " + cliente.getName() + "\n" +
+                                        "📧 Email informado: `" + cliente.getEmail() + "`"
+                        );
+
+                        System.out.println("ERRO: Email inválido");
+                        return; // impede o cadastro
+                    }
+
+                    // -------------------- 2. SALVAR NO BANCO --------------------
+                    boolean sucesso = ClientDAO.insert(cliente);
+
+                    if (!sucesso) {
+                        TelegramNotifier.sendError(
+                                "Falha ao inserir cliente no banco:\n" +
+                                        "👤 Nome: " + cliente.getName() + "\n" +
+                                        "📞 Telefone: " + cliente.getPhoneNumber() + "\n" +
+                                        "📧 Email: " + cliente.getEmail()
+                        );
+                        return;
+                    }
+
+                    // -------------------- 3. ATUALIZAR UI --------------------
                     adicionarCliente(cliente);
-                    System.out.println("Cliente adicionado na interface");
-                } else {
-                    System.out.println("ERRO: Falha ao inserir no banco!");
+
+                    // -------------------- 4. ENVIAR NOTIFICAÇÃO --------------------
+                    TelegramNotifier.send(
+                            "📢 *Novo cliente cadastrado!*\n\n" +
+                                    "👤 Nome: " + cliente.getName() + "\n" +
+                                    "📞 Telefone: " + cliente.getPhoneNumber() + "\n" +
+                                    "📧 Email: " + cliente.getEmail()
+                    );
+
+                    System.out.println("Cliente salvo com sucesso!");
+
+                } catch (Exception ex) {
+
+                    // -------------------- 5. ERRO INESPERADO --------------------
+                    TelegramNotifier.sendError(
+                            "Erro inesperado ao salvar cliente:\n```\n" +
+                                    ex.getMessage() + "\n```"
+                    );
+
+                    ex.printStackTrace();
                 }
-                System.out.println("=== FIM CALLBACK ===");
             });
 
             modal.show();
-            modal.setMaximized(true);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // ------------ ADICIONAR ITEM NA LISTA --------------
+    // ---------------------------------------------------------------------
+    // ████ GERAR ITENS DE LISTA ████
+    // ---------------------------------------------------------------------
     public void adicionarCliente(Client c) {
         listaClientes.getChildren().add(criarItemCliente(c));
     }
 
-    // ------------ CRIA O CARD COMPLETO DO CLIENTE --------
-    public HBox criarItemCliente(Client c) {
+    private HBox criarItemCliente(Client c) {
 
-        HBox linha = new HBox();
-        linha.getStyleClass().add("cliente-card");
-        linha.setSpacing(40);
+        HBox card = new HBox();
+        card.getStyleClass().add("cliente-card");
+        card.setSpacing(25);
 
-        // ----------- COLUNA 1 (DADOS PESSOAIS) -----------------
-        VBox col1 = new VBox(
-                criarLabel("Nome: ", c.getName()),
-                criarLabel("Telefone: ", c.getPhoneNumber()),
-                criarLabel("Email: ", c.getEmail()),
-                criarLabel("Endereço: ", c.getAddress()),
-                criarLabel("Ativo: ", c.isActive() ? "Sim" : "Não"),
-                criarLabel("Cadastro: ", c.getRegistrationDate() != null ? c.getRegistrationDate().toString() : "—")
-        );
-        col1.setSpacing(6);
+        Label lblNome = new Label(c.getName());
+        lblNome.getStyleClass().add("cliente-nome");
 
-        // ----------- COLUNA 2 (DADOS CAPILARES + VISITA) ---------
-        VBox col2 = new VBox(
-                criarLabel("Tipo de cabelo: ", c.getHairType()),
-                criarLabel("Textura: ", c.getHairTexture()),
-                criarLabel("Couro cabeludo: ", c.getScalp()),
-                criarLabel("Alergias: ", getOr(c.getAllergies(), "Nenhuma")),
-                criarLabel("Última visita: ",
-                        c.getLastVisit() != null ? c.getLastVisit().toLocalDate().toString() : "—"),
-                criarLabel("Observações: ", getOr(c.getObservations(), "—"))
-        );
-        col2.setSpacing(6);
+        Label lblTelefone = new Label("Telefone: " + c.getPhoneNumber());
+        lblTelefone.getStyleClass().add("cliente-info");
 
-        // --------------------- BOTÕES ----------------------------
-        Button editar = new Button("Editar");
-        editar.getStyleClass().add("btn-edit");
-        editar.setOnAction(e -> abrirEditarCliente(c));
+        Label lblEmail = new Label("Email: " + c.getEmail());
+        lblEmail.getStyleClass().add("cliente-info");
 
-        Button excluir = new Button("Excluir");
-        excluir.getStyleClass().add("btn-delete");
-        excluir.setOnAction(e -> {
-            System.out.println("=== BOTÃO EXCLUIR CLICADO ===");
-            System.out.println("Cliente: " + c.getName() + " (ID: " + c.getId() + ")");
-            
-            boolean sucesso = ClientDAO.delete(c.getId());
-            System.out.println("Resultado da exclusão: " + sucesso);
-            
-            if (sucesso) {
-                listaClientes.getChildren().remove(linha);
-                System.out.println("Cliente removido da interface");
-            } else {
-                System.out.println("ERRO: Não foi possível excluir o cliente!");
+        VBox colunaInfo = new VBox(lblNome, lblTelefone, lblEmail);
+        colunaInfo.setSpacing(6);
+        HBox.setHgrow(colunaInfo, javafx.scene.layout.Priority.ALWAYS);
+
+        Button btnDetalhes = new Button("Ver detalhes");
+        btnDetalhes.getStyleClass().add("btn-info");
+        btnDetalhes.setOnAction(e -> abrirModalDetalhes(c));
+
+        Button btnEditar = criarBotao("Editar", "btn-edit", e -> abrirEditarCliente(c));
+
+        Button btnExcluir = criarBotao("Excluir", "btn-delete", e -> {
+            try {
+
+                boolean sucesso = ClientDAO.delete(c.getId());
+
+                if (!sucesso) {
+
+                    TelegramNotifier.sendError(
+                            "❌ *Falha ao excluir cliente do banco*\n\n" +
+                                    "👤 Nome: " + c.getName() + "\n" +
+                                    "📞 Telefone: " + c.getPhoneNumber() + "\n" +
+                                    "📧 Email: " + c.getEmail()
+                    );
+
+                    System.out.println("Erro ao excluir cliente.");
+                    return;
+                }
+
+                // REMOVE DA LISTA
+                listaClientes.getChildren().remove(card);
+
+                // NOTIFICAÇÃO DE SUCESSO
+                TelegramNotifier.send(
+                        "🗑️ *Cliente excluído com sucesso!*\n\n" +
+                                "👤 Nome: " + c.getName() + "\n" +
+                                "📞 Telefone: " + c.getPhoneNumber() + "\n" +
+                                "📧 Email: " + c.getEmail()
+                );
+
+                System.out.println("Cliente excluído com sucesso!");
+
+            } catch (Exception ex) {
+
+                // ERRO INESPERADO
+                TelegramNotifier.sendError(
+                        "❗ *Erro inesperado ao excluir cliente:*\n```\n" +
+                                ex.getMessage() + "\n```"
+                );
+
+                ex.printStackTrace();
             }
         });
 
-        VBox boxAcoes = new VBox(10, editar, excluir);
-        boxAcoes.setStyle("-fx-alignment: center-right;");
 
-        // Adiciona tudo ao card
-        linha.getChildren().addAll(col1, col2, boxAcoes);
+        VBox colunaAcoes = new VBox(8, btnDetalhes, btnEditar, btnExcluir);
+        colunaAcoes.setStyle("-fx-alignment: center;");
 
-        return linha;
+        card.getChildren().addAll(colunaInfo, colunaAcoes);
+
+        return card;
     }
 
-    // ------------ CRIA LABEL FORMATADA ---------------
-    private Label criarLabel(String titulo, String conteudo) {
-        Label lbl = new Label(titulo + (conteudo != null ? conteudo : "—"));
-        lbl.getStyleClass().add("cliente-info");
-        return lbl;
+    private Button criarBotao(String texto, String classe, javafx.event.EventHandler<javafx.event.ActionEvent> acao) {
+        Button btn = new Button(texto);
+        btn.getStyleClass().add(classe);
+        btn.setOnAction(acao);
+        btn.setPrefWidth(90);
+        return btn;
     }
 
-    private String getOr(String valor, String padrao) {
-        return (valor != null && !valor.isEmpty()) ? valor : padrao;
+    // ---------------------------------------------------------------------
+    // ████ MODAL DETALHES ████
+    // ---------------------------------------------------------------------
+    private void abrirModalDetalhes(Client c) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("detalhes_cliente.fxml"));
+            Parent root = loader.load();
+
+            DetalhesClienteController controller = loader.getController();
+            controller.setCliente(c);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Detalhes do Cliente");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    // ------------ MODAL EDITAR CLIENTE -----------------
+    // ---------------------------------------------------------------------
+    // ████ EDITAR CLIENTE ████
+    // ---------------------------------------------------------------------
     @FXML
     private void abrirEditarCliente(Client client) {
         try {
@@ -180,22 +261,23 @@ public class ClientesController {
             Parent root = loader.load();
 
             EditarClienteController controller = loader.getController();
-            // TODO: Implementar EditarClienteController.setClient(client);
-            // controller.setClient(client);
+            controller.setCliente(client); // <-- importante
 
             Stage stage = new Stage();
             stage.setTitle("Editar Cliente");
             stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
             stage.showAndWait();
 
-            atualizarLista();
+            atualizarLista(); // recarregar lista após salvar
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // ------------ ATUALIZAR LISTA COMPLETA -------------
+
     private void atualizarLista() {
         listaClientes.getChildren().clear();
         ClientDAO.getAllClients().forEach(this::adicionarCliente);

@@ -277,3 +277,13 @@
     -fx-background-color: #444444;
     -fx-text-fill: #f9d94a; /* destaque */
 }
+.error {
+    -fx-border-color: #ff5b5b;
+    -fx-border-width: 1.2px;
+    -fx-border-radius: 6px;
+}
+
+.error-label {
+    -fx-text-fill: #ff5b5b;
+    -fx-font-size: 12px;
+}

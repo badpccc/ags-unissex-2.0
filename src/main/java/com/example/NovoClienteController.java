@@ -1,11 +1,9 @@
 package com.example;
 
 import com.example.backends.classes.Client;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
@@ -16,19 +14,26 @@ public class NovoClienteController {
     @FXML private TextField txtTelefone;
     @FXML private TextField txtEmail;
     @FXML private TextField txtAddress;
-
     @FXML private CheckBox chkAtivo;
+
+    // --- LABELS DE ERRO ---
+    @FXML private Label lblErroNome;
+    @FXML private Label lblErroTelefone;
+    @FXML private Label lblErroEmail;
+    @FXML private Label lblErroEndereco;
 
     // --- CAMPOS CAPILARES ---
     @FXML private ComboBox<String> cbHairType;
     @FXML private ComboBox<String> cbHairTexture;
     @FXML private ComboBox<String> cbScalp;
 
+    @FXML private Label lblErroHairType;
+    @FXML private Label lblErroHairTexture;
+    @FXML private Label lblErroScalp;
+
+    // --- OUTROS CAMPOS ---
     @FXML private TextField txtAllergies;
-
     @FXML private DatePicker dpLastVisit;
-
-    // --- OBSERVAÇÕES ---
     @FXML private TextArea txtObservations;
 
     // --- BOTÕES ---
@@ -38,15 +43,23 @@ public class NovoClienteController {
     private Consumer<Client> onClienteSalvo;
 
 
-
     // ===============================================================
     // INITIALIZE
     // ===============================================================
     @FXML
     public void initialize() {
 
-
         aplicarMascaraTelefone(txtTelefone);
+
+        // Limpar erro ao digitar
+        adicionarLimpezaDeErro(txtNome, lblErroNome);
+        adicionarLimpezaDeErro(txtTelefone, lblErroTelefone);
+        adicionarLimpezaDeErro(txtEmail, lblErroEmail);
+        adicionarLimpezaDeErro(txtAddress, lblErroEndereco);
+
+        adicionarLimpezaDeErro(cbHairType, lblErroHairType);
+        adicionarLimpezaDeErro(cbHairTexture, lblErroHairTexture);
+        adicionarLimpezaDeErro(cbScalp, lblErroScalp);
 
         // Permitir apenas letras no nome
         txtNome.textProperty().addListener((obs, oldValue, newValue) -> {
@@ -55,11 +68,27 @@ public class NovoClienteController {
             }
         });
 
-        // Botões
         btnSalvar.setOnAction(e -> salvar());
         btnCancelar.setOnAction(e -> fechar());
     }
 
+
+    // ===============================================================
+    // FUNÇÃO PARA LIMPAR ERRO AO DIGITAR / MODIFICAR
+    // ===============================================================
+    private void adicionarLimpezaDeErro(Control campo, Label erroLabel) {
+        if (campo instanceof TextField tf) {
+            tf.textProperty().addListener((obs, oldValue, newValue) -> removerErro(campo, erroLabel));
+        } else if (campo instanceof ComboBox<?> cb) {
+            cb.valueProperty().addListener((obs, oldValue, newValue) -> removerErro(campo, erroLabel));
+        }
+    }
+
+
+    private void removerErro(Control campo, Label erro) {
+        campo.getStyleClass().remove("error");
+        erro.setText("");
+    }
 
 
     // ===============================================================
@@ -91,43 +120,85 @@ public class NovoClienteController {
     }
 
 
+    // ===============================================================
+    // VALIDAR CAMPOS
+    // ===============================================================
+    private boolean validar() {
+        boolean valido = true;
+
+        // Nome
+        if (txtNome.getText().trim().isEmpty()) {
+            mostrarErro(txtNome, lblErroNome, "O nome é obrigatório.");
+            valido = false;
+        }
+
+        // Telefone
+        if (txtTelefone.getText().trim().length() < 14) {
+            mostrarErro(txtTelefone, lblErroTelefone, "Telefone inválido.");
+            valido = false;
+        }
+
+        // Email
+        if (!txtEmail.getText().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            mostrarErro(txtEmail, lblErroEmail, "E-mail inválido.");
+            valido = false;
+        }
+
+        // Endereço
+        if (txtAddress.getText().trim().isEmpty()) {
+            mostrarErro(txtAddress, lblErroEndereco, "O endereço é obrigatório.");
+            valido = false;
+        }
+
+        // Capilares
+        if (cbHairType.getValue() == null) {
+            mostrarErro(cbHairType, lblErroHairType, "Selecione o tipo de cabelo.");
+            valido = false;
+        }
+
+        if (cbHairTexture.getValue() == null) {
+            mostrarErro(cbHairTexture, lblErroHairTexture, "Selecione a textura.");
+            valido = false;
+        }
+
+        if (cbScalp.getValue() == null) {
+            mostrarErro(cbScalp, lblErroScalp, "Selecione o couro cabeludo.");
+            valido = false;
+        }
+
+        return valido;
+    }
+
+
+    private void mostrarErro(Control campo, Label erro, String msg) {
+        if (!campo.getStyleClass().contains("error")) {
+            campo.getStyleClass().add("error");
+        }
+        erro.setText(msg);
+    }
+
 
     // ===============================================================
     // SALVAR CLIENTE
     // ===============================================================
     private void salvar() {
-        System.out.println("=== INICIANDO SALVAMENTO ===");
 
-        String nome = txtNome.getText();
-        String telefone = txtTelefone.getText();
-        String email = txtEmail.getText();
-
-        System.out.println("Dados coletados - Nome: " + nome + ", Telefone: " + telefone + ", Email: " + email);
-
-        // Validação simples
-        if (nome.isEmpty() || telefone.isEmpty()) {
-            System.out.println("ERRO: Nome e telefone são obrigatórios!");
+        if (!validar()) {
+            System.out.println("Erro: falha na validação.");
             return;
         }
-
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            System.out.println("ERRO: Email inválido!");
-            return;
-        }
-
-        System.out.println("Validação passou. Criando objeto Client...");
 
         Client cliente = new Client();
 
         // CAMPOS BÁSICOS
-        cliente.setName(nome);
-        cliente.setPhoneNumber(telefone);
-        cliente.setEmail(email);
+        cliente.setName(txtNome.getText());
+        cliente.setPhoneNumber(txtTelefone.getText());
+        cliente.setEmail(txtEmail.getText());
         cliente.setAddress(txtAddress.getText());
         cliente.setActive(chkAtivo.isSelected());
         cliente.setRegistrationDate(LocalDate.now());
 
-        // CAMPOS CAPILARES
+        // CAPILARES
         cliente.setHairType(cbHairType.getValue());
         cliente.setHairTexture(cbHairTexture.getValue());
         cliente.setScalp(cbScalp.getValue());
@@ -141,14 +212,9 @@ public class NovoClienteController {
         // OBSERVAÇÕES
         cliente.setObservations(txtObservations.getText());
 
-        // RETORNAR O CLIENTE PARA O CONTROLLER PRINCIPAL
-        System.out.println("Cliente criado com sucesso. Executando callback...");
         if (onClienteSalvo != null)
             onClienteSalvo.accept(cliente);
-        else
-            System.out.println("ERRO: Callback não foi definido!");
 
-        System.out.println("Fechando modal...");
         fechar();
     }
 

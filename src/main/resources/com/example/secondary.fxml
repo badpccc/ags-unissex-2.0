@@ -83,7 +83,7 @@
                     <Label fx:id="textUsuarios" text="Usuários" styleClass="menu-text"/>
                 </HBox>
 
-                <!-- PAGINA NEUTRA
+                <!-- PAGINA NEUTRA  -->
                 <HBox fx:id="menuPaginaNeutra" styleClass="menu-item" onMouseClicked="#showPaginaNeutra">
                     <Label styleClass="menu-icon">
                         <graphic>
@@ -93,7 +93,7 @@
                     </Label>
                     <Label text="Página Neutra" styleClass="menu-text"/>
                 </HBox>
- -->
+
             </VBox>
 
             <!-- empurra o logout -->

@@ -8,7 +8,6 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.DatePicker?>
 
-<<<<<<< HEAD
 <VBox
         xmlns="http://javafx.com/javafx/21"
         xmlns:fx="http://javafx.com/fxml/1"
@@ -19,21 +18,7 @@
         maxWidth="Infinity"
         prefWidth="720"
         stylesheets="@css/modal.css">
-=======
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.NovoClienteController"
-      spacing="20"
-      alignment="TOP_CENTER"
-      stylesheets="@css/modal.css"
-      style="-fx-padding: 25; -fx-background-color: #202020;"
-      VBox.vgrow="ALWAYS"
-      HBox.hgrow="ALWAYS">
->>>>>>> 5b1718a45ff2af8d2cf0faf81f7749183811c654
 
-
-
-    <!-- TÍTULO -->
     <Label text="Novo Cliente" styleClass="modal-title"/>
 
     <!-- DADOS BÁSICOS -->
@@ -45,26 +30,38 @@
             <ColumnConstraints hgrow="ALWAYS"/>
         </columnConstraints>
 
+        <!-- Nome -->
         <Label text="Nome:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtNome" promptText="Nome completo"
-                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" spacing="2">
+            <TextField fx:id="txtNome" promptText="Nome completo"/>
+            <Label fx:id="lblErroNome" text="" styleClass="error-label"/>
+        </VBox>
 
+        <!-- Telefone -->
         <Label text="Telefone:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtTelefone" promptText="(00) 00000-0000"
-                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <VBox GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="2">
+            <TextField fx:id="txtTelefone" promptText="(00) 00000-0000"/>
+            <Label fx:id="lblErroTelefone" text="" styleClass="error-label"/>
+        </VBox>
 
+        <!-- Email -->
         <Label text="E-mail:" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtEmail" promptText="email@exemplo.com"
-                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <VBox GridPane.rowIndex="2" GridPane.columnIndex="1" spacing="2">
+            <TextField fx:id="txtEmail" promptText="email@exemplo.com"/>
+            <Label fx:id="lblErroEmail" text="" styleClass="error-label"/>
+        </VBox>
 
+        <!-- Endereço -->
         <Label text="Endereço:" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtAddress" promptText="Rua, Número, Bairro"
-                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <VBox GridPane.rowIndex="3" GridPane.columnIndex="1" spacing="2">
+            <TextField fx:id="txtAddress" promptText="Rua, Número, Bairro"/>
+            <Label fx:id="lblErroEndereco" text="" styleClass="error-label"/>
+        </VBox>
 
+        <!-- Cliente ativo -->
         <Label text="Cliente Ativo:" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
         <CheckBox fx:id="chkAtivo" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
     </GridPane>
-
 
     <!-- DADOS CAPILARES -->
     <Label text="Informações Capilares" styleClass="section-title"/>
@@ -75,74 +72,76 @@
             <ColumnConstraints hgrow="ALWAYS"/>
         </columnConstraints>
 
+        <!-- Tipo de cabelo -->
         <Label text="Tipo de cabelo:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cbHairType" GridPane.rowIndex="0" GridPane.columnIndex="1">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Liso"/>
-                    <String fx:value="Ondulado"/>
-                    <String fx:value="Cacheado"/>
-                    <String fx:value="Crespo"/>
-                </FXCollections>
-            </items>
-        </ComboBox>
+        <VBox GridPane.rowIndex="0" GridPane.columnIndex="1" spacing="2">
+            <ComboBox fx:id="cbHairType">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Liso"/>
+                        <String fx:value="Ondulado"/>
+                        <String fx:value="Cacheado"/>
+                        <String fx:value="Crespo"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Label fx:id="lblErroHairType" text="" styleClass="error-label"/>
+        </VBox>
 
+        <!-- Textura -->
         <Label text="Textura:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cbHairTexture" GridPane.rowIndex="1" GridPane.columnIndex="1">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Fino"/>
-                    <String fx:value="Médio"/>
-                    <String fx:value="Grosso"/>
-                </FXCollections>
-            </items>
-        </ComboBox>
+        <VBox GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="2">
+            <ComboBox fx:id="cbHairTexture">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Fino"/>
+                        <String fx:value="Médio"/>
+                        <String fx:value="Grosso"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Label fx:id="lblErroHairTexture" text="" styleClass="error-label"/>
+        </VBox>
 
+        <!-- Couro cabeludo -->
         <Label text="Couro cabeludo:" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="cbScalp" GridPane.rowIndex="2" GridPane.columnIndex="1">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Oleoso"/>
-                    <String fx:value="Seco"/>
-                    <String fx:value="Misto"/>
-                    <String fx:value="Sensível"/>
-                </FXCollections>
-            </items>
-        </ComboBox>
+        <VBox GridPane.rowIndex="2" GridPane.columnIndex="1" spacing="2">
+            <ComboBox fx:id="cbScalp">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Oleoso"/>
+                        <String fx:value="Seco"/>
+                        <String fx:value="Misto"/>
+                        <String fx:value="Sensível"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Label fx:id="lblErroScalp" text="" styleClass="error-label"/>
+        </VBox>
 
+        <!-- Alergias -->
         <Label text="Alergias:" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <TextField fx:id="txtAllergies" promptText="Alergias ou sensibilidades"
                    GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-<<<<<<< HEAD
+        <!-- Cabeleireiro preferido -->
         <Label text="Cabeleireiro preferido:" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
         <TextField fx:id="txtPreferredStylist" promptText="Nome do profissional"
                    GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
+        <!-- Última visita -->
         <Label text="Última visita:" styleClass="form-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
         <DatePicker fx:id="dpLastVisit" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-=======
-        <Label text="Última Visita:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dpLastVisit" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
->>>>>>> 5b1718a45ff2af8d2cf0faf81f7749183811c654
     </GridPane>
-
 
     <!-- OBSERVAÇÕES -->
     <Label text="Observações" styleClass="section-title"/>
     <TextArea fx:id="txtObservations"
               promptText="Observações gerais"
               prefRowCount="4"
-<<<<<<< HEAD
               maxWidth="450"/>
-=======
-              minHeight="100"
-              VBox.vgrow="SOMETIMES"/>
->>>>>>> 5b1718a45ff2af8d2cf0faf81f7749183811c654
 
-
-    <!-- BOTÕES (VERTICAL) -->
+    <!-- BOTÕES -->
     <VBox spacing="12" alignment="CENTER">
         <Button text="Salvar" fx:id="btnSalvar" styleClass="btn-add"/>
         <Button text="Cancelar" fx:id="btnCancelar" styleClass="btn-delete"/>
