@@ -8,7 +8,7 @@
 }
 
 .root, .border-pane {
-    -fx-background-color: #1f1f1f;
+    -fx-background-color: #1b1b1b;
 }
 
 /* ======================================= */
@@ -16,32 +16,35 @@
 /* ======================================= */
 
 .clientes-header {
-    -fx-background-color: #141414;
-    -fx-padding: 30;
-    -fx-spacing: 30;
+    -fx-background-color: linear-gradient(to bottom, #111, #181818);
+    -fx-padding: 28 40;
+    -fx-spacing: 25;
     -fx-alignment: center-left;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0, 0, 5);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 25, 0.3, 0, 6);
 }
 
 .clientes-title {
-    -fx-font-size: 2.4em;
+    -fx-font-size: 2.6em;
     -fx-font-weight: bold;
-    -fx-text-fill: #4dd2ff; /* azul padrão */
+    -fx-text-fill: #4dd2ff;
 }
 
 /* Campo de busca */
 .clientes-search {
-    -fx-background-color: #222;
+    -fx-background-color: #202020;
     -fx-text-fill: #fff;
     -fx-prompt-text-fill: #777;
-    -fx-background-radius: 8;
-    -fx-padding: 8 14;
+    -fx-background-radius: 10;
+    -fx-padding: 10 16;
     -fx-border-color: #333;
-    -fx-border-radius: 8;
+    -fx-border-radius: 10;
+    -fx-border-width: 1.3;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 1);
 }
 
 .clientes-search:focused {
     -fx-border-color: #4dd2ff;
+    -fx-effect: dropshadow(gaussian, rgba(77,210,255,0.4), 10, 0.5, 0, 0);
 }
 
 /* Botão principal */
@@ -51,8 +54,9 @@
     -fx-font-size: 1.2em;
     -fx-font-weight: bold;
     -fx-padding: 12 26;
-    -fx-background-radius: 10;
+    -fx-background-radius: 12;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 12, 0.25, 0, 3);
 }
 
 .btn-primario:hover {
@@ -63,146 +67,109 @@
 /*               LISTA                     */
 /* ======================================= */
 
-.scroll-clientes {
-    -fx-background: transparent;
-    -fx-background-color: transparent;
-}
-
+.scroll-clientes,
 .scroll-clientes .viewport {
     -fx-background-color: transparent;
 }
 
 .lista-clientes {
-    -fx-padding: 0 20;
+    -fx-padding: 15 0;
+    -fx-alignment: CENTER;
+    -fx-spacing: 18;
 }
 
 /* ======================================= */
-/*           CARD DO CLIENTE               */
+/*               CARD DO CLIENTE           */
 /* ======================================= */
 
 .cliente-card {
-    -fx-background-color: #111;
-    -fx-padding: 20;
+    -fx-background-color: #242424;
     -fx-background-radius: 14;
-    -fx-spacing: 40;
-       -fx-max-width: 700px;
-        -fx-min-width: 700px;
+    -fx-padding: 22 26;
+    -fx-spacing: 30;
+    -fx-max-width: 900px;
+    -fx-min-width: 900px;
     -fx-alignment: center-left;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 18, 0, 0, 6);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 22, 0.2, 0, 8);
+    -fx-border-color: #2e2e2e;
+    -fx-border-radius: 14;
+    -fx-border-width: 1.5;
 }
 
 .cliente-card:hover {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #2c2c2c;
+    -fx-effect: dropshadow(gaussian, rgba(77,210,255,0.25), 20, 0.3, 0, 0);
 }
 
-/* Nome e info */
+/* Nome */
 .cliente-nome {
-    -fx-font-size: 18px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
 }
 
-
-/* Informações alinhadas */
+/* Infos */
 .cliente-info {
     -fx-font-size: 14px;
     -fx-text-fill: #cccccc;
 }
 
-/* Botões editar/excluir */
-.btn-editar {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-background-radius: 10;
-    -fx-padding: 8 18;
-    -fx-font-size: 1.1em;
-    -fx-cursor: hand;
-}
-
-.btn-editar:hover {
-    -fx-background-color: #5dade2;
-}
-
-.btn-excluir {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-    -fx-background-radius: 10;
-    -fx-padding: 8 18;
-    -fx-font-size: 1.1em;
-    -fx-cursor: hand;
-}
-
-.btn-excluir:hover {
-    -fx-background-color: #ff6b61;
-}
-.cliente-card {
-    -fx-background-color: #2d2d2d;
-    -fx-background-radius: 10;
-    -fx-padding: 18 20;
-    -fx-spacing: 20;
-    -fx-max-width: 900px;        /* 🔥 limita a largura máxima do card */
-    -fx-min-width: 900px;        /* 🔥 mantém tamanho consistente */
-    -fx-alignment: CENTER_LEFT;  /* evita esticar demais */
-}
-/* Colunas */
+/* Colunas internas */
 .cliente-coluna {
-    -fx-spacing: 8;
+    -fx-spacing: 10;
 }
 
 /* Títulos */
 .cliente-label-titulo {
-    -fx-text-fill: #bbb;
+    -fx-text-fill: #8b8b8b;
     -fx-font-weight: bold;
 }
 
 /* Valores */
 .cliente-label-valor {
-    -fx-text-fill: #fff;
+    -fx-text-fill: #ffffff;
 }
 
-/* Botões */
+/* ======================================= */
+/*              BOTÕES AÇÃO                */
+/* ======================================= */
+
+.btn-edit, .btn-delete, .btn-info {
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 8 18;
+    -fx-cursor: hand;
+    -fx-font-size: 1em;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10, 0.3, 0, 2);
+}
+
+/* Editar (Azul) */
 .btn-edit {
-    -fx-background-color: #4a90e2;
-    -fx-text-fill: white;
-    -fx-background-radius: 8;
-    -fx-padding: 6 12;
+    -fx-background-color: #3498db;
 }
 .btn-edit:hover {
-    -fx-background-color: #6bb1ff;
+    -fx-background-color: #5dade2;
 }
 
+/* Excluir (Vermelho) */
 .btn-delete {
-    -fx-background-color: #d9534f;
-    -fx-text-fill: white;
-    -fx-background-radius: 8;
-    -fx-padding: 6 12;
+    -fx-background-color: #e74c3c;
 }
 .btn-delete:hover {
-    -fx-background-color: #ff6b69;
+    -fx-background-color: #ff6b61;
 }
-/* Botão azul padrão */
+
+/* Info (Amarelo) */
 .btn-info {
-    -fx-background-color: #FFFF00;
-    -fx-text-fill: black;
-    -fx-background-radius: 8;
-    -fx-padding: 6 12;
+    -fx-background-color: #f1db4b;
+    -fx-text-fill: #111;
 }
-
-/* Hover: tom mais forte */
 .btn-info:hover {
-    -fx-background-color: #FFFF00;
+    -fx-background-color: #ffe95a;
 }
-
-/* Pressionado */
 .btn-info:pressed {
-    -fx-background-color: #FFFF00;
+    -fx-background-color: #e3ca3d;
 }
-.lista-clientes {
-    -fx-alignment: CENTER;       /* Centraliza horizontalmente */
-    -fx-spacing: 12;
-}
-
-/* Focado (opcional, para manter padrão bonito) */
 .btn-info:focused {
-    -fx-effect: dropshadow(gaussian, rgba(13,110,253,0.4), 8, 0.3, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(240,220,80,0.35), 10, 0.3, 0, 0);
 }
