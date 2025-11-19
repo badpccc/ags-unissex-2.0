@@ -82,3 +82,37 @@
     -fx-font-size: 14px;
     -fx-padding: 0 0 0 10;
 }
+/* ======================================= */
+/*                LOGOUT ITEM              */
+/* ======================================= */
+
+.logout-item {
+    -fx-background-color: rgba(231, 76, 60, 0.12); /* Vermelho suave */
+    -fx-padding: 14 20;
+    -fx-alignment: center-left;
+    -fx-spacing: 12;
+    -fx-cursor: hand;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 2);
+}
+
+/* Hover */
+.logout-item:hover {
+    -fx-background-color: rgba(231, 76, 60, 0.22);
+    -fx-effect: dropshadow(gaussian, rgba(231,76,60,0.40), 12, 0, 0, 3);
+}
+
+/* Ícone do logout */
+.logout-icon {
+    -fx-text-fill: #e74c3c; /* Vermelho vibrante */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Texto */
+.logout-text {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
