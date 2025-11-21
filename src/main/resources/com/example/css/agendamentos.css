@@ -142,6 +142,19 @@
     -fx-background-color: #dc2626;
 }
 
+.btn-concluir {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-concluir:hover {
+    -fx-background-color: #059669;
+}
+
 
 /* ======================================= */
 /*            SCROLL INVISÍVEL             */

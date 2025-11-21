@@ -94,13 +94,20 @@ public class Service {
     }
     
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Service service = (Service) obj;
+        return id != null && id.equals(service.id);
+    }
+    
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+    
+    @Override
     public String toString() {
-        return "Service{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", duration=" + getFormattedDuration() +
-                ", category='" + category + '\'' +
-                '}';
+        return name; // Retornar apenas o nome para exibição em ComboBox
     }
 }

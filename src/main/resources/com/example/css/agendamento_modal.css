@@ -8,38 +8,86 @@
 }
 
 .modal-root {
-    -fx-background-color: rgba(0, 0, 0, 0.55);
+    -fx-background-color: #0f0f0f;
+}
+
+/* ----------------------------- */
+/*   SCROLL PANE                 */
+/* ----------------------------- */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #1f1f1f;
+    -fx-background-radius: 8;
+    -fx-pref-width: 12;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: #1f1f1f;
+    -fx-background-radius: 6;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #4ab3f9;
+    -fx-background-radius: 6;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #66c3ff;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #2196f3;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: transparent;
 }
 
 /* Container principal */
 .form-wrapper {
     -fx-background-color: #1b1b1b;
-    -fx-padding: 30;
-    -fx-background-radius: 16;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 40, 0, 0, 6);
+    -fx-padding: 40;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 50, 0, 0, 8);
+    -fx-max-width: 700;
 }
 
 .modal-container {
     -fx-background-color: #1b1b1b;
-    -fx-background-radius: 16;
-    -fx-padding: 40;
-    -fx-spacing: 30;
+    -fx-background-radius: 20;
+    -fx-padding: 50;
+    -fx-spacing: 35;
 }
 
 /* ----------------------------- */
 /*   TÍTULO                      */
 /* ----------------------------- */
 .modal-title {
-    -fx-font-size: 1.9em;
+    -fx-font-size: 2.5em;
     -fx-font-weight: bold;
-    -fx-text-fill: #f9d94a; /* azul premium para diferenciar do modal de usuário */
+    -fx-text-fill: #f9d94a;
+    -fx-effect: dropshadow(gaussian, rgba(249,217,74,0.3), 10, 0, 0, 2);
 }
 
 /* ----------------------------- */
 /*   GRUPOS DE CAMPOS            */
 /* ----------------------------- */
 .field-group {
-    -fx-spacing: 6;
+    -fx-spacing: 8;
+}
+
+.field-label {
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d6d6d6;
 }
 
 .field-label {
@@ -53,18 +101,64 @@
 /* ----------------------------- */
 .input-field, .text-field, .text-input {
     -fx-background-color: #262626;
-    -fx-background-radius: 14;
-    -fx-padding: 12 18;
-    -fx-font-size: 1.15em;
+    -fx-background-radius: 16;
+    -fx-padding: 15 20;
+    -fx-font-size: 1.2em;
     -fx-text-fill: #ffffff;
     -fx-prompt-text-fill: #8b8b8b;
     -fx-border-color: transparent;
+    -fx-border-width: 2;
+    -fx-border-radius: 16;
 }
 
-.input-field:focused {
+.input-field:focused, .text-field:focused, .text-input:focused {
     -fx-background-color: #2f2f2f;
     -fx-border-color: #4ab3f9;
     -fx-border-width: 2;
+}
+
+/* ----------------------------- */
+/*   TEXT AREA                   */
+/* ----------------------------- */
+.input-area, .text-area {
+    -fx-background-color: #262626;
+    -fx-background-radius: 16;
+    -fx-padding: 15 20;
+    -fx-font-size: 1.1em;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #8b8b8b;
+    -fx-border-color: transparent;
+    -fx-border-width: 2;
+    -fx-border-radius: 16;
+}
+
+.input-area:focused, .text-area:focused {
+    -fx-background-color: #2f2f2f;
+    -fx-border-color: #4ab3f9;
+    -fx-border-width: 2;
+}
+
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8;
+}
+
+.text-area .scroll-bar:vertical .track {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 4;
+}
+
+.text-area .scroll-bar:vertical .thumb {
+    -fx-background-color: #4ab3f9;
+    -fx-background-radius: 4;
 }
 
 /* ----------------------------- */
@@ -72,20 +166,28 @@
 /* ----------------------------- */
 .combo-box {
     -fx-background-color: #262626;
-    -fx-background-radius: 14;
-    -fx-font-size: 1.15em;
+    -fx-background-radius: 16;
+    -fx-font-size: 1.2em;
+    -fx-border-color: transparent;
+    -fx-border-width: 2;
+    -fx-border-radius: 16;
+}
+
+.combo-box:focused {
+    -fx-border-color: #4ab3f9;
+    -fx-border-width: 2;
 }
 
 .combo-box .list-cell {
     -fx-background-color: transparent;
     -fx-text-fill: #ffffff;
-    -fx-padding: 10 15;
+    -fx-padding: 12 18;
 }
 
 /* Botão da seta */
 .combo-box .arrow-button {
     -fx-background-color: #3a3a3a;
-    -fx-background-radius: 0 14 14 0;
+    -fx-background-radius: 0 16 16 0;
 }
 
 .combo-box .arrow-button:hover {
@@ -99,14 +201,16 @@
 /* Popup */
 .combo-box-popup .list-view {
     -fx-background-color: #1e1e1e;
-    -fx-background-radius: 14;
+    -fx-background-radius: 16;
     -fx-border-color: #4ab3f9;
-    -fx-border-width: 1.5;
+    -fx-border-width: 2;
+    -fx-max-height: 300;
 }
 
 .combo-box-popup .list-view .list-cell {
     -fx-background-color: #1e1e1e;
     -fx-text-fill: white;
+    -fx-padding: 12 18;
 }
 
 .combo-box-popup .list-view .list-cell:hover {
@@ -119,47 +223,85 @@
 }
 
 /* ----------------------------- */
-/*   BOTÕES                      */
+/*   BOTÕES FULLSCREEN           */
 /* ----------------------------- */
 .btn-salvar {
     -fx-background-color: #4caf50;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 1.2em;
-    -fx-background-radius: 14;
-    -fx-padding: 12 26;
+    -fx-font-size: 1.3em;
+    -fx-background-radius: 16;
+    -fx-padding: 15 30;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.3), 15, 0, 0, 3);
 }
 .btn-salvar:hover {
     -fx-background-color: #43a047;
+    -fx-scale-y: 1.05;
+    -fx-scale-x: 1.05;
 }
 
 .btn-cancelar {
     -fx-background-color: #d32f2f;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 1.2em;
-    -fx-background-radius: 14;
-    -fx-padding: 12 26;
+    -fx-font-size: 1.3em;
+    -fx-background-radius: 16;
+    -fx-padding: 15 30;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(211,47,47,0.3), 15, 0, 0, 3);
 }
 .btn-cancelar:hover {
     -fx-background-color: #b71c1c;
+    -fx-scale-y: 1.05;
+    -fx-scale-x: 1.05;
 }
 
 /* ----------------------------- */
-/*   RESPONSIVIDADE              */
+/*   RESPONSIVIDADE FULLSCREEN   */
 /* ----------------------------- */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900px) {
     .form-wrapper {
-        -fx-padding: 20;
+        -fx-padding: 30;
+        -fx-max-width: 600;
     }
 
     .modal-title {
-        -fx-font-size: 1.6em;
+        -fx-font-size: 2em;
     }
 
-    .input-field {
+    .input-field, .combo-box {
+        -fx-font-size: 1.1em;
+        -fx-pref-width: 400;
+        -fx-max-width: 400;
+    }
+
+    .btn-salvar, .btn-cancelar {
+        -fx-font-size: 1.2em;
+        -fx-pref-width: 130;
+        -fx-pref-height: 40;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .form-wrapper {
+        -fx-padding: 20;
+        -fx-max-width: 500;
+    }
+
+    .modal-title {
+        -fx-font-size: 1.8em;
+    }
+
+    .input-field, .combo-box {
         -fx-font-size: 1em;
+        -fx-pref-width: 300;
+        -fx-max-width: 300;
+    }
+
+    .btn-salvar, .btn-cancelar {
+        -fx-font-size: 1.1em;
+        -fx-pref-width: 120;
+        -fx-pref-height: 38;
     }
 }

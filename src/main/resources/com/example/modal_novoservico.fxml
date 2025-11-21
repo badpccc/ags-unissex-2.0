@@ -48,6 +48,15 @@
                            styleClass="input-field"/>
             </VBox>
 
+            <!-- Categoria -->
+            <VBox spacing="5" styleClass="field-group">
+                <Label text="Categoria" styleClass="field-label"/>
+                <ComboBox fx:id="cbCategoria"
+                          promptText="Selecione a categoria"
+                          styleClass="input-field"
+                          prefWidth="200"/>
+            </VBox>
+
             <!-- Descrição -->
             <VBox spacing="5" styleClass="field-group">
                 <Label text="Descrição" styleClass="field-label"/>

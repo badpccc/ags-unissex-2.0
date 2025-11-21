@@ -145,14 +145,20 @@ public class Client {
     }
     
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Client client = (Client) obj;
+        return id != null && id.equals(client.id);
+    }
+    
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+    
+    @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", isActive=" + isActive +
-                ", lastVisit=" + lastVisit +
-                '}';
+        return name; // Retornar apenas o nome para exibição em ComboBox
     }
 }

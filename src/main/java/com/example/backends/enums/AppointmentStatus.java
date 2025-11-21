@@ -31,6 +31,16 @@ public enum AppointmentStatus {
         return this == CONCLUIDO || this == CANCELADO || this == NAO_COMPARECEU;
     }
     
+    public String getColor() {
+        return switch (this) {
+            case AGENDADO -> "#3b82f6";        // Azul
+            case EM_ANDAMENTO -> "#f59e0b";   // Amarelo
+            case CONCLUIDO -> "#10b981";      // Verde
+            case CANCELADO -> "#ef4444";      // Vermelho
+            case NAO_COMPARECEU -> "#9ca3af"; // Cinza
+        };
+    }
+    
     @Override
     public String toString() {
         return displayName;

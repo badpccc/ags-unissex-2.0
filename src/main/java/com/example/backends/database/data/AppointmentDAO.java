@@ -395,6 +395,9 @@ public class AppointmentDAO {
             // Configura transação manual
             conn.setAutoCommit(false);
             
+            // Definir o parâmetro appointmentID
+            pstmt.setLong(1, appointmentID);
+            
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Linhas afetadas na remoção de serviços: " + affectedRows);
             
