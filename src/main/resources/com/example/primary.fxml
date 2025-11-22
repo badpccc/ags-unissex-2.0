@@ -44,7 +44,6 @@
 
             <HBox spacing="25" alignment="CENTER" styleClass="button-box">
                 <Button text="Entrar" onAction="#switchToSecondary"/>
-                <!-- BOTÕES  <Button text="Registrar" onAction="#handleRegister"/> -->
             </HBox>
 
         </VBox>

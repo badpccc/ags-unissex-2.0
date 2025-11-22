@@ -45,10 +45,4 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
-    // OPCIONAL
-    @FXML
-    private void handleRegister() {
-        System.out.println("Registrar clicado (sem ação)");
-    }
 }

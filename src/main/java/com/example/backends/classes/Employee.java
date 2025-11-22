@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+    // LEMBRAR DE ADICIONAR CADA UM DESSES ATRIBUTOS NA TELA DE REGISTRAR NOVO FUNCIONÁRIO! 
 public class Employee {
     private Long id;
     private String name;

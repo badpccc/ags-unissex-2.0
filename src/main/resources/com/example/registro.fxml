@@ -17,42 +17,64 @@
         <VBox spacing="18" alignment="CENTER" styleClass="login-box">
 
             <!-- Título -->
-            <Label text="Registro" styleClass="title-label"/>
+            <Label text="Registro de Administrador" styleClass="title-label"/>
 
             <!-- Subtítulo -->
             <HBox alignment="CENTER">
-                <Label text="💈AGS-Unissex" styleClass="subtitle-label"/>
+                <Label text="💈 AGS-Unissex" styleClass="subtitle-label"/>
             </HBox>
 
-            <!-- Campo Usuário -->
+            <!-- Nome Completo -->
             <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding>
-                    <Insets top="10" right="20" bottom="10" left="20"/>
-                </padding>
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+                <Label text="Nome Completo" styleClass="field-label"/>
+                <TextField fx:id="txtFullName" promptText="Digite seu nome completo"/>
+            </VBox>
+
+            <!-- Usuário -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
                 <Label text="Usuário" styleClass="field-label"/>
-                <TextField fx:id="txtUser" promptText="Digite seu usuário" />
+                <TextField fx:id="txtUser" promptText="Digite seu usuário"/>
+            </VBox>
+
+            <!-- Email -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+                <Label text="Email" styleClass="field-label"/>
+                <TextField fx:id="txtEmail" promptText="Digite seu email"/>
+            </VBox>
+
+            <!-- Telefone -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+                <Label text="Telefone" styleClass="field-label"/>
+                <TextField fx:id="txtPhone" promptText="Digite seu telefone"/>
             </VBox>
 
             <!-- Senha -->
             <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding>
-                    <Insets top="10" right="20" bottom="10" left="20"/>
-                </padding>
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
                 <Label text="Senha" styleClass="field-label"/>
-                <PasswordField fx:id="txtPass" promptText="Digite sua senha" />
+                <PasswordField fx:id="txtPass" promptText="Digite sua senha"/>
             </VBox>
 
             <!-- Confirmar Senha -->
             <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding>
-                    <Insets top="10" right="20" bottom="10" left="20"/>
-                </padding>
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
                 <Label text="Confirmar Senha" styleClass="field-label"/>
-                <PasswordField fx:id="txtPass2" promptText="Confirme sua senha" />
+                <PasswordField fx:id="txtPass2" promptText="Confirme sua senha"/>
+            </VBox>
+
+            <!-- Notas -->
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
+                <Label text="Notas (opcional)" styleClass="field-label"/>
+                <TextArea fx:id="txtNotes" promptText="Alguma observação?" prefRowCount="2"/>
             </VBox>
 
             <!-- Mensagem de erro -->
-            <Label fx:id="lblMessage" styleClass="error-label" text="" />
+            <Label fx:id="lblMessage" styleClass="error-label" text=""/>
 
             <!-- Botões -->
             <HBox spacing="25" alignment="CENTER" styleClass="button-box">

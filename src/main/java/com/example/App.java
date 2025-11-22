@@ -10,13 +10,15 @@ import com.example.backends.database.connection.Connect;
 import java.sql.Connection;
 import java.io.IOException;
 
+import com.example.backends.database.data.AdmDAO;;;
+
 public class App extends Application {
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 800, 600);
+        scene = new Scene(loadFXML(getFirstPanel()), 800, 600);
         stage.setScene(scene);
         stage.setTitle("AGS-Unissex");
         
@@ -48,6 +50,13 @@ public class App extends Application {
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    private static String getFirstPanel() {
+        if (AdmDAO.hasAdmin()) {
+            return "primary";
+        }
+        return "registro"; 
     }
 
     public static void main(String[] args) {
