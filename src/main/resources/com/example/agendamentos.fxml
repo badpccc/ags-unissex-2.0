@@ -8,53 +8,35 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.AgendamentosController"
             prefWidth="900" prefHeight="600"
-            stylesheets="@css/agendamentos.css">
+            stylesheets="@css/agendamentos.css"
+            styleClass="root">
 
-    <!-- ===================================================== -->
-    <!--                     CABEÇALHO                         -->
-    <!-- ===================================================== -->
+    <!-- CABEÇALHO -->
     <top>
-        <HBox spacing="20"
-              alignment="CENTER_LEFT"
-              styleClass="ag-header">
-
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="ag-header">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-            <Label text="Agendamentos"
-                   styleClass="ag-title"/>
-
+            <Label text="Agendamentos" styleClass="ag-title"/>
             <Pane HBox.hgrow="ALWAYS"/>
-
-            <!-- Campo de busca -->
             <TextField fx:id="txtBuscar"
                        promptText="Buscar cliente ou serviço..."
                        styleClass="ag-search"/>
-
             <Button fx:id="btnNovoAgendamento"
                     text="Novo Agendamento"
                     styleClass="btn-primario"
                     onAction="#novoAgendamento"/>
-
         </HBox>
     </top>
 
-    <!-- ===================================================== -->
-    <!--                    ÁREA PRINCIPAL                     -->
-    <!-- ===================================================== -->
+    <!-- LISTA DE AGENDAMENTOS -->
     <center>
-        <ScrollPane fitToWidth="true"
-                    styleClass="ag-scroll">
-
-            <VBox fx:id="listaAgendamentos"
-                  spacing="12"
-                  styleClass="ag-lista">
-
+        <ScrollPane fitToWidth="true" styleClass="ag-scroll">
+            <VBox fx:id="listaAgendamentos" spacing="12" styleClass="ag-lista">
                 <padding>
                     <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
-
             </VBox>
         </ScrollPane>
     </center>

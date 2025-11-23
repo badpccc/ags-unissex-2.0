@@ -9,7 +9,7 @@ import com.example.backends.classes.Client;
 import com.example.backends.database.connection.Connect;
 
 public class ClientDAO {
-    
+
 
     public static boolean insert(Client client) {
         String sql = """
@@ -23,9 +23,9 @@ public class ClientDAO {
         try (Connection conn = Connect.getConnection()) {
             // Forçar transação manual
             conn.setAutoCommit(false);
-            
+
             try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            
+
                 System.out.println("=== DADOS SENDO INSERIDOS ===");
                 System.out.println("1. Nome: '" + client.getName() + "'");
                 System.out.println("2. Email: '" + client.getEmail() + "'");
@@ -38,27 +38,27 @@ public class ClientDAO {
                 System.out.println("9. Alergias: '" + client.getAllergies() + "'");
                 System.out.println("10. Observações: '" + client.getObservations() + "'");
                 System.out.println("===============================");
-                
+
                 pstmt.setString(1, client.getName());
                 pstmt.setString(2, client.getEmail());
                 pstmt.setString(3, client.getPhoneNumber());
                 pstmt.setString(4, client.getAddress());
                 pstmt.setString(5, client.getNotes());
-                
+
                 pstmt.setString(6, client.getHairType());
                 pstmt.setString(7, client.getHairTexture());
                 pstmt.setString(8, client.getScalp());
                 pstmt.setString(9, client.getAllergies());
                 pstmt.setString(10, client.getObservations());
-                
+
                 System.out.println("Executando INSERT...");
                 int affectedRows = pstmt.executeUpdate();
                 System.out.println("Linhas afetadas: " + affectedRows);
-                
+
                 // Confirmar a transação
                 conn.commit();
                 System.out.println("Transação de inserção commitada!");
-                
+
                 if (affectedRows > 0) {
                     try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                         if (generatedKeys.next()) {
@@ -66,14 +66,14 @@ public class ClientDAO {
                         }
                     }
                 }
-                
+
                 return affectedRows > 0;
-                
+
             } catch (SQLException e) {
                 conn.rollback();
                 throw e;
             }
-            
+
         } catch (SQLException e) {
             System.err.println("=== ERRO DETALHADO NA INSERÇÃO ===");
             System.err.println("Erro SQL: " + e.getMessage());
@@ -99,35 +99,35 @@ public class ClientDAO {
         try (Connection conn = Connect.getConnection()) {
             // Forçar transação manual
             conn.setAutoCommit(false);
-            
+
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
                 pstmt.setString(1, client.getName());
                 pstmt.setString(2, client.getEmail());
                 pstmt.setString(3, client.getPhoneNumber());
                 pstmt.setString(4, client.getAddress());
                 pstmt.setString(5, client.getNotes());
-                
+
                 pstmt.setString(6, client.getHairType());
                 pstmt.setString(7, client.getHairTexture());
                 pstmt.setString(8, client.getScalp());
                 pstmt.setString(9, client.getAllergies());
                 pstmt.setString(10, client.getObservations());
-                
+
                 pstmt.setLong(11, client.getId());
-                
+
                 int affectedRows = pstmt.executeUpdate();
-                
+
                 // Confirmar a transação
                 conn.commit();
-                
+
                 return affectedRows > 0;
-                
+
             } catch (SQLException e) {
                 conn.rollback();
                 throw e;
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar cliente: " + e.getMessage());
             e.printStackTrace();
@@ -145,25 +145,25 @@ public class ClientDAO {
         try (Connection conn = Connect.getConnection()) {
             // Forçar transação manual
             conn.setAutoCommit(false);
-            
+
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setLong(1, clientID);
                 int affectedRows = pstmt.executeUpdate();
-                
+
                 // Confirmar a transação
                 conn.commit();
-                
+
                 System.out.println("Linhas afetadas: " + affectedRows);
                 System.out.println("Exclusão " + (affectedRows > 0 ? "SUCESSO" : "FALHOU"));
                 System.out.println("Transação commitada!");
-                
+
                 return affectedRows > 0;
-                
+
             } catch (SQLException e) {
                 conn.rollback();
                 throw e;
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao remover cliente: " + e.getMessage());
             e.printStackTrace();
@@ -173,23 +173,23 @@ public class ClientDAO {
 
     public static Client getClientByID(Long clientID) {
         String sql = "SELECT * FROM clients WHERE id = ? AND is_active = true";
-        
+
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
             pstmt.setLong(1, clientID);
-            
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return mapResultSetToClient(rs);
                 }
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao buscar cliente por ID: " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         return null;
     }
 
@@ -205,15 +205,15 @@ public class ClientDAO {
             while (rs.next()) {
                 clients.add(mapResultSetToClient(rs));
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao listar clientes: " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         return clients;
     }
-    
+
 
     public static List<Client> getActiveClients() {
         List<Client> clients = new ArrayList<>();
@@ -226,15 +226,15 @@ public class ClientDAO {
             while (rs.next()) {
                 clients.add(mapResultSetToClient(rs));
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao listar clientes ativos: " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         return clients;
     }
-    
+
 
     public static List<Client> getClientsByName(String name) {
         List<Client> clients = new ArrayList<>();
@@ -242,105 +242,105 @@ public class ClientDAO {
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
             pstmt.setString(1, "%" + name + "%");
-            
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     clients.add(mapResultSetToClient(rs));
                 }
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao buscar clientes por nome: " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         return clients;
     }
-    
+
 
     public static Client getClientByPhone(String phoneNumber) {
         String sql = "SELECT * FROM clients WHERE phone_number = ? AND is_active = true";
-        
+
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
             pstmt.setString(1, phoneNumber);
-            
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return mapResultSetToClient(rs);
                 }
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao buscar cliente por telefone: " + e.getMessage());
             e.printStackTrace();
         }
-        
+
         return null;
     }
 
     public static boolean updateLastVisit(Long clientID, LocalDateTime lastVisit) {
         String sql = "UPDATE clients SET last_visit = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
-        
+
         try (Connection conn = Connect.getConnection()) {
             // Forçar transação manual
             conn.setAutoCommit(false);
-            
+
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
                 pstmt.setTimestamp(1, Timestamp.valueOf(lastVisit));
                 pstmt.setLong(2, clientID);
-                
+
                 int affectedRows = pstmt.executeUpdate();
-                
+
                 // Confirmar a transação
                 conn.commit();
-                
+
                 return affectedRows > 0;
-                
+
             } catch (SQLException e) {
                 conn.rollback();
                 throw e;
             }
-            
+
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar última visita: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
-    
+
     private static Client mapResultSetToClient(ResultSet rs) throws SQLException {
         Client client = new Client();
-        
+
         client.setId(rs.getLong("id"));
         client.setName(rs.getString("name"));
         client.setEmail(rs.getString("email"));
         client.setPhoneNumber(rs.getString("phone_number"));
         client.setAddress(rs.getString("address"));
-        
+
         Date regDate = rs.getDate("registration_date");
         if (regDate != null) {
             client.setRegistrationDate(regDate.toLocalDate());
         }
-        
+
         client.setActive(rs.getBoolean("is_active"));
         client.setNotes(rs.getString("notes"));
-        
+
         client.setHairType(rs.getString("hair_type"));
         client.setHairTexture(rs.getString("hair_texture"));
         client.setScalp(rs.getString("scalp"));
         client.setAllergies(rs.getString("allergies"));
         client.setObservations(rs.getString("observations"));
-        
+
         Timestamp lastVisitTs = rs.getTimestamp("last_visit");
         if (lastVisitTs != null) {
             client.setLastVisit(lastVisitTs.toLocalDateTime());
         }
-        
+
         return client;
     }
 

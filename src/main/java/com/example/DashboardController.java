@@ -13,18 +13,10 @@ import java.sql.SQLException;
 
 public class DashboardController {
 
-    @FXML
-    private VBox homeContent;
-
-    @FXML
-    private Label lblTotalClientes;
-
-    @FXML
-    private Label lblTotalAgendamentos;
-
-    @FXML
-    private Label lblTotalServicos;
-
+    @FXML private VBox homeContent;
+    @FXML private Label lblTotalClientes;
+    @FXML private Label lblTotalAgendamentos;
+    @FXML private Label lblTotalServicos;
 
     @FXML
     public void initialize() {
@@ -38,7 +30,7 @@ public class DashboardController {
     }
 
     private int getTotalClientes() {
-        String sql = "SELECT COUNT(*) FROM clients WHERE is_active = true";
+        String sql = "SELECT COUNT(*) FROM public.clientes WHERE is_active = true"; // tabela correta
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -48,12 +40,13 @@ public class DashboardController {
 
         } catch (SQLException e) {
             System.err.println("Erro ao contar clientes: " + e.getMessage());
+            System.err.println("Verifique se o usuário do banco tem permissão de SELECT nesta tabela.");
             return 0;
         }
     }
 
     private int getTotalAgendamentos() {
-        String sql = "SELECT COUNT(*) FROM appointments"; // Ajuste se o nome da tabela for diferente
+        String sql = "SELECT COUNT(*) FROM public.appointments"; // tabela correta
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -63,12 +56,13 @@ public class DashboardController {
 
         } catch (SQLException e) {
             System.err.println("Erro ao contar agendamentos: " + e.getMessage());
+            System.err.println("Verifique se o usuário do banco tem permissão de SELECT nesta tabela.");
             return 0;
         }
     }
 
     private int getTotalServicos() {
-        String sql = "SELECT COUNT(*) FROM services"; // Ajuste se sua tabela tiver outro nome
+        String sql = "SELECT COUNT(*) FROM public.services"; // tabela correta
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -78,6 +72,7 @@ public class DashboardController {
 
         } catch (SQLException e) {
             System.err.println("Erro ao contar serviços: " + e.getMessage());
+            System.err.println("Verifique se o usuário do banco tem permissão de SELECT nesta tabela.");
             return 0;
         }
     }

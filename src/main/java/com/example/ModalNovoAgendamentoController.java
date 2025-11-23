@@ -16,31 +16,31 @@ public class ModalNovoAgendamentoController {
     @FXML private TextField txtHora;
     @FXML private TextField txtPreco;
 
-    // 🔹 Callback para enviar dados ao AgendamentosController
-    private Consumer<AgendamentosController.AgendamentoTemp> callback;
+    // Callback temporário para retornar dados ao controller principal
+    private Consumer<AgendamentosController> callback;
 
-    // 🔹 Permitir o AgendamentosController registrar a callback
-    public void setCallback(Consumer<AgendamentosController.AgendamentoTemp> callback) {
+    /**
+     * Define o callback que será chamado quando salvar
+     */
+    public void setCallback(Consumer<AgendamentosController> callback) {
         this.callback = callback;
     }
 
+    /**
+     * Fecha o modal
+     */
     @FXML
     private void fecharModal() {
         Stage stage = (Stage) txtCliente.getScene().getWindow();
         stage.close();
     }
-    public void preencherCampos(String cliente, String servico, LocalDate data, LocalTime hora, double preco) {
-        txtCliente.setText(cliente);
-        cmbServico.setValue(servico);     // ComboBox recebe o serviço
-        dpData.setValue(data);            // DatePicker recebe a data
-        txtHora.setText(hora.toString()); // TextField recebe a hora
-        txtPreco.setText(String.valueOf(preco));
-    }
 
-
+    /**
+     * Método de placeholder para salvar agendamento
+     */
     @FXML
     private void salvarAgendamento() {
-
+        // Aqui você pode pegar os dados dos campos
         String cliente = txtCliente.getText();
         String servico = cmbServico.getValue();
         LocalDate data = dpData.getValue();
@@ -48,24 +48,41 @@ public class ModalNovoAgendamentoController {
         String precoStr = txtPreco.getText();
 
         if (cliente.isEmpty() || servico == null || data == null || horaStr.isEmpty() || precoStr.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Preencha todos os campos!", ButtonType.OK);
-            alert.show();
+            Alert a = new Alert(Alert.AlertType.WARNING, "Preencha todos os campos!", ButtonType.OK);
+            a.show();
             return;
         }
 
         LocalTime hora = LocalTime.parse(horaStr);
-        double preco = Double.parseDouble(precoStr);
+        String preco = precoStr;
 
-        // 🔹 Criar o agendamento temporário
-        AgendamentosController.AgendamentoTemp novo = new AgendamentosController.AgendamentoTemp(
-                cliente, servico, data, hora, preco
-        );
+        System.out.println("Agendamento salvo (temporário):");
+        System.out.println("Cliente: " + cliente);
+        System.out.println("Serviço: " + servico);
+        System.out.println("Data: " + data);
+        System.out.println("Hora: " + hora);
+        System.out.println("Preço: " + preco);
 
-        // 🔹 Enviar para o controller principal
-        if (callback != null) {
-            callback.accept(novo);
-        }
-
+        // Apenas fecha o modal por enquanto
         fecharModal();
+    }
+
+    /**
+     * Preenche os campos do modal (opcional)
+     */
+    public void preencherCampos(String cliente, String servico, LocalDate data, LocalTime hora, String preco) {
+        txtCliente.setText(cliente);
+        cmbServico.setValue(servico);
+        dpData.setValue(data);
+        txtHora.setText(hora != null ? hora.toString() : "");
+        txtPreco.setText(preco);
+    }
+
+    /**
+     * Configurar para edição (placeholder)
+     */
+    public void configurarParaEdicao(Object appointment) {
+        // Aqui você pode carregar dados no modal se quiser
+        System.out.println("Editar agendamento (temporário)");
     }
 }

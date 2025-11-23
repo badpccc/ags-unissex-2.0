@@ -4,9 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.function.Consumer;
+
+import com.example.backends.classes.Appointment;
+import com.example.backends.database.data.ClientDAO;
+import com.example.backends.database.data.ServicesDAO;
 
 public class EditarAgendamentoController {
 
@@ -16,39 +21,62 @@ public class EditarAgendamentoController {
     @FXML private TextField txtHora;
     @FXML private TextField txtPreco;
 
-    private AgendamentosController.AgendamentoTemp agendamentoOriginal;
-    private Consumer<AgendamentosController.AgendamentoTemp> callback;
+    private Appointment agendamentoOriginal;
+    private Consumer<Appointment> callback;
 
-    // Carregar os dados do agendamento no formulário
-    public void carregarAgendamento(
-            AgendamentosController.AgendamentoTemp ag,
-            Consumer<AgendamentosController.AgendamentoTemp> callback
-    ) {
+    /**
+     * Carrega o agendamento no formulário para edição
+     */
+    public void carregarAgendamento(Appointment ag, Consumer<Appointment> callback) {
         this.agendamentoOriginal = ag;
         this.callback = callback;
 
-        txtCliente.setText(ag.cliente);
-        txtServico.setText(ag.servico);
-        dpData.setValue(ag.data);
-        txtHora.setText(ag.hora.toString());
-        txtPreco.setText(String.valueOf(ag.preco));
+        try {
+            // Buscar dados reais pelo ID
+            var client = ClientDAO.getClientByID(ag.getClientId());
+            txtCliente.setText(client != null ? client.getName() : "");
+
+            List<Long> serviceIds = ag.getServiceIds();
+            if (!serviceIds.isEmpty()) {
+                var service = ServicesDAO.getServiceByID(serviceIds.get(0));
+                txtServico.setText(service != null ? service.getName() : "");
+            }
+
+            dpData.setValue(ag.getAppointmentDateTime().toLocalDate());
+            txtHora.setText(ag.getAppointmentDateTime().toLocalTime().toString());
+            txtPreco.setText(String.valueOf(ag.getTotalPrice() != null ? ag.getTotalPrice() : 0));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Salva as alterações no agendamento
+     */
     @FXML
     private void salvar() {
         try {
-            AgendamentosController.AgendamentoTemp atualizado =
-                    new AgendamentosController.AgendamentoTemp(
-                            txtCliente.getText(),
-                            txtServico.getText(),
-                            dpData.getValue(),
-                            LocalTime.parse(txtHora.getText()),
-                            Double.parseDouble(txtPreco.getText())
-                    );
+            if (dpData.getValue() == null || txtHora.getText().isEmpty() || txtPreco.getText().isEmpty()) {
+                mostrarErro("Erro", "Preencha todos os campos obrigatórios!");
+                return;
+            }
 
-            // Retorna o novo agendamento para o controller principal
+            // Atualizar data/hora
+            agendamentoOriginal.setAppointmentDateTime(
+                    dpData.getValue().atTime(LocalTime.parse(txtHora.getText()))
+            );
+
+            // Atualizar preço como BigDecimal
+            agendamentoOriginal.setTotalPrice(
+                    BigDecimal.valueOf(Double.parseDouble(txtPreco.getText()))
+            );
+
+            // Para o cliente e serviço, você poderia atualizar os IDs se necessário
+            // Exemplo: buscar cliente/serviço pelo nome novamente
+
             if (callback != null) {
-                callback.accept(atualizado);
+                callback.accept(agendamentoOriginal);
             }
 
             fechar();
@@ -64,11 +92,17 @@ public class EditarAgendamentoController {
         fechar();
     }
 
+    /**
+     * Fecha o modal
+     */
     private void fechar() {
         Stage stage = (Stage) txtCliente.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Mostra mensagem de erro
+     */
     private void mostrarErro(String titulo, String msg) {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setTitle(titulo);

@@ -8,7 +8,8 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.FinancasController"
             stylesheets="@css/financas.css"
-            prefWidth="1200" prefHeight="750">
+            prefWidth="1200" prefHeight="750"
+            styleClass="root">
 
     <!-- ========================= -->
     <!--   TOPO / CABEÇALHO        -->

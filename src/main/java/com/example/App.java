@@ -30,6 +30,7 @@ public class App extends Application {
         // Permite fullscreen com F11
         scene.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("F11")) {
+
                 stage.setFullScreen(!stage.isFullScreen());
             }
         });
