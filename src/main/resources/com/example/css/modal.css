@@ -8,7 +8,7 @@
 }
 
 .root {
-    -fx-background-color: rgba(0, 0, 0, 0.55); /* fundo escurecido */
+    -fx-background-color: rgba(0, 0, 0, 0.55);
 }
 
 /* Container principal do modal */
@@ -18,16 +18,10 @@
     -fx-spacing: 30;
     -fx-background-radius: 16;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 40, 0, 0, 6);
-
-    /* ESSA LINHA É ESSENCIAL! */
     -fx-fill-width: true;
 }
 
-
-/* ----------------------------------------------- */
-/*   TÍTULO                                         */
-/* ----------------------------------------------- */
-
+/* TÍTULO */
 .modal-title {
     -fx-font-size: 2.1em;
     -fx-font-weight: bold;
@@ -35,20 +29,14 @@
     -fx-padding: 0 0 20 0;
 }
 
-/* ----------------------------------------------- */
-/*   LABELS DO FORMULÁRIO                           */
-/* ----------------------------------------------- */
-
+/* LABELS DO FORMULÁRIO */
 .form-label {
     -fx-font-size: 1.1em;
     -fx-font-weight: bold;
     -fx-text-fill: #d6d6d6;
 }
 
-/* ----------------------------------------------- */
-/*   CAMPOS DE TEXTO                                */
-/* ----------------------------------------------- */
-
+/* CAMPOS DE TEXTO */
 .text-field, .text-input {
     -fx-background-color: #262626;
     -fx-background-radius: 14;
@@ -58,7 +46,6 @@
     -fx-prompt-text-fill: #8b8b8b;
     -fx-border-color: transparent;
 }
-
 .text-field:focused, .text-input:focused {
     -fx-background-color: #2f2f2f;
     -fx-border-color: #f9d94a;
@@ -66,42 +53,22 @@
     -fx-border-radius: 14;
 }
 
-/* ----------------------------------------------- */
-/*   DATEPICKER                                     */
-/* ----------------------------------------------- */
-
-.date-picker {
-    -fx-background-color: #262626;
-    -fx-background-radius: 14;
-}
-
+/* DATEPICKER */
+.date-picker,
+.date-picker .editor,
 .date-picker .text-field {
-    -fx-background-color: transparent;
-    -fx-padding: 14 18;
+    -fx-background-color: #111;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255,255,255,0.4);
+    -fx-background-radius: 6;
+    -fx-border-color: #444;
+    -fx-border-radius: 6;
+}
+.date-picker > .arrow-button .arrow {
+    -fx-background-color: white;
 }
 
-.date-picker:focused .text-field {
-    -fx-background-color: #2f2f2f;
-}
-
-.date-picker .arrow-button {
-    -fx-background-color: #3a3a3a;
-    -fx-background-radius: 0 14 14 0;
-    -fx-cursor: hand;
-}
-
-.date-picker .arrow-button:hover {
-    -fx-background-color: #4a4a4a;
-}
-
-.date-picker .arrow {
-    -fx-background-color: #f9d94a;
-}
-
-/* ----------------------------------------------- */
-/*   TEXTAREA                                       */
-/* ----------------------------------------------- */
-
+/* TEXTAREA */
 .text-area {
     -fx-background-color: #262626;
     -fx-control-inner-background: #262626;
@@ -110,7 +77,6 @@
     -fx-padding: 14;
     -fx-background-radius: 14;
 }
-
 .text-area:focused {
     -fx-control-inner-background: #2f2f2f;
     -fx-border-color: #f9d94a;
@@ -118,68 +84,30 @@
     -fx-border-radius: 14;
 }
 
-/* Scrollbar do textarea */
-.text-area .scroll-bar {
-    -fx-background-color: transparent;
-}
-
-/* ----------------------------------------------- */
-/*   BOTÕES SALVAR / CANCELAR                       */
-/* ----------------------------------------------- */
-
-/* ========================================== */
-/*        BOTÕES DO MODAL (Salvar/Cancelar)   */
-/* ========================================== */
-
+/* BOTÕES */
 .btn-add {
     -fx-background-color: #28c76f;
     -fx-text-fill: white;
-    -fx-font-size: 15px;
-    -fx-padding: 10 22;
-    -fx-background-radius: 8;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);
-    -fx-font-weight: bold;
-
-    /* Suavização ao alterar estados */
-    -fx-transition: 0.2s;
 }
-
 .btn-add:hover {
     -fx-background-color: #20b863;
 }
-
 .btn-add:pressed {
     -fx-background-color: #1a9d55;
 }
 
-
-/* CANCELAR */
 .btn-delete {
     -fx-background-color: #ff4d4d;
     -fx-text-fill: white;
-    -fx-font-size: 15px;
-    -fx-padding: 10 22;
-    -fx-background-radius: 8;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 0, 2);
-    -fx-font-weight: bold;
 }
-
 .btn-delete:hover {
     -fx-background-color: #e64545;
 }
-
 .btn-delete:pressed {
     -fx-background-color: #cc3d3d;
 }
 
-
-
-/* ----------------------------------------------- */
-/*   GRID E ORGANIZAÇÃO DO FORMULÁRIO               */
-/* ----------------------------------------------- */
-
+/* GRID E ORGANIZAÇÃO DO FORMULÁRIO */
 .form-grid {
     -fx-hgap: 25;
     -fx-vgap: 18;
@@ -192,189 +120,171 @@
     -fx-padding: 20 0 10 0;
 }
 
-/* ----------------------------------------------- */
-/*   RESPONSIVO                                      */
-/* ----------------------------------------------- */
+/* COMBOBOX */
+.combo-box {
+    -fx-background-color: #262626;
+    -fx-background-radius: 14;
+    -fx-font-size: 1.2em;
+}
+.combo-box .arrow-button {
+    -fx-background-color: #3a3a3a;
+}
+.combo-box .arrow-button:hover {
+    -fx-background-color: #4a4a4a;
+}
+.combo-box .arrow {
+    -fx-background-color: #f9d94a;
+}
+.combo-box .text-field,
+.combo-box .label {
+    -fx-text-fill: #ffffff;
+}
+.combo-box-popup .list-view {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #f9d94a;
+}
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: white;
+}
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #333333;
+}
+.combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: #444444;
+    -fx-text-fill: #f9d94a;
+}
 
+/* ERROS */
+.error {
+    -fx-border-color: #ff5b5b;
+}
+.error-label {
+    -fx-text-fill: #ff5b5b;
+}
+
+/* RESPONSIVO */
 @media screen and (max-width: 780px) {
     .modal-container {
         -fx-pref-width: 95%;
         -fx-padding: 30;
     }
-
     .modal-title {
         -fx-font-size: 1.8em;
     }
-
     .form-grid {
         -fx-hgap: 15;
         -fx-vgap: 14;
     }
 }
-/* ----------------------------------------------- */
-/*   COMBOBOX – ESTILO PREMIUM DARK                */
-/* ----------------------------------------------- */
 
-.combo-box {
-    -fx-background-color: #262626;
-    -fx-background-radius: 14;
-    -fx-padding: 0;
-    -fx-font-size: 1.2em;
-}
-
-.combo-box .list-cell {
-    -fx-background-color: transparent;
-    -fx-text-fill: #ffffff;
-    -fx-padding: 10 15;
-}
-
-/* Caixa fechada */
-.combo-box .arrow-button {
-    -fx-background-color: #3a3a3a;
-    -fx-background-radius: 0 14 14 0;
-    -fx-padding: 0 10;
-}
-
-.combo-box .arrow-button:hover {
-    -fx-background-color: #4a4a4a;
-}
-
-.combo-box .arrow {
-    -fx-background-color: #f9d94a; /* seta dourada */
-}
-
-/* Texto dentro da caixa */
-.combo-box .text-field,
-.combo-box .label {
-    -fx-text-fill: #ffffff;
-    -fx-padding: 12 18;
-}
-
-/* Lista suspensa (popup) */
-.combo-box-popup .list-view {
-    -fx-background-color: #1e1e1e;
-    -fx-background-radius: 14;
-    -fx-control-inner-background: #1e1e1e;
-    -fx-border-color: #f9d94a;
-    -fx-border-width: 1.5;
-    -fx-border-radius: 14;
-}
-
-/* Itens da lista */
-.combo-box-popup .list-view .list-cell {
-    -fx-background-color: #1e1e1e;
-    -fx-text-fill: white;
-    -fx-padding: 10 15;
-}
-
-/* Hover nos itens */
-.combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: #333333;
-}
-
-/* Item selecionado */
-.combo-box-popup .list-view .list-cell:selected {
-    -fx-background-color: #444444;
-    -fx-text-fill: #f9d94a; /* destaque */
-}
-.error {
-    -fx-border-color: #ff5b5b;
-    -fx-border-width: 1.2px;
-    -fx-border-radius: 6px;
-}
-
-.error-label {
-    -fx-text-fill: #ff5b5b;
-    -fx-font-size: 12px;
-}
 /* =============================== */
-/* CAMPO DO DATEPICKER             */
+/* DATEPICKER – ESTILO PREMIUM DARK */
 /* =============================== */
 .date-picker,
 .date-picker .editor,
 .date-picker .text-field {
-    -fx-background-color: #111;
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: rgba(255,255,255,0.4);
-    -fx-background-radius: 6;
-    -fx-border-color: #444;
-    -fx-border-radius: 6;
+    -fx-background-color: #262626;   /* fundo escuro do campo */
+    -fx-text-fill: white;            /* texto digitado */
+    -fx-prompt-text-fill: rgba(255,255,255,0.4); /* hint */
+    -fx-background-radius: 14;
+    -fx-border-color: transparent;
 }
 
-/* seta */
-.date-picker > .arrow-button .arrow {
-    -fx-background-color: white;
+.date-picker:focused .text-field {
+    -fx-background-color: #2f2f2f;
+    -fx-border-color: #f9d94a;       /* dourado */
+    -fx-border-width: 2;
+    -fx-border-radius: 14;
 }
 
-/* =============================== */
-/* POPUP DO CALENDÁRIO             */
-/* =============================== */
+/* Botão de seta */
+.date-picker .arrow-button {
+    -fx-background-color: #3a3a3a;
+    -fx-background-radius: 0 14 14 0;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #4a4a4a;
+}
+
+.date-picker .arrow {
+    -fx-background-color: #f9d94a;   /* seta dourada */
+}
+
+/* Popup do calendário */
 .date-picker-popup {
-    -fx-background-color: #000;
-    -fx-border-color: #444;
+    -fx-background-color: #1b1b1b;
+    -fx-border-color: #f9d94a;
+    -fx-border-width: 1.5;
+    -fx-background-radius: 14;
 }
 
-.date-picker-popup > .calendar-pane {
-    -fx-background-color: #000;
+/* Cabeçalho do calendário (mês/ano + botões) */
+.date-picker-popup .calendar-pane > .top-pane,
+.date-picker-popup .calendar-pane .header-label,
+.date-picker-popup .calendar-pane > .top-pane .label {
+    -fx-text-fill: #f9d94a;          /* meses e ano dourado */
+    -fx-font-weight: bold;
+    -fx-font-size: 1.1em;
 }
 
-/* cabeçalho (mês/ano + botões) */
-.date-picker-popup .calendar-pane > .top-pane {
-    -fx-background-color: #000;
-    -fx-border-color: #444;
+/* Dias */
+.date-picker .day-cell {
+    -fx-background-color: #262626;
+    -fx-text-fill: white;
+    -fx-border-color: #333;
+}
+
+.date-picker .day-cell:hover {
+    -fx-background-color: #333;
+}
+
+.date-picker .day-cell:selected {
+    -fx-background-color: #f9d94a;
+    -fx-text-fill: #1b1b1b;
+    -fx-border-color: #f9d94a;
+}
+
+.date-picker .day-cell.today {
+    -fx-border-color: #f9d94a;
+}
+
+/* Dias desabilitados */
+.date-picker .day-cell:disabled {
+    -fx-background-color: #262626;
+    -fx-text-fill: rgba(255,255,255,0.3);
+}
+.date-picker .spinner {
+    -fx-background-color: #262626;
+    -fx-text-fill: #ffffff;
+}
+
+.date-picker .text-field {
+    -fx-background-color: #262626;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: rgba(255,255,255,0.4);
+}
+
+.date-picker-popup {
+    -fx-background-color: #1b1b1b;
+    -fx-border-color: #f9d94a;
+}
+
+.date-picker-popup .calendar-pane {
+    -fx-background-color: #1b1b1b;
 }
 
 .date-picker-popup .button {
-    -fx-background-color: #000;
+    -fx-background-color: #262626;
     -fx-text-fill: white;
-    -fx-border-radius: 4;
 }
+
 .date-picker-popup .button:hover {
-    -fx-background-color: #111;
+    -fx-background-color: #333333;
 }
 
-/* =============================== */
-/* CÉLULAS DE DIA                  */
-/* =============================== */
-.date-picker .day-cell {
-    -fx-background-color: #000;
+.date-picker-popup .day-cell {
+    -fx-background-color: #262626;
     -fx-text-fill: white;
-    -fx-border-color: #222;
-    -fx-border-width: 1;
-}
-
-/* hover */
-.date-picker .day-cell:hover {
-    -fx-background-color: #111;
-}
-
-/* focado */
-.date-picker .day-cell:focused {
-    -fx-background-color: #111;
-}
-
-/* selecionado */
-.date-picker .day-cell:selected {
-    -fx-background-color: #222 !important;
-    -fx-text-fill: white !important;
-    -fx-border-color: #5a9bd6;
-    -fx-border-width: 1.5;
-}
-
-/* hoje */
-.date-picker .day-cell.today {
-    -fx-border-color: #5a9bd6;
-    -fx-border-width: 1.5;
-}
-
-/* desabilitados */
-.date-picker .day-cell:disabled {
-    -fx-background-color: #000;
-    -fx-text-fill: rgba(255,255,255,0.3);
-}
-
-/* dias do outro mês */
-.date-picker .day-cell.other-month {
-    -fx-background-color: #000;
-    -fx-text-fill: rgba(255,255,255,0.25);
 }

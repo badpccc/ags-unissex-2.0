@@ -48,7 +48,6 @@ public class NovoClienteController {
     // ===============================================================
     @FXML
     public void initialize() {
-
         aplicarMascaraTelefone(txtTelefone);
 
         // Limpar erro ao digitar
@@ -56,7 +55,6 @@ public class NovoClienteController {
         adicionarLimpezaDeErro(txtTelefone, lblErroTelefone);
         adicionarLimpezaDeErro(txtEmail, lblErroEmail);
         adicionarLimpezaDeErro(txtAddress, lblErroEndereco);
-
         adicionarLimpezaDeErro(cbHairType, lblErroHairType);
         adicionarLimpezaDeErro(cbHairTexture, lblErroHairTexture);
         adicionarLimpezaDeErro(cbScalp, lblErroScalp);
@@ -68,9 +66,21 @@ public class NovoClienteController {
             }
         });
 
+        // Populando ComboBoxes
+        cbHairType.setItems(javafx.collections.FXCollections.observableArrayList(
+                "Liso", "Ondulado", "Cacheado", "Crespo"
+        ));
+        cbHairTexture.setItems(javafx.collections.FXCollections.observableArrayList(
+                "Fino", "Médio", "Grosso"
+        ));
+        cbScalp.setItems(javafx.collections.FXCollections.observableArrayList(
+                "Oleoso", "Seco", "Misto", "Sensível"
+        ));
+
         btnSalvar.setOnAction(e -> salvar());
         btnCancelar.setOnAction(e -> fechar());
     }
+
 
 
     // ===============================================================

@@ -8,7 +8,8 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ServicosController"
             prefWidth="900" prefHeight="600"
-            stylesheets="@css/servicos.css">
+            stylesheets="@css/servicos.css"
+            styleClass="root">
 
     <!-- ===================================================== -->
     <!--                     CABEÇALHO                         -->
