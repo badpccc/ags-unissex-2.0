@@ -91,9 +91,9 @@ public class ClientDAO {
             UPDATE clients SET 
                 name = ?, email = ?, phone_number = ?, address = ?, notes = ?,
                 hair_type = ?, hair_texture = ?, scalp = ?, allergies = ?,
-                observations = ?,
+                observations = ?, is_active = ?,
                 updated_at = CURRENT_TIMESTAMP
-            WHERE id = ? AND is_active = true
+            WHERE id = ?
             """;
 
         try (Connection conn = Connect.getConnection()) {
@@ -113,8 +113,9 @@ public class ClientDAO {
                 pstmt.setString(8, client.getScalp());
                 pstmt.setString(9, client.getAllergies());
                 pstmt.setString(10, client.getObservations());
+                pstmt.setBoolean(11, client.isActive());
 
-                pstmt.setLong(11, client.getId());
+                pstmt.setLong(12, client.getId());
 
                 int affectedRows = pstmt.executeUpdate();
 

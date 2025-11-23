@@ -5,26 +5,23 @@ import com.example.backends.database.data.ClientDAO;
 import com.example.utils.TelegramNotifier;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class EditarClienteController {
 
-    @FXML
-    private TextField txtNome;
-
-    @FXML
-    private TextField txtTelefone;
-
-    @FXML
-    private TextField txtEmail;
-
-    @FXML
-    private Button btnSalvar;
-
-    @FXML
-    private Button btnCancelar;
+    @FXML private TextField txtNome;
+    @FXML private TextField txtTelefone;
+    @FXML private TextField txtEmail;
+    @FXML private TextField txtAddress;
+    @FXML private ComboBox<String> cbHairType;
+    @FXML private ComboBox<String> cbHairTexture;
+    @FXML private ComboBox<String> cbScalp;
+    @FXML private TextField txtAllergies;
+    @FXML private CheckBox chkAtivo;
+    @FXML private TextArea txtObservations;
+    @FXML private Button btnSalvar;
+    @FXML private Button btnCancelar;
 
     private Client cliente; // cliente atual sendo editado
 
@@ -34,14 +31,44 @@ public class EditarClienteController {
     public void setCliente(Client cliente) {
         this.cliente = cliente;
 
-        // Preencher os campos
-        txtNome.setText(cliente.getName());
-        txtTelefone.setText(cliente.getPhoneNumber());
-        txtEmail.setText(cliente.getEmail());
+        // Preencher todos os campos com os dados do cliente
+        txtNome.setText(cliente.getName() != null ? cliente.getName() : "");
+        txtTelefone.setText(cliente.getPhoneNumber() != null ? cliente.getPhoneNumber() : "");
+        txtEmail.setText(cliente.getEmail() != null ? cliente.getEmail() : "");
+        txtAddress.setText(cliente.getAddress() != null ? cliente.getAddress() : "");
+        txtAllergies.setText(cliente.getAllergies() != null ? cliente.getAllergies() : "");
+        txtObservations.setText(cliente.getObservations() != null ? cliente.getObservations() : "");
+        chkAtivo.setSelected(cliente.isActive());
+        
+        // Selecionar valores nos ComboBox
+        if (cliente.getHairType() != null) {
+            cbHairType.setValue(cliente.getHairType());
+        }
+        if (cliente.getHairTexture() != null) {
+            cbHairTexture.setValue(cliente.getHairTexture());
+        }
+        if (cliente.getScalp() != null) {
+            cbScalp.setValue(cliente.getScalp());
+        }
     }
 
     @FXML
     public void initialize() {
+        // Preencher ComboBoxes
+        cbHairType.getItems().addAll("Liso", "Ondulado", "Cacheado", "Crespo");
+        cbHairTexture.getItems().addAll("Fino", "Médio", "Grosso");
+        cbScalp.getItems().addAll("Normal", "Oleoso", "Seco", "Misto", "Sensível");
+        
+        // Formatação automática do telefone
+        txtTelefone.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.isEmpty()) {
+                String formatted = formatPhone(newValue);
+                if (!formatted.equals(newValue)) {
+                    txtTelefone.setText(formatted);
+                    txtTelefone.positionCaret(formatted.length());
+                }
+            }
+        });
 
         // Botão cancelar fecha a janela
         btnCancelar.setOnAction(e -> fecharJanela());
@@ -59,6 +86,9 @@ public class EditarClienteController {
             String nome = txtNome.getText().trim();
             String telefone = txtTelefone.getText().trim();
             String email = txtEmail.getText().trim();
+            String address = txtAddress.getText().trim();
+            String allergies = txtAllergies.getText().trim();
+            String observations = txtObservations.getText().trim();
 
             // ----------------------------
             // 1. VALIDAÇÕES SIMPLES
@@ -84,6 +114,13 @@ public class EditarClienteController {
             cliente.setName(nome);
             cliente.setPhoneNumber(telefone);
             cliente.setEmail(email);
+            cliente.setAddress(address.isEmpty() ? null : address);
+            cliente.setHairType(cbHairType.getValue());
+            cliente.setHairTexture(cbHairTexture.getValue());
+            cliente.setScalp(cbScalp.getValue());
+            cliente.setAllergies(allergies.isEmpty() ? null : allergies);
+            cliente.setObservations(observations.isEmpty() ? null : observations);
+            cliente.setActive(chkAtivo.isSelected());
 
             // ----------------------------
             // 3. Atualizar no banco
@@ -138,9 +175,52 @@ public class EditarClienteController {
     // 🔵 ALERTA SIMPLES
     // ==============================
     private void alertar(String msg) {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
+    }
+    
+    /**
+     * Formata o telefone automaticamente enquanto o usuário digita
+     * Formato: (00) 00000-0000 ou (00) 0000-0000
+     */
+    private String formatPhone(String phone) {
+        // Remove tudo que não é número
+        String numbers = phone.replaceAll("[^0-9]", "");
+        
+        // Limita a 11 dígitos
+        if (numbers.length() > 11) {
+            numbers = numbers.substring(0, 11);
+        }
+        
+        // Aplica a formatação progressiva
+        StringBuilder formatted = new StringBuilder();
+        
+        if (numbers.length() > 0) {
+            formatted.append("(");
+            formatted.append(numbers.substring(0, Math.min(2, numbers.length())));
+            
+            if (numbers.length() > 2) {
+                formatted.append(") ");
+                
+                if (numbers.length() <= 6) {
+                    // (00) 0000
+                    formatted.append(numbers.substring(2));
+                } else if (numbers.length() <= 10) {
+                    // (00) 0000-0000
+                    formatted.append(numbers.substring(2, 6));
+                    formatted.append("-");
+                    formatted.append(numbers.substring(6));
+                } else {
+                    // (00) 00000-0000
+                    formatted.append(numbers.substring(2, 7));
+                    formatted.append("-");
+                    formatted.append(numbers.substring(7));
+                }
+            }
+        }
+        
+        return formatted.toString();
     }
 }

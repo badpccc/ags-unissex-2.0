@@ -9,84 +9,85 @@
            fx:controller="com.example.RegisterController"
            stylesheets="@css/login.css"
            prefWidth="900"
-           prefHeight="550"
+           prefHeight="650"
            styleClass="root-pane"
            alignment="CENTER">
 
     <!-- CONTAINER PRINCIPAL -->
-    <StackPane styleClass="form-container" alignment="CENTER">
-        <VBox spacing="20" alignment="CENTER" styleClass="login-box">
+    <StackPane styleClass="form-container" alignment="CENTER" maxWidth="600" maxHeight="600">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" 
+                    style="-fx-background: transparent; -fx-background-color: transparent;">
+            <VBox spacing="20" alignment="CENTER" styleClass="login-box" style="-fx-padding: 30;">
 
-            <!-- TÍTULO -->
-            <Label text="Registro de Administrador" styleClass="title-label"/>
+                <!-- TÍTULO -->
+                <Label text="Registro de Administrador" styleClass="title-label"/>
 
-            <!-- SUBTÍTULO -->
-            <Label text="💈 AGS-Unissex" styleClass="subtitle-label"/>
-
-            <!-- FORMULÁRIO -->
-            <VBox spacing="15" alignment="CENTER_LEFT" styleClass="form-fields">
+                <!-- SUBTÍTULO -->
+                <HBox alignment="CENTER" style="-fx-padding: 0 0 10 0;">
+                    <Label text="💈 AGS-Unissex" styleClass="subtitle-label"/>
+                </HBox>
 
                 <!-- Nome Completo -->
-                <VBox spacing="5">
-                    <Label text="Nome Completo" styleClass="field-label"/>
-                    <TextField fx:id="txtFullName" promptText="Digite seu nome completo" styleClass="input-field"/>
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="450">
+                    <Label text="Nome Completo *" styleClass="field-label"/>
+                    <TextField fx:id="txtFullName" promptText="Digite seu nome completo" 
+                               prefWidth="450" maxWidth="450"/>
                 </VBox>
 
                 <!-- Usuário -->
-                <VBox spacing="5">
-                    <Label text="Usuário" styleClass="field-label"/>
-                    <TextField fx:id="txtUser" promptText="Digite seu usuário" styleClass="input-field"/>
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="450">
+                    <Label text="Usuário *" styleClass="field-label"/>
+                    <TextField fx:id="txtUser" promptText="Digite seu usuário (mínimo 4 caracteres)" 
+                               prefWidth="450" maxWidth="450"/>
                 </VBox>
 
                 <!-- Email -->
-                <VBox spacing="5">
-                    <Label text="Email" styleClass="field-label"/>
-                    <TextField fx:id="txtEmail" promptText="Digite seu email" styleClass="input-field"/>
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="450">
+                    <Label text="Email *" styleClass="field-label"/>
+                    <TextField fx:id="txtEmail" promptText="Digite seu email (ex: usuario@email.com)" 
+                               prefWidth="450" maxWidth="450"/>
                 </VBox>
 
                 <!-- Telefone -->
-                <VBox spacing="5">
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="450">
                     <Label text="Telefone" styleClass="field-label"/>
-                    <TextField fx:id="txtPhone" promptText="Digite seu telefone" styleClass="input-field"/>
+                    <TextField fx:id="txtPhone" promptText="Digite seu telefone (ex: (11) 98765-4321)" 
+                               prefWidth="450" maxWidth="450"/>
                 </VBox>
 
                 <!-- Senha -->
-                <VBox spacing="5">
-                    <Label text="Senha" styleClass="field-label"/>
-                    <PasswordField fx:id="txtPass" promptText="Digite sua senha" styleClass="input-field"/>
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="450">
+                    <Label text="Senha *" styleClass="field-label"/>
+                    <PasswordField fx:id="txtPass" promptText="Digite sua senha (mínimo 6 caracteres)" 
+                                   prefWidth="450" maxWidth="450"/>
                 </VBox>
 
                 <!-- Confirmar Senha -->
-                <VBox spacing="5">
-                    <Label text="Confirmar Senha" styleClass="field-label"/>
-                    <PasswordField fx:id="txtPass2" promptText="Confirme sua senha" styleClass="input-field"/>
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="450">
+                    <Label text="Confirmar Senha *" styleClass="field-label"/>
+                    <PasswordField fx:id="txtPass2" promptText="Confirme sua senha" 
+                                   prefWidth="450" maxWidth="450"/>
                 </VBox>
 
                 <!-- Notas -->
-                <VBox spacing="5">
+                <VBox spacing="8" alignment="CENTER_LEFT" maxWidth="450">
                     <Label text="Notas (opcional)" styleClass="field-label"/>
-                    <TextArea fx:id="txtNotes" promptText="Alguma observação?" prefRowCount="2" styleClass="input-field"/>
+                    <TextArea fx:id="txtNotes" promptText="Alguma observação?" 
+                              prefRowCount="3" prefWidth="450" maxWidth="450" wrapText="true"/>
                 </VBox>
 
-                <!-- BOTÕES -->
-                <HBox spacing="20" alignment="CENTER" styleClass="button-box">
-                    <Button fx:id="btnRegister" text="Registrar" onAction="#handleRegister" styleClass="btn-add"/>
-                    <Button fx:id="btnBack" text="Voltar" onAction="#handleBack" styleClass="btn-cancel"/>
+                <!-- Mensagem -->
+                <Label fx:id="lblMessage" styleClass="error-label" text="" 
+                       style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10;"/>
+
+                <!-- Botão Registrar -->
+                <HBox spacing="20" alignment="CENTER" style="-fx-padding: 15 0 0 0;">
+                    <Button fx:id="btnRegister" text="Registrar" onAction="#handleRegister" 
+                            prefWidth="200" prefHeight="40" styleClass="button-box"/>
                 </HBox>
 
-
             </VBox>
-
-            <!-- Mensagem de erro -->
-            <Label fx:id="lblMessage" styleClass="error-label" text=""/>
-
-            <!-- BOTÕES
-            <HBox spacing="20" alignment="CENTER" styleClass="button-box">
-                <Button fx:id="btnRegister" text="Registrar" onAction="#handleRegister" styleClass="btn-add"/>
-                <Button fx:id="btnBack" text="Voltar" onAction="#handleBack" styleClass="btn-cancel"/>
-            </HBox>-->
-
-        </VBox>
+        </ScrollPane>
     </StackPane>
 
 </StackPane>

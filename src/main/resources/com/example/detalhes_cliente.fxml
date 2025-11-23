@@ -21,6 +21,12 @@
     <Label fx:id="lblNome"
            styleClass="detalhes-nome" />
 
+    <!-- Status Ativo/Inativo -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Status:" styleClass="detalhes-item"/>
+        <Label fx:id="lblStatus" styleClass="detalhes-item"/>
+    </HBox>
+
     <!-- Informações -->
     <Label fx:id="lblTelefone" styleClass="detalhes-item"/>
     <Label fx:id="lblEmail" styleClass="detalhes-item"/>

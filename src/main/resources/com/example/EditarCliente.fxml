@@ -2,22 +2,92 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox spacing="12" alignment="CENTER" xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.EditarClienteController"
-      stylesheets="@css/style.css"
-      styleClass="modal">
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.EditarClienteController"
+           stylesheets="@css/style.css"
+           alignment="CENTER"
+           prefWidth="700"
+           prefHeight="650">
 
-    <Label text="Editar Cliente" styleClass="modal-title"/>
+    <VBox spacing="15" alignment="CENTER" styleClass="modal" style="-fx-padding: 30;">
 
-    <TextField fx:id="txtNome" promptText="Nome completo" styleClass="text-field"/>
-    <TextField fx:id="txtTelefone" promptText="Telefone" styleClass="text-field"/>
-    <TextField fx:id="txtEmail" promptText="E-mail" styleClass="text-field"/>
+        <Label text="Editar Cliente" styleClass="modal-title"/>
 
-    <HBox spacing="12" alignment="CENTER">
-        <Button text="Salvar Alterações" fx:id="btnSalvar" styleClass="btn-primary"/>
-        <Button text="Cancelar" fx:id="btnCancelar" styleClass="btn-danger"/>
-    </HBox>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" 
+                    style="-fx-background: transparent; -fx-background-color: transparent;">
+            <VBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 10;">
 
-</VBox>
+                <!-- Nome -->
+                <VBox spacing="5">
+                    <Label text="Nome Completo *" styleClass="field-label"/>
+                    <TextField fx:id="txtNome" promptText="Digite o nome completo" styleClass="text-field"/>
+                </VBox>
+
+                <!-- Telefone -->
+                <VBox spacing="5">
+                    <Label text="Telefone *" styleClass="field-label"/>
+                    <TextField fx:id="txtTelefone" promptText="(00) 00000-0000" styleClass="text-field"/>
+                </VBox>
+
+                <!-- Email -->
+                <VBox spacing="5">
+                    <Label text="Email *" styleClass="field-label"/>
+                    <TextField fx:id="txtEmail" promptText="exemplo@email.com" styleClass="text-field"/>
+                </VBox>
+
+                <!-- Endereço -->
+                <VBox spacing="5">
+                    <Label text="Endereço" styleClass="field-label"/>
+                    <TextField fx:id="txtAddress" promptText="Rua, Número, Bairro" styleClass="text-field"/>
+                </VBox>
+
+                <!-- Tipo de Cabelo -->
+                <VBox spacing="5">
+                    <Label text="Tipo de Cabelo" styleClass="field-label"/>
+                    <ComboBox fx:id="cbHairType" promptText="Selecione" styleClass="text-field" prefWidth="9999"/>
+                </VBox>
+
+                <!-- Textura -->
+                <VBox spacing="5">
+                    <Label text="Textura" styleClass="field-label"/>
+                    <ComboBox fx:id="cbHairTexture" promptText="Selecione" styleClass="text-field" prefWidth="9999"/>
+                </VBox>
+
+                <!-- Couro Cabeludo -->
+                <VBox spacing="5">
+                    <Label text="Couro Cabeludo" styleClass="field-label"/>
+                    <ComboBox fx:id="cbScalp" promptText="Selecione" styleClass="text-field" prefWidth="9999"/>
+                </VBox>
+
+                <!-- Alergias -->
+                <VBox spacing="5">
+                    <Label text="Alergias" styleClass="field-label"/>
+                    <TextField fx:id="txtAllergies" promptText="Alergias ou sensibilidades" styleClass="text-field"/>
+                </VBox>
+
+                <!-- Cliente Ativo -->
+                <VBox spacing="5">
+                    <CheckBox fx:id="chkAtivo" text="Cliente está ativo?"/>
+                </VBox>
+
+                <!-- Observações -->
+                <VBox spacing="5">
+                    <Label text="Observações" styleClass="field-label"/>
+                    <TextArea fx:id="txtObservations" promptText="Notas adicionais..." prefRowCount="3" styleClass="text-field"/>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+
+        <!-- Botões -->
+        <HBox spacing="15" alignment="CENTER" style="-fx-padding: 15 0 0 0;">
+            <Button text="Salvar Alterações" fx:id="btnSalvar" styleClass="btn-primary" prefWidth="150"/>
+            <Button text="Cancelar" fx:id="btnCancelar" styleClass="btn-danger" prefWidth="150"/>
+        </HBox>
+
+    </VBox>
+
+</StackPane>

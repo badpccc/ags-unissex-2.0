@@ -15,6 +15,9 @@ module com.example {
     requires org.slf4j;
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
+    
+    // BCrypt para criptografia de senhas
+    requires jbcrypt;
 
     // Exportar todos os pacotes necessários
     exports com.example;

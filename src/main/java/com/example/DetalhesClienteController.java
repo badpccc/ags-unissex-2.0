@@ -8,6 +8,7 @@ import com.example.backends.classes.Client; // <-- IMPORT QUE FALTAVA
 public class DetalhesClienteController {
 
     @FXML private Label lblNome;
+    @FXML private Label lblStatus;
     @FXML private Label lblTelefone;
     @FXML private Label lblEmail;
     @FXML private Label lblEndereco;
@@ -20,6 +21,16 @@ public class DetalhesClienteController {
 
     public void setCliente(Client c) {
         lblNome.setText(c.getName());
+        
+        // Configurar status com cores
+        if (c.isActive()) {
+            lblStatus.setText("ATIVO");
+            lblStatus.setStyle("-fx-text-fill: #4CAF50; -fx-font-weight: bold; -fx-font-size: 14px;");
+        } else {
+            lblStatus.setText("NÃO ATIVO");
+            lblStatus.setStyle("-fx-text-fill: #FF4444; -fx-font-weight: bold; -fx-font-size: 14px;");
+        }
+        
         lblTelefone.setText("Telefone: " + c.getPhoneNumber());
         lblEmail.setText("Email: " + c.getEmail());
         lblEndereco.setText("Endereço: " + c.getAddress());
