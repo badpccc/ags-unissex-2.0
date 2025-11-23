@@ -40,7 +40,6 @@ public class ClientesController {
 
             NovoClienteController controller = loader.getController();
 
-            // Scroll para telas menores
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(root);
             scrollPane.setFitToWidth(true);
@@ -49,51 +48,32 @@ public class ClientesController {
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
             Stage modal = new Stage();
-            Scene scene = new Scene(scrollPane, 900, 650);
+            Scene scene = new Scene(scrollPane, 900, 650); // tamanho fixo
             modal.setScene(scene);
             modal.setTitle("Novo Cliente");
-            modal.setResizable(true);
+            modal.setResizable(false); // desativa redimensionamento
 
-            // ------------------------------------------------------------------
-            // 🔵 ABRIR AUTOMATICAMENTE EM TELA CHEIA
-            // ------------------------------------------------------------------
-            modal.setMaximized(true); // ocupa toda a tela
-            modal.setFullScreen(false); // modo tela cheia real
-            modal.setFullScreenExitHint(""); // remove mensagem do JavaFX
-            modal.setFullScreenExitKeyCombination(javafx.scene.input.KeyCombination.NO_MATCH);
-
-            // Atalho opcional F11 para fullscreen
-            scene.setOnKeyPressed(event -> {
-                if (event.getCode().toString().equals("F11")) {
-                    modal.setFullScreen(!modal.isFullScreen());
-                }
-            });
+            // 🔹 REMOVER FULLSCREEN COMPLETAMENTE
+            modal.setMaximized(false);
+            modal.setFullScreen(false);
 
             modal.initOwner(btnAdicionarCliente.getScene().getWindow());
             modal.initModality(Modality.APPLICATION_MODAL);
 
-            // ------------------------------------------------------------------
-            // 🔵 CALLBACK ÚNICO E COMPLETO
-            // ------------------------------------------------------------------
+            // CALLBACK ÚNICO
             controller.setOnClienteSalvo(cliente -> {
                 try {
-
-                    // -------------------- 1. VALIDAÇÃO DE EMAIL --------------------
                     if (cliente.getEmail() == null || !cliente.getEmail().contains("@")) {
-
                         TelegramNotifier.sendError(
                                 "Tentativa de cadastro com email inválido:\n" +
                                         "👤 Nome: " + cliente.getName() + "\n" +
                                         "📧 Email informado: `" + cliente.getEmail() + "`"
                         );
-
                         System.out.println("ERRO: Email inválido");
-                        return; // impede o cadastro
+                        return;
                     }
 
-                    // -------------------- 2. SALVAR NO BANCO --------------------
                     boolean sucesso = ClientDAO.insert(cliente);
-
                     if (!sucesso) {
                         TelegramNotifier.sendError(
                                 "Falha ao inserir cliente no banco:\n" +
@@ -104,10 +84,8 @@ public class ClientesController {
                         return;
                     }
 
-                    // -------------------- 3. ATUALIZAR UI --------------------
                     adicionarCliente(cliente);
 
-                    // -------------------- 4. ENVIAR NOTIFICAÇÃO --------------------
                     TelegramNotifier.send(
                             "📢 *Novo cliente cadastrado!*\n\n" +
                                     "👤 Nome: " + cliente.getName() + "\n" +
@@ -118,13 +96,10 @@ public class ClientesController {
                     System.out.println("Cliente salvo com sucesso!");
 
                 } catch (Exception ex) {
-
-                    // -------------------- 5. ERRO INESPERADO --------------------
                     TelegramNotifier.sendError(
                             "Erro inesperado ao salvar cliente:\n```\n" +
                                     ex.getMessage() + "\n```"
                     );
-
                     ex.printStackTrace();
                 }
             });

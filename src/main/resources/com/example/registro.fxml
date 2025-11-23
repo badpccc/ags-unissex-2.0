@@ -10,77 +10,81 @@
            stylesheets="@css/login.css"
            prefWidth="900"
            prefHeight="550"
-           alignment="CENTER"
-           styleClass="root-pane">
+           styleClass="root-pane"
+           alignment="CENTER">
 
+    <!-- CONTAINER PRINCIPAL -->
     <StackPane styleClass="form-container" alignment="CENTER">
-        <VBox spacing="18" alignment="CENTER" styleClass="login-box">
+        <VBox spacing="20" alignment="CENTER" styleClass="login-box">
 
-            <!-- Título -->
+            <!-- TÍTULO -->
             <Label text="Registro de Administrador" styleClass="title-label"/>
 
-            <!-- Subtítulo -->
-            <HBox alignment="CENTER">
-                <Label text="💈 AGS-Unissex" styleClass="subtitle-label"/>
-            </HBox>
+            <!-- SUBTÍTULO -->
+            <Label text="💈 AGS-Unissex" styleClass="subtitle-label"/>
 
-            <!-- Nome Completo -->
-            <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-                <Label text="Nome Completo" styleClass="field-label"/>
-                <TextField fx:id="txtFullName" promptText="Digite seu nome completo"/>
-            </VBox>
+            <!-- FORMULÁRIO -->
+            <VBox spacing="15" alignment="CENTER_LEFT" styleClass="form-fields">
 
-            <!-- Usuário -->
-            <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-                <Label text="Usuário" styleClass="field-label"/>
-                <TextField fx:id="txtUser" promptText="Digite seu usuário"/>
-            </VBox>
+                <!-- Nome Completo -->
+                <VBox spacing="5">
+                    <Label text="Nome Completo" styleClass="field-label"/>
+                    <TextField fx:id="txtFullName" promptText="Digite seu nome completo" styleClass="input-field"/>
+                </VBox>
 
-            <!-- Email -->
-            <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-                <Label text="Email" styleClass="field-label"/>
-                <TextField fx:id="txtEmail" promptText="Digite seu email"/>
-            </VBox>
+                <!-- Usuário -->
+                <VBox spacing="5">
+                    <Label text="Usuário" styleClass="field-label"/>
+                    <TextField fx:id="txtUser" promptText="Digite seu usuário" styleClass="input-field"/>
+                </VBox>
 
-            <!-- Telefone -->
-            <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-                <Label text="Telefone" styleClass="field-label"/>
-                <TextField fx:id="txtPhone" promptText="Digite seu telefone"/>
-            </VBox>
+                <!-- Email -->
+                <VBox spacing="5">
+                    <Label text="Email" styleClass="field-label"/>
+                    <TextField fx:id="txtEmail" promptText="Digite seu email" styleClass="input-field"/>
+                </VBox>
 
-            <!-- Senha -->
-            <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-                <Label text="Senha" styleClass="field-label"/>
-                <PasswordField fx:id="txtPass" promptText="Digite sua senha"/>
-            </VBox>
+                <!-- Telefone -->
+                <VBox spacing="5">
+                    <Label text="Telefone" styleClass="field-label"/>
+                    <TextField fx:id="txtPhone" promptText="Digite seu telefone" styleClass="input-field"/>
+                </VBox>
 
-            <!-- Confirmar Senha -->
-            <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-                <Label text="Confirmar Senha" styleClass="field-label"/>
-                <PasswordField fx:id="txtPass2" promptText="Confirme sua senha"/>
-            </VBox>
+                <!-- Senha -->
+                <VBox spacing="5">
+                    <Label text="Senha" styleClass="field-label"/>
+                    <PasswordField fx:id="txtPass" promptText="Digite sua senha" styleClass="input-field"/>
+                </VBox>
 
-            <!-- Notas -->
-            <VBox spacing="10" alignment="CENTER_LEFT">
-                <padding><Insets top="10" right="20" bottom="10" left="20"/></padding>
-                <Label text="Notas (opcional)" styleClass="field-label"/>
-                <TextArea fx:id="txtNotes" promptText="Alguma observação?" prefRowCount="2"/>
+                <!-- Confirmar Senha -->
+                <VBox spacing="5">
+                    <Label text="Confirmar Senha" styleClass="field-label"/>
+                    <PasswordField fx:id="txtPass2" promptText="Confirme sua senha" styleClass="input-field"/>
+                </VBox>
+
+                <!-- Notas -->
+                <VBox spacing="5">
+                    <Label text="Notas (opcional)" styleClass="field-label"/>
+                    <TextArea fx:id="txtNotes" promptText="Alguma observação?" prefRowCount="2" styleClass="input-field"/>
+                </VBox>
+
+                <!-- BOTÕES -->
+                <HBox spacing="20" alignment="CENTER" styleClass="button-box">
+                    <Button fx:id="btnRegister" text="Registrar" onAction="#handleRegister" styleClass="btn-add"/>
+                    <Button fx:id="btnBack" text="Voltar" onAction="#handleBack" styleClass="btn-cancel"/>
+                </HBox>
+
+
             </VBox>
 
             <!-- Mensagem de erro -->
             <Label fx:id="lblMessage" styleClass="error-label" text=""/>
 
-            <!-- Botões -->
-            <HBox spacing="25" alignment="CENTER" styleClass="button-box">
-                <Button fx:id="btnRegister" text="Registrar" onAction="#handleRegister"/>
-                <Button fx:id="btnBack" text="Voltar" onAction="#handleBack"/>
-            </HBox>
+            <!-- BOTÕES
+            <HBox spacing="20" alignment="CENTER" styleClass="button-box">
+                <Button fx:id="btnRegister" text="Registrar" onAction="#handleRegister" styleClass="btn-add"/>
+                <Button fx:id="btnBack" text="Voltar" onAction="#handleBack" styleClass="btn-cancel"/>
+            </HBox>-->
 
         </VBox>
     </StackPane>

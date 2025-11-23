@@ -84,10 +84,20 @@
     -fx-border-radius: 14;
 }
 
-/* BOTÕES */
+/* BOTÕES – MAIOR E CENTRALIZADO */
+.button, .btn-add, .btn-delete, .btn-edit {
+    -fx-min-width: 150px;          /* largura mínima maior */
+    -fx-min-height: 50px;          /* altura maior */
+    -fx-font-size: 1.3em;          /* fonte maior */
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 14;
+    -fx-cursor: hand;
+}
+
+/* Botões verdes */
 .btn-add {
     -fx-background-color: #28c76f;
-    -fx-text-fill: white;
 }
 .btn-add:hover {
     -fx-background-color: #20b863;
@@ -96,9 +106,9 @@
     -fx-background-color: #1a9d55;
 }
 
+/* Botões vermelhos */
 .btn-delete {
     -fx-background-color: #ff4d4d;
-    -fx-text-fill: white;
 }
 .btn-delete:hover {
     -fx-background-color: #e64545;
@@ -106,6 +116,25 @@
 .btn-delete:pressed {
     -fx-background-color: #cc3d3d;
 }
+
+/* Botão de edição (se existir) */
+.btn-edit {
+    -fx-background-color: #3498db;
+}
+.btn-edit:hover {
+    -fx-background-color: #2980b9;
+}
+.btn-edit:pressed {
+    -fx-background-color: #2471a3;
+}
+
+/* Centralizar botões dentro de seus containers */
+.button-box, .btn-container {
+    -fx-alignment: center;  /* centraliza horizontalmente */
+    -fx-spacing: 20px;      /* espaçamento entre botões */
+    -fx-padding: 20 0 20 0; /* padding superior e inferior */
+}
+
 
 /* GRID E ORGANIZAÇÃO DO FORMULÁRIO */
 .form-grid {

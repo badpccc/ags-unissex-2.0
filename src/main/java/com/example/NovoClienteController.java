@@ -42,7 +42,6 @@ public class NovoClienteController {
 
     private Consumer<Client> onClienteSalvo;
 
-
     // ===============================================================
     // INITIALIZE
     // ===============================================================
@@ -50,7 +49,7 @@ public class NovoClienteController {
     public void initialize() {
         aplicarMascaraTelefone(txtTelefone);
 
-        // Limpar erro ao digitar
+        // Limpar erros ao digitar
         adicionarLimpezaDeErro(txtNome, lblErroNome);
         adicionarLimpezaDeErro(txtTelefone, lblErroTelefone);
         adicionarLimpezaDeErro(txtEmail, lblErroEmail);
@@ -77,11 +76,10 @@ public class NovoClienteController {
                 "Oleoso", "Seco", "Misto", "Sensível"
         ));
 
+        // Botões
         btnSalvar.setOnAction(e -> salvar());
         btnCancelar.setOnAction(e -> fechar());
     }
-
-
 
     // ===============================================================
     // FUNÇÃO PARA LIMPAR ERRO AO DIGITAR / MODIFICAR
@@ -94,21 +92,17 @@ public class NovoClienteController {
         }
     }
 
-
     private void removerErro(Control campo, Label erro) {
         campo.getStyleClass().remove("error");
         erro.setText("");
     }
-
 
     // ===============================================================
     // MÁSCARA DE TELEFONE
     // ===============================================================
     private void aplicarMascaraTelefone(TextField campo) {
         campo.textProperty().addListener((obs, oldValue, newValue) -> {
-
             String digits = newValue.replaceAll("[^0-9]", "");
-
             if (digits.length() > 11)
                 digits = digits.substring(0, 11);
 
@@ -129,38 +123,32 @@ public class NovoClienteController {
         });
     }
 
-
     // ===============================================================
     // VALIDAR CAMPOS
     // ===============================================================
     private boolean validar() {
         boolean valido = true;
 
-        // Nome
         if (txtNome.getText().trim().isEmpty()) {
             mostrarErro(txtNome, lblErroNome, "O nome é obrigatório.");
             valido = false;
         }
 
-        // Telefone
         if (txtTelefone.getText().trim().length() < 14) {
             mostrarErro(txtTelefone, lblErroTelefone, "Telefone inválido.");
             valido = false;
         }
 
-        // Email
         if (!txtEmail.getText().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             mostrarErro(txtEmail, lblErroEmail, "E-mail inválido.");
             valido = false;
         }
 
-        // Endereço
         if (txtAddress.getText().trim().isEmpty()) {
             mostrarErro(txtAddress, lblErroEndereco, "O endereço é obrigatório.");
             valido = false;
         }
 
-        // Capilares
         if (cbHairType.getValue() == null) {
             mostrarErro(cbHairType, lblErroHairType, "Selecione o tipo de cabelo.");
             valido = false;
@@ -179,7 +167,6 @@ public class NovoClienteController {
         return valido;
     }
 
-
     private void mostrarErro(Control campo, Label erro, String msg) {
         if (!campo.getStyleClass().contains("error")) {
             campo.getStyleClass().add("error");
@@ -187,39 +174,27 @@ public class NovoClienteController {
         erro.setText(msg);
     }
 
-
     // ===============================================================
     // SALVAR CLIENTE
     // ===============================================================
     private void salvar() {
-
         if (!validar()) {
             System.out.println("Erro: falha na validação.");
             return;
         }
 
         Client cliente = new Client();
-
-        // CAMPOS BÁSICOS
         cliente.setName(txtNome.getText());
         cliente.setPhoneNumber(txtTelefone.getText());
         cliente.setEmail(txtEmail.getText());
         cliente.setAddress(txtAddress.getText());
         cliente.setActive(chkAtivo.isSelected());
         cliente.setRegistrationDate(LocalDate.now());
-
-        // CAPILARES
         cliente.setHairType(cbHairType.getValue());
         cliente.setHairTexture(cbHairTexture.getValue());
         cliente.setScalp(cbScalp.getValue());
         cliente.setAllergies(txtAllergies.getText());
-        cliente.setLastVisit(
-                dpLastVisit.getValue() != null
-                        ? dpLastVisit.getValue().atStartOfDay()
-                        : null
-        );
-
-        // OBSERVAÇÕES
+        cliente.setLastVisit(dpLastVisit.getValue() != null ? dpLastVisit.getValue().atStartOfDay() : null);
         cliente.setObservations(txtObservations.getText());
 
         if (onClienteSalvo != null)
@@ -228,7 +203,6 @@ public class NovoClienteController {
         fechar();
     }
 
-
     // ===============================================================
     // FECHAR MODAL
     // ===============================================================
@@ -236,7 +210,6 @@ public class NovoClienteController {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
-
 
     // ===============================================================
     // CALLBACK

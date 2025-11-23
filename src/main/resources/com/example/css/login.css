@@ -113,3 +113,72 @@
   -fx-font-weight: normal;
   -fx-opacity: 0.85;
 }
+
+/* ===== Ajuste dos campos ===== */
+.text-field,
+.password-field,
+.text-area {
+  -fx-background-color: #111111;
+  -fx-text-fill: #ffffff;
+  -fx-prompt-text-fill: #777777;
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+  -fx-border-color: #3c3c3c;
+  -fx-border-width: 1.2px;
+  -fx-padding: 12 14 12 14;
+  -fx-min-width: 320px;
+  -fx-max-width: 480px;
+  -fx-font-size: 14px;
+  -fx-transition: all 0.2s ease-in-out;
+}
+
+/* ===== Botões grandes e centralizados ===== */
+.button {
+  -fx-background-color: #efbf3a;
+  -fx-text-fill: #1a1a1a;
+  -fx-font-weight: bold;
+  -fx-font-size: 14px;
+  -fx-background-radius: 8;
+  -fx-border-radius: 8;
+  -fx-padding: 12 30;
+  -fx-min-width: 140px;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.3), 8, 0.4, 0, 0);
+  -fx-transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+  -fx-background-color: #ffd75e;
+  -fx-effect: dropshadow(gaussian, rgba(239, 191, 58, 0.5), 12, 0.5, 0, 0);
+}
+
+.button:pressed {
+  -fx-background-color: #cfaf30;
+  -fx-translate-y: 1px;
+}
+
+/* ===== Box de botões centralizado ===== */
+.button-box {
+  -fx-alignment: center;
+  -fx-spacing: 20;
+  -fx-padding: 15 0 0 0;
+}
+
+/* ===== Responsividade ===== */
+@media screen and (max-width: 500px) {
+  .text-field,
+  .password-field,
+  .text-area {
+    -fx-min-width: 90%;
+    -fx-max-width: 95%;
+  }
+
+  .button {
+    -fx-min-width: 80%;
+  }
+
+  .form-container {
+    -fx-pref-width: 95%;
+    -fx-padding: 25;
+  }
+}
