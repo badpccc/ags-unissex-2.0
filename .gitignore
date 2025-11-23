@@ -1,8 +1,10 @@
 # Compiled class files
 *.class
 
-# Log files
-*.log
+# Log files - mas manter estrutura de pastas
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
 
 # BlueJ files
 *.ctxt
@@ -72,14 +74,18 @@ bin/
 
 # VS Code
 .vscode/
+*.code-workspace
 
 # Mac
 .DS_Store
+.AppleDouble
+.LSOverride
 
 # Windows
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+$RECYCLE.BIN/
 
 # Linux
 *~
@@ -89,28 +95,55 @@ Desktop.ini
 *.temp
 *.swp
 *.swo
+*.bak
+*.backup
+
+# JavaFX specific
+*.fxbuild
+.fxbuild/
+
+# JRebel
+rebel.xml
+
+# Database específico do projeto
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables específicos
+.env
+.env.*
+!.env.example
+application-local.properties
+database.properties
+
+# Docker (caso use futuramente)
+.dockerignore
+docker-compose.override.yml
+
+# Arquivos de configuração local
+config/local/
+*.local.properties
+
+# Backup files
+*~
+*.orig
+*.rej
+
+# Coverage reports
+jacoco.exec
+*.lcov
+coverage/
+
+# Dependency directories
+.m2/repository/
+
+# System files
+.fuse_hidden*
+.nfs*
 
 # Application specific
 application.properties.local
 *.pid
 *.seed
 *.pid.lock
-
-# JavaFX specific
-*.fxbuild
-
-# JRebel
-rebel.xml
-
-# Node.js (if using any frontend tools)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local

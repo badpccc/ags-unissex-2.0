@@ -129,6 +129,26 @@ CREATE TABLE IF NOT EXISTS appointment_services (
     -- Evitar duplicatas
     CONSTRAINT uk_appointment_service UNIQUE (appointment_id, service_id)
 );
+-- =============================================
+-- TABELA: ADMINS
+-- =============================================
+
+CREATE TABLE IF NOT EXISTS adm (
+    id BIGSERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    username VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    phone_number VARCHAR(20),
+
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+
+    last_login TIMESTAMP,
+    notes TEXT,
+
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 -- =============================================
 -- ÍNDICES PARA PERFORMANCE

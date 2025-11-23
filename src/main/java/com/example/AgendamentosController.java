@@ -1,131 +1,181 @@
 package com.example;
 
-import com.example.backends.classes.Service;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.math.BigDecimal;
-import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AgendamentosController {
 
     @FXML private VBox listaAgendamentos;
 
-    @FXML
-    private void initialize() {
-        System.out.println("Tela AGENDAMENTOS carregada");
+    private final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
-        // Exemplo: adicionar agendamentos iniciais
-        adicionarCard(new Service("Corte Masculino", new BigDecimal("25.00"), Duration.ofMinutes(30)));
-        adicionarCard(new Service("Barba", new BigDecimal("15.00"), Duration.ofMinutes(15)));
+    // 🔹 Lista local (SEM BANCO)
+    private static final List<AgendamentoTemp> agendamentos = new ArrayList<>();
+
+    @FXML
+    public void initialize() {
+
+        // Criar agendamento inicial somente uma vez
+        if (agendamentos.isEmpty()) {
+            agendamentos.add(new AgendamentoTemp(
+                    "Arthur",
+                    "Corte Masculino",
+                    LocalDate.now(),
+                    LocalTime.of(15, 30),
+                    25.00
+            ));
+        }
+
+        carregarAgendamentos();
     }
 
+
+    // 🔹 Abrir modal igual ao UsuariosController
     @FXML
-    private void novoAgendamento() {
+    public void novoAgendamento() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("modal_novoservico.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModalNovoAgendamento.fxml"));
             Parent root = loader.load();
 
-            ModalNovoServicoController controller = loader.getController();
+            // Controller do modal
+            ModalNovoAgendamentoController controller = loader.getController();
+            controller.setCallback(this::adicionarAgendamento);
 
             Stage stage = new Stage();
+            stage.setTitle("Novo Agendamento");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
-            stage.setTitle("Novo Agendamento");
+
             stage.showAndWait();
 
-            Service novo = controller.getServiceCriado();
-            if (novo != null) {
-                adicionarCard(novo);
-            }
+            carregarAgendamentos();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void adicionarCard(Service service) {
-        // Card principal
-        HBox card = new HBox(20);
-        card.getStyleClass().add("ag-card");
-
-        // Informações do agendamento
-        VBox infoBox = new VBox(4);
-        Label lblNome = new Label(service.getName());
-        lblNome.getStyleClass().add("ag-nome");
-
-        Label lblDuracao = new Label("Duração: " + service.getFormattedDuration());
-        lblDuracao.getStyleClass().add("ag-info");
-
-        Label lblPreco = new Label(String.format("R$ %.2f", service.getPrice()));
-        lblPreco.getStyleClass().add("ag-preco");
-
-        Label lblStatus = new Label("Status: AGENDADO");
-        lblStatus.getStyleClass().add("ag-status-agendado");
-
-        infoBox.getChildren().addAll(lblNome, lblDuracao, lblPreco, lblStatus);
-
-        // Spacer para alinhamento
-        Pane spacer = new Pane();
-        HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
-
-        // Botões
-        Button btnEditar = new Button("Editar");
-        btnEditar.getStyleClass().add("btn-editar");
-        btnEditar.setOnAction(e -> editarAgendamento(service, lblNome, lblDuracao, lblPreco, lblStatus));
-
-        Button btnExcluir = new Button("Excluir");
-        btnExcluir.getStyleClass().add("btn-excluir");
-        btnExcluir.setOnAction(e -> listaAgendamentos.getChildren().remove(card));
-
-        Button btnConcluir = new Button("Concluir");
-        btnConcluir.getStyleClass().add("btn-concluir");
-        btnConcluir.setOnAction(e -> {
-            lblStatus.setText("Status: CONCLUÍDO");
-            lblStatus.getStyleClass().removeAll("ag-status-agendado", "ag-status-cancelado");
-            lblStatus.getStyleClass().add("ag-status-concluido");
-        });
-
-        VBox botoes = new VBox(5, btnEditar, btnExcluir, btnConcluir);
-
-        card.getChildren().addAll(infoBox, spacer, botoes);
-        listaAgendamentos.getChildren().add(card);
+    // 🔹 Adicionar agendamento na lista local
+    private void adicionarAgendamento(AgendamentoTemp a) {
+        agendamentos.add(a);
+        carregarAgendamentos();
     }
 
-    private void editarAgendamento(Service service, Label lblNome, Label lblDuracao, Label lblPreco, Label lblStatus) {
+    // 🔹 Carregar cards
+    private void carregarAgendamentos() {
+        listaAgendamentos.getChildren().clear();
+
+        if (agendamentos.isEmpty()) {
+            Label l = new Label("Nenhum agendamento encontrado.");
+            l.setStyle("-fx-text-fill: #bbbbbb; -fx-font-size: 16px;");
+            listaAgendamentos.getChildren().add(l);
+            return;
+        }
+
+        for (AgendamentoTemp ag : agendamentos) {
+            listaAgendamentos.getChildren().add(criarCardAgendamento(ag));
+        }
+    }
+
+    private HBox criarCardAgendamento(AgendamentoTemp ag) {
+        HBox card = new HBox(20);
+        card.setStyle("-fx-background-color: #2a2a2a; -fx-padding: 18; -fx-background-radius: 12;");
+
+        VBox info = new VBox(6);
+
+        Label nome = new Label("👤 " + ag.cliente);
+        nome.setStyle("-fx-font-size: 18; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        Label servico = new Label("💈 Serviço: " + ag.servico);
+        servico.setStyle("-fx-text-fill: #cccccc;");
+
+        Label data = new Label(
+                "🕒 " + ag.data.format(formatoData) + " às " + ag.hora.format(formatoHora)
+        );
+        data.setStyle("-fx-text-fill: #bbbbbb;");
+
+        Label preco = new Label("💵 R$ " + ag.preco);
+        preco.setStyle("-fx-text-fill: #90ee90;");
+
+        info.getChildren().addAll(nome, servico, data, preco);
+
+// 🔵 Botão editar
+        Button editar = new Button("Editar");
+        editar.getStyleClass().add("btn-editar");
+        editar.setOnAction(e -> abrirEdicao(ag));
+
+// 🔴 Botão excluir
+        Button excluir = new Button("Excluir");
+        excluir.getStyleClass().add("btn-excluir");
+        excluir.setOnAction(e -> {
+            agendamentos.remove(ag);
+            carregarAgendamentos();
+        });
+
+
+        // Caixa de botões (✔ AGORA CORRETO)
+        HBox botoes = new HBox(10, editar, excluir);
+
+        Region espaco = new Region();
+        HBox.setHgrow(espaco, Priority.ALWAYS);
+
+        card.getChildren().addAll(info, espaco, botoes);
+
+        return card;
+    }
+
+    private void abrirEdicao(AgendamentoTemp ag) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("modal_novoservico.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/EditarAgendamento.fxml"));
             Parent root = loader.load();
 
-            ModalNovoServicoController controller = loader.getController();
-            controller.preencherFormulario(service);
+            EditarAgendamentoController controller = loader.getController();
+
+            controller.carregarAgendamento(ag, atualizado -> {
+                agendamentos.remove(ag);
+                agendamentos.add(atualizado);
+                carregarAgendamentos();
+            });
 
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
             stage.setTitle("Editar Agendamento");
+            stage.setScene(new Scene(root));
             stage.showAndWait();
-
-            Service atualizado = controller.getServiceCriado();
-            if (atualizado != null) {
-                lblNome.setText(atualizado.getName());
-                lblDuracao.setText("Duração: " + atualizado.getFormattedDuration());
-                lblPreco.setText(String.format("R$ %.2f", atualizado.getPrice()));
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    // 🔹 CLASSE INTERNA para salvar temporariamente
+    public static class AgendamentoTemp {
+        public String cliente;
+        public String servico;
+        public LocalDate data;
+        public LocalTime hora;
+        public double preco;
+
+        public AgendamentoTemp(String cliente, String servico, LocalDate data, LocalTime hora, double preco) {
+            this.cliente = cliente;
+            this.servico = servico;
+            this.data = data;
+            this.hora = hora;
+            this.preco = preco;
         }
     }
 }

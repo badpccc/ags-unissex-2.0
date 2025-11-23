@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+    // LEMBRAR DE ADICIONAR CADA UM DESSES ATRIBUTOS NA TELA DE REGISTRAR NOVO FUNCIONÁRIO! 
 public class Employee {
     private Long id;
     private String name;
@@ -216,15 +217,20 @@ public class Employee {
     }
     
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Employee employee = (Employee) obj;
+        return id != null && id.equals(employee.id);
+    }
+    
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+    
+    @Override
     public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", position='" + position + '\'' +
-                ", experienceLevel='" + experienceLevel + '\'' +
-                ", specialties='" + specialties + '\'' +
-                ", isActive=" + isActive +
-                ", canPerformChemical=" + canPerformChemicalTreatments +
-                '}';
+        return name; // Retornar apenas o nome para exibição em ComboBox
     }
 }

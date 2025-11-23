@@ -1,6 +1,7 @@
 package com.example.utils;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +21,7 @@ public class TelegramNotifier {
                     "&parse_mode=Markdown" +
                     "&text=" + URLEncoder.encode(texto, StandardCharsets.UTF_8);
 
-            URL url = new URL(urlString);
+            URL url = URI.create(urlString).toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.getInputStream();

@@ -8,10 +8,11 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ServicosController"
             prefWidth="900" prefHeight="600"
-            stylesheets="@css/servicos.css"
-            styleClass="root">
+            stylesheets="@css/servicos.css">
 
-    <!-- ================= CABEÇALHO ================= -->
+    <!-- ===================================================== -->
+    <!--                     CABEÇALHO                         -->
+    <!-- ===================================================== -->
     <top>
         <HBox spacing="20"
               alignment="CENTER_LEFT"
@@ -35,20 +36,50 @@
                     text="Novo Serviço"
                     styleClass="btn-primario"
                     onAction="#novoServico"/>
+
         </HBox>
     </top>
 
-    <!-- ================= LISTA DE SERVIÇOS ================= -->
+    <!-- ===================================================== -->
+    <!--                    ÁREA PRINCIPAL                     -->
+    <!-- ===================================================== -->
     <center>
         <ScrollPane fitToWidth="true"
                     styleClass="ag-scroll">
+
             <VBox fx:id="listaServicos"
                   spacing="12"
                   styleClass="ag-lista">
+
                 <padding>
                     <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
+
+                <!-- CARD EXEMPLO (remover depois) -->
+                <HBox spacing="20"
+                      styleClass="ag-card">
+
+                    <VBox spacing="4">
+                        <Label text="Corte Masculino"
+                               styleClass="ag-nome"/>
+
+                        <Label text="Duração: 30 min"
+                               styleClass="ag-info"/>
+                    </VBox>
+
+                    <Pane HBox.hgrow="ALWAYS"/>
+
+                    <Label text="R$ 25,00"
+                           styleClass="ag-preco"/>
+
+                    <Button text="Editar" styleClass="btn-editar" onAction="#editarServico"/>
+
+                    <Button text="Excluir" styleClass="btn-excluir"/>
+
+                </HBox>
+
             </VBox>
         </ScrollPane>
     </center>
+
 </BorderPane>
