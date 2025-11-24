@@ -30,7 +30,7 @@ public class DashboardController {
     }
 
     private int getTotalClientes() {
-        String sql = "SELECT COUNT(*) FROM public.clientes WHERE is_active = true"; // tabela correta
+        String sql = "SELECT COUNT(*) FROM public.clients WHERE is_active = true"; // tabela correta: clients
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

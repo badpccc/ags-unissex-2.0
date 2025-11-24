@@ -8,9 +8,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.application.Platform;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.example.backends.classes.Appointment;
+import com.example.backends.classes.Client;
+import com.example.backends.classes.Service;
+import com.example.backends.database.data.AppointmentDAO;
+import com.example.backends.database.data.ClientDAO;
+import com.example.backends.database.data.ServicesDAO;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,23 +28,8 @@ public class AgendamentosController {
     private final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
-    // 🔹 Lista local (SEM BANCO)
-    private static final List<AgendamentoTemp> agendamentos = new ArrayList<>();
-
     @FXML
     public void initialize() {
-
-        // Criar agendamento inicial somente uma vez
-        if (agendamentos.isEmpty()) {
-            agendamentos.add(new AgendamentoTemp(
-                    "Arthur",
-                    "Corte Masculino",
-                    LocalDate.now(),
-                    LocalTime.of(15, 30),
-                    25.00
-            ));
-        }
-
         carregarAgendamentos();
     }
 
@@ -58,7 +49,9 @@ public class AgendamentosController {
             stage.setTitle("Novo Agendamento");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
+            stage.setResizable(true); // Permitir redimensionamento
+            stage.setMinWidth(700);
+            stage.setMinHeight(600);
 
             stage.showAndWait();
 
@@ -69,49 +62,74 @@ public class AgendamentosController {
         }
     }
 
-    // 🔹 Adicionar agendamento na lista local
-    private void adicionarAgendamento(AgendamentoTemp a) {
-        agendamentos.add(a);
+    // Adicionar agendamento e recarregar lista
+    private void adicionarAgendamento(Appointment a) {
         carregarAgendamentos();
     }
 
-    // 🔹 Carregar cards
+    // Carregar agendamentos do banco de dados
     private void carregarAgendamentos() {
-        listaAgendamentos.getChildren().clear();
+        new Thread(() -> {
+            final List<Appointment> agendamentos = AppointmentDAO.getAllAppointments();
+            
+            Platform.runLater(() -> {
+                listaAgendamentos.getChildren().clear();
 
-        if (agendamentos.isEmpty()) {
-            Label l = new Label("Nenhum agendamento encontrado.");
-            l.setStyle("-fx-text-fill: #bbbbbb; -fx-font-size: 16px;");
-            listaAgendamentos.getChildren().add(l);
-            return;
-        }
+                if (agendamentos == null || agendamentos.isEmpty()) {
+                    Label l = new Label("Nenhum agendamento encontrado.");
+                    l.setStyle("-fx-text-fill: #bbbbbb; -fx-font-size: 16px;");
+                    listaAgendamentos.getChildren().add(l);
+                    return;
+                }
 
-        for (AgendamentoTemp ag : agendamentos) {
-            listaAgendamentos.getChildren().add(criarCardAgendamento(ag));
-        }
+                for (Appointment ag : agendamentos) {
+                    listaAgendamentos.getChildren().add(criarCardAgendamento(ag));
+                }
+            });
+        }).start();
     }
 
-    private HBox criarCardAgendamento(AgendamentoTemp ag) {
+    private HBox criarCardAgendamento(Appointment ag) {
         HBox card = new HBox(20);
         card.setStyle("-fx-background-color: #2a2a2a; -fx-padding: 18; -fx-background-radius: 12;");
 
         VBox info = new VBox(6);
 
-        Label nome = new Label("👤 " + ag.cliente);
+        // Buscar nome do cliente
+        Client cliente = ClientDAO.getClientByID(ag.getClientId());
+        String nomeCliente = cliente != null ? cliente.getName() : "Cliente não encontrado";
+        
+        Label nome = new Label("👤 " + nomeCliente);
         nome.setStyle("-fx-font-size: 18; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        Label servico = new Label("💈 Serviço: " + ag.servico);
+        // Buscar serviços (múltiplos)
+        List<String> nomesServicos = new ArrayList<>();
+        if (ag.getServiceIds() != null) {
+            for (Long serviceId : ag.getServiceIds()) {
+                Service s = ServicesDAO.getServiceByID(serviceId);
+                if (s != null) {
+                    nomesServicos.add(s.getName());
+                }
+            }
+        }
+        String servicosTexto = nomesServicos.isEmpty() ? "Nenhum serviço" : String.join(", ", nomesServicos);
+        
+        Label servico = new Label("💈 Serviços: " + servicosTexto);
         servico.setStyle("-fx-text-fill: #cccccc;");
 
         Label data = new Label(
-                "🕒 " + ag.data.format(formatoData) + " às " + ag.hora.format(formatoHora)
+                "🕒 " + ag.getAppointmentDateTime().format(formatoData) + 
+                " às " + ag.getAppointmentDateTime().format(formatoHora)
         );
         data.setStyle("-fx-text-fill: #bbbbbb;");
 
-        Label preco = new Label("💵 R$ " + ag.preco);
+        Label preco = new Label(String.format("💵 R$ %.2f", ag.getTotalPrice()));
         preco.setStyle("-fx-text-fill: #90ee90;");
 
-        info.getChildren().addAll(nome, servico, data, preco);
+        Label status = new Label("📋 Status: " + ag.getStatus().name());
+        status.setStyle("-fx-text-fill: #fbbf24;");
+
+        info.getChildren().addAll(nome, servico, data, preco, status);
 
 // 🔵 Botão editar
         Button editar = new Button("Editar");
@@ -122,8 +140,15 @@ public class AgendamentosController {
         Button excluir = new Button("Excluir");
         excluir.getStyleClass().add("btn-excluir");
         excluir.setOnAction(e -> {
-            agendamentos.remove(ag);
-            carregarAgendamentos();
+            Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmacao.setHeaderText("Confirmar exclusão");
+            confirmacao.setContentText("Deseja realmente excluir este agendamento?");
+            confirmacao.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    AppointmentDAO.delete(ag.getId());
+                    carregarAgendamentos();
+                }
+            });
         });
 
 
@@ -138,44 +163,11 @@ public class AgendamentosController {
         return card;
     }
 
-    private void abrirEdicao(AgendamentoTemp ag) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/EditarAgendamento.fxml"));
-            Parent root = loader.load();
-
-            EditarAgendamentoController controller = loader.getController();
-
-            controller.carregarAgendamento(ag, atualizado -> {
-                agendamentos.remove(ag);
-                agendamentos.add(atualizado);
-                carregarAgendamentos();
-            });
-
-            Stage stage = new Stage();
-            stage.setTitle("Editar Agendamento");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    // 🔹 CLASSE INTERNA para salvar temporariamente
-    public static class AgendamentoTemp {
-        public String cliente;
-        public String servico;
-        public LocalDate data;
-        public LocalTime hora;
-        public double preco;
-
-        public AgendamentoTemp(String cliente, String servico, LocalDate data, LocalTime hora, double preco) {
-            this.cliente = cliente;
-            this.servico = servico;
-            this.data = data;
-            this.hora = hora;
-            this.preco = preco;
-        }
+    private void abrirEdicao(Appointment ag) {
+        // TODO: Implementar modal de edição de agendamento
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setHeaderText("Em desenvolvimento");
+        info.setContentText("A funcionalidade de edição de agendamentos será implementada em breve.");
+        info.show();
     }
 }

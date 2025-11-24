@@ -9,7 +9,9 @@
             fx:controller="com.example.ModalNovoAgendamentoController"
             stylesheets="@css/agendamento_modal.css"
             styleClass="modal-root"
-            prefWidth="800" prefHeight="900">
+            prefWidth="750" prefHeight="650"
+            minWidth="700" minHeight="600"
+            maxWidth="900" maxHeight="800">
 
     <ScrollPane AnchorPane.topAnchor="0"
                 AnchorPane.leftAnchor="0"
@@ -21,15 +23,15 @@
                 vbarPolicy="AS_NEEDED"
                 styleClass="scroll-pane">
 
-        <VBox spacing="30"
+        <VBox spacing="20"
               alignment="TOP_CENTER"
-              style="-fx-padding: 30;">
+              style="-fx-padding: 20;">
 
             <!-- TÍTULO -->
             <Label text="📅 Novo Agendamento" styleClass="modal-title"/>
 
             <!-- FORM -->
-            <VBox spacing="25" styleClass="form-wrapper" prefWidth="700">
+            <VBox spacing="18" styleClass="form-wrapper" prefWidth="650">
 
                 <!-- Cliente -->
                 <VBox spacing="8" styleClass="field-group">
@@ -53,12 +55,31 @@
 
                 <!-- Serviço -->
                 <VBox spacing="8" styleClass="field-group">
-                    <Label text="Serviço" styleClass="field-label"/>
-                    <ComboBox fx:id="cmbServico"
-                              promptText="Selecione um serviço"
-                              styleClass="input-field"
-                              prefWidth="500"
-                              maxWidth="500"/>
+                    <Label text="Serviços" styleClass="field-label"/>
+                    
+                    <!-- ComboBox para adicionar serviços -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <ComboBox fx:id="cmbServico"
+                                  promptText="Selecione um serviço para adicionar"
+                                  styleClass="input-field"
+                                  prefWidth="400"
+                                  maxWidth="400"/>
+                        <Button text="+ Adicionar"
+                                fx:id="btnAdicionarServico"
+                                onAction="#adicionarServico"
+                                styleClass="btn-salvar"
+                                prefWidth="120"/>
+                    </HBox>
+                    
+                    <!-- Tags dos serviços selecionados -->
+                    <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+                        <Label text="Serviços Selecionados:" style="-fx-font-size: 12px; -fx-text-fill: #666; -fx-font-weight: bold;"/>
+                        <FlowPane fx:id="flowServicos"
+                                  hgap="10"
+                                  vgap="10"
+                                  prefWrapLength="500"
+                                  style="-fx-padding: 5;"/>
+                    </VBox>
                 </VBox>
 
                 <!-- Data e Hora -->
@@ -96,7 +117,7 @@
                     <Label text="Observações" styleClass="field-label"/>
                     <TextArea fx:id="txtObservacoes"
                              promptText="Observações sobre o atendimento..."
-                             prefRowCount="4"
+                             prefRowCount="3"
                              prefWidth="500"
                              maxWidth="500"
                              wrapText="true"
@@ -106,22 +127,22 @@
             </VBox>
 
             <!-- BOTÕES -->
-            <HBox spacing="25"
+            <HBox spacing="20"
                   alignment="CENTER"
                   styleClass="modal-buttons"
-                  style="-fx-padding: 20 0 30 0;">
+                  style="-fx-padding: 15 0 20 0;">
 
                 <Button text="Cancelar"
                         styleClass="btn-cancelar"
                         onAction="#fecharModal"
-                        prefWidth="150"
-                        prefHeight="45"/>
+                        prefWidth="140"
+                        prefHeight="40"/>
 
                 <Button text="Agendar"
                         styleClass="btn-salvar"
                         onAction="#salvarAgendamento"
-                        prefWidth="150"
-                        prefHeight="45"/>
+                        prefWidth="140"
+                        prefHeight="40"/>
 
             </HBox>
 
