@@ -54,7 +54,7 @@
                 <ComboBox fx:id="cbCategoria"
                           promptText="Selecione a categoria"
                           styleClass="input-field"
-                          prefWidth="200"/>
+                          prefWidth="460"/>
             </VBox>
 
             <!-- Descrição -->
@@ -64,6 +64,14 @@
                           promptText="Descrição opcional..."
                           prefRowCount="3"
                           styleClass="input-area"/>
+            </VBox>
+
+            <!-- Ativo -->
+            <VBox spacing="5" styleClass="field-group">
+                <CheckBox fx:id="chkAtivo"
+                          text="Serviço ativo"
+                          styleClass="checkbox-field"
+                          selected="true"/>
             </VBox>
 
         </VBox>
