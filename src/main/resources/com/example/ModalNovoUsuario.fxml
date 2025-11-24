@@ -9,7 +9,7 @@
             fx:controller="com.example.ModalNovoUsuarioController"
             stylesheets="@css/modal.css"
             styleClass="modal-root"
-            prefWidth="520" prefHeight="600">
+            prefWidth="600" prefHeight="700">
 
     <!-- SCROLLPANE -->
     <ScrollPane fitToWidth="true"
@@ -20,7 +20,7 @@
                 AnchorPane.rightAnchor="0"
                 AnchorPane.bottomAnchor="0">
 
-        <VBox spacing="25"
+        <VBox spacing="20"
               alignment="TOP_CENTER"
               styleClass="modal-container">
 
@@ -31,31 +31,30 @@
             <!-- TÍTULO DO MODAL -->
             <Label text="➕ Novo Usuário" styleClass="modal-title"/>
 
+            <!-- MENSAGEM DE ERRO -->
+            <Label fx:id="lblErro" styleClass="error-label" wrapText="true"/>
+
             <!-- FORMULÁRIO -->
-            <VBox spacing="18" styleClass="form-wrapper">
+            <VBox spacing="15" styleClass="form-wrapper">
+
+                <!-- Tipo de Usuário -->
+                <VBox spacing="5" styleClass="field-group">
+                    <Label text="⚡ Tipo de Usuário *" styleClass="field-label" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <ComboBox fx:id="cmbTipo" promptText="Selecione o tipo" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
+                </VBox>
+
+                <Separator/>
 
                 <!-- Nome -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Nome Completo" styleClass="field-label"/>
+                    <Label text="Nome Completo *" styleClass="field-label"/>
                     <TextField fx:id="txtNome" promptText="Digite o nome completo" styleClass="input-field"/>
                 </VBox>
 
                 <!-- Email -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Email" styleClass="field-label"/>
+                    <Label text="Email *" styleClass="field-label"/>
                     <TextField fx:id="txtEmail" promptText="exemplo@empresa.com" styleClass="input-field"/>
-                </VBox>
-
-                <!-- Senha -->
-                <VBox spacing="5" styleClass="field-group">
-                    <Label text="Senha" styleClass="field-label"/>
-                    <PasswordField fx:id="txtSenha" promptText="Digite a senha" styleClass="input-field"/>
-                </VBox>
-
-                <!-- Tipo -->
-                <VBox spacing="5" styleClass="field-group">
-                    <Label text="Tipo de Usuário" styleClass="field-label"/>
-                    <ComboBox fx:id="cmbTipo" promptText="Selecione o tipo" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
                 </VBox>
 
                 <!-- Telefone -->
@@ -64,27 +63,105 @@
                     <TextField fx:id="txtTelefone" promptText="(00) 00000-0000" styleClass="input-field"/>
                 </VBox>
 
-                <!-- CPF -->
-                <VBox spacing="5" styleClass="field-group">
-                    <Label text="CPF" styleClass="field-label"/>
-                    <TextField fx:id="txtCpf" promptText="000.000.000-00" styleClass="input-field"/>
-                </VBox>
-
-                <!-- Data de Contratação -->
-                <VBox spacing="5" styleClass="field-group">
-                    <Label text="Data de Contratação" styleClass="field-label"/>
-                    <DatePicker fx:id="dpDataContratacao" promptText="Selecione a data" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
-                </VBox>
-
                 <!-- Ativo -->
                 <VBox spacing="5" styleClass="field-group">
-                    <CheckBox fx:id="chkAtivo" text="Usuário ativo" selected="true"/>
+                    <CheckBox fx:id="chkAtivo" text="Ativo" selected="true"/>
                 </VBox>
 
                 <!-- Observações -->
                 <VBox spacing="5" styleClass="field-group">
                     <Label text="Observações" styleClass="field-label"/>
-                    <TextArea fx:id="txtObservacoes" promptText="Notas adicionais..." prefRowCount="3" styleClass="input-field"/>
+                    <TextArea fx:id="txtObservacoes" promptText="Notas adicionais..." prefRowCount="2" styleClass="input-field"/>
+                </VBox>
+
+                <!-- ==================== CAMPOS ADMINISTRADOR ==================== -->
+
+                <VBox fx:id="camposAdministrador" spacing="15">
+                    <Separator style="-fx-background-color: #3b82f6;"/>
+                    
+                    <Label text="👤 Dados do Administrador" style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #3b82f6;"/>
+
+                    <!-- Username -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Username *" styleClass="field-label"/>
+                        <TextField fx:id="txtUsername" promptText="Nome de usuário para login (mín. 4 caracteres)" styleClass="input-field"/>
+                    </VBox>
+
+                    <!-- Senha -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Senha *" styleClass="field-label"/>
+                        <PasswordField fx:id="txtSenha" promptText="Mínimo 6 caracteres" styleClass="input-field"/>
+                    </VBox>
+                </VBox>
+
+                <!-- ==================== CAMPOS FUNCIONÁRIO ==================== -->
+
+                <VBox fx:id="camposFuncionario" spacing="15">
+                    <Separator style="-fx-background-color: #10b981;"/>
+                    
+                    <Label text="💼 Dados do Funcionário" style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #10b981;"/>
+
+                    <!-- CPF -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="CPF *" styleClass="field-label"/>
+                        <TextField fx:id="txtCpf" promptText="000.000.000-00" styleClass="input-field"/>
+                    </VBox>
+
+                    <!-- Data de Contratação -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Data de Contratação *" styleClass="field-label"/>
+                        <DatePicker fx:id="dpDataContratacao" promptText="Selecione a data" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Cargo -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Cargo" styleClass="field-label"/>
+                        <TextField fx:id="txtCargo" promptText="Ex: Cabeleireiro, Barbeiro, Manicure" styleClass="input-field"/>
+                    </VBox>
+
+                    <!-- Especialidades -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Especialidades" styleClass="field-label"/>
+                        <TextField fx:id="txtEspecialidades" promptText="Ex: Corte, Coloração, Tratamentos" styleClass="input-field"/>
+                    </VBox>
+
+                    <!-- Nível de Experiência -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Nível de Experiência" styleClass="field-label"/>
+                        <ComboBox fx:id="cmbNivelExperiencia" promptText="Selecione" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Grid de 2 colunas: Salário e Comissão -->
+                    <HBox spacing="10">
+                        <!-- Salário Base -->
+                        <VBox spacing="5" styleClass="field-group" HBox.hgrow="ALWAYS">
+                            <Label text="Salário Base (R$)" styleClass="field-label"/>
+                            <TextField fx:id="txtSalarioBase" promptText="0.00" styleClass="input-field"/>
+                        </VBox>
+
+                        <!-- Comissão -->
+                        <VBox spacing="5" styleClass="field-group" HBox.hgrow="ALWAYS">
+                            <Label text="Comissão (%)" styleClass="field-label"/>
+                            <TextField fx:id="txtComissao" promptText="0.30 = 30%" styleClass="input-field"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Horário de Trabalho -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Horário de Trabalho" styleClass="field-label"/>
+                        <TextField fx:id="txtHorarioTrabalho" promptText="Ex: 08:00-18:00" styleClass="input-field"/>
+                    </VBox>
+
+                    <!-- Tipo de Cliente Preferido -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Tipo de Cliente Preferido" styleClass="field-label"/>
+                        <ComboBox fx:id="cmbTipoClientePreferido" promptText="Selecione" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Pode realizar tratamentos químicos -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <CheckBox fx:id="chkQuimicos" text="Pode realizar tratamentos químicos (coloração, alisamento, etc.)"/>
+                    </VBox>
                 </VBox>
 
             </VBox>
