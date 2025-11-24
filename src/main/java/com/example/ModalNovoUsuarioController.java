@@ -57,6 +57,81 @@ public class ModalNovoUsuarioController {
         cmbTipoClientePreferido.getItems().addAll("Masculino", "Feminino", "Infantil", "Todos");
         cmbTipoClientePreferido.setValue("Todos");
         
+        // Máscara de telefone (11) 99999-9999
+        txtTelefone.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return;
+            }
+            
+            String cleaned = newValue.replaceAll("[^0-9]", "");
+            
+            if (cleaned.length() > 11) {
+                cleaned = cleaned.substring(0, 11);
+            }
+            
+            StringBuilder formatted = new StringBuilder();
+            int length = cleaned.length();
+            
+            if (length > 0) {
+                formatted.append("(");
+                formatted.append(cleaned.substring(0, Math.min(2, length)));
+                
+                if (length >= 3) {
+                    formatted.append(") ");
+                    
+                    if (length <= 7) {
+                        formatted.append(cleaned.substring(2));
+                    } else {
+                        formatted.append(cleaned.substring(2, 7));
+                        
+                        if (length > 7) {
+                            formatted.append("-");
+                            formatted.append(cleaned.substring(7));
+                        }
+                    }
+                }
+            }
+            
+            String result = formatted.toString();
+            if (!result.equals(newValue)) {
+                int caretPosition = txtTelefone.getCaretPosition();
+                txtTelefone.setText(result);
+                
+                // Ajustar posição do cursor
+                if (caretPosition <= result.length()) {
+                    txtTelefone.positionCaret(Math.min(caretPosition + 1, result.length()));
+                } else {
+                    txtTelefone.positionCaret(result.length());
+                }
+            }
+        });
+        
+        // Máscara de CPF 000.000.000-00
+        txtCpf.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null && !newValue.isEmpty()) {
+                String cleaned = newValue.replaceAll("[^0-9]", "");
+                if (cleaned.length() > 11) {
+                    cleaned = cleaned.substring(0, 11);
+                }
+                
+                StringBuilder formatted = new StringBuilder();
+                for (int i = 0; i < cleaned.length(); i++) {
+                    if (i == 3 || i == 6) {
+                        formatted.append(".");
+                    } else if (i == 9) {
+                        formatted.append("-");
+                    }
+                    formatted.append(cleaned.charAt(i));
+                }
+                
+                String result = formatted.toString();
+                if (!result.equals(newValue)) {
+                    txtCpf.setText(result);
+                    txtCpf.positionCaret(result.length());
+                }
+            }
+        });
+        
         // Listener para mostrar/ocultar campos baseado no tipo
         cmbTipo.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
@@ -91,7 +166,7 @@ public class ModalNovoUsuarioController {
         System.out.println("Tipo selecionado: " + tipo);
         
         if (tipo == null) {
-            mostrarErro("Selecione o tipo de usuário");
+            mostrarErroPopup("Tipo de Usuário", "Por favor, selecione o tipo de usuário (Administrador ou Funcionário)");
             return;
         }
         
@@ -117,19 +192,19 @@ public class ModalNovoUsuarioController {
             if (sucesso) {
                 System.out.println("Salvamento bem-sucedido, mostrando alerta");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Sucesso");
-                alert.setHeaderText(null);
-                alert.setContentText(tipo + " cadastrado com sucesso!");
+                alert.setTitle("✅ Sucesso");
+                alert.setHeaderText(tipo + " cadastrado com sucesso!");
+                alert.setContentText("Os dados foram salvos no sistema.");
                 alert.showAndWait();
                 fecharModal();
             } else {
                 System.out.println("Salvamento falhou");
-                mostrarErro("Erro ao cadastrar " + tipo.toLowerCase());
+                mostrarErroPopup("Erro ao Salvar", "Não foi possível cadastrar o " + tipo.toLowerCase() + ".\nVerifique os logs para mais detalhes.");
             }
         } catch (Exception e) {
             System.err.println("EXCEÇÃO no método salvar: " + e.getMessage());
             e.printStackTrace();
-            mostrarErro("Erro inesperado: " + e.getMessage());
+            mostrarErroPopup("Erro Inesperado", "Ocorreu um erro ao processar os dados:\n" + e.getMessage());
         }
     }
     
@@ -138,20 +213,35 @@ public class ModalNovoUsuarioController {
         
         if (txtNome.getText().trim().isEmpty()) {
             System.out.println("Nome vazio");
-            mostrarErro("Nome é obrigatório");
+            mostrarErroPopup("Nome Obrigatório", "Por favor, preencha o nome completo.");
+            return false;
+        }
+        
+        if (txtNome.getText().trim().length() < 3) {
+            mostrarErroPopup("Nome Inválido", "O nome deve ter no mínimo 3 caracteres.");
             return false;
         }
         
         if (txtEmail.getText().trim().isEmpty()) {
             System.out.println("Email vazio");
-            mostrarErro("Email é obrigatório");
+            mostrarErroPopup("Email Obrigatório", "Por favor, preencha o email.");
             return false;
         }
         
-        if (!txtEmail.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+        if (!txtEmail.getText().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             System.out.println("Email inválido: " + txtEmail.getText());
-            mostrarErro("Email inválido");
+            mostrarErroPopup("Email Inválido", "Por favor, insira um email válido.\nExemplo: usuario@empresa.com");
             return false;
+        }
+        
+        // Validar telefone se preenchido
+        if (!txtTelefone.getText().trim().isEmpty()) {
+            String telefoneNumeros = txtTelefone.getText().replaceAll("[^0-9]", "");
+            if (telefoneNumeros.length() != 11) {
+                System.out.println("Telefone incompleto: " + telefoneNumeros.length() + " dígitos");
+                mostrarErroPopup("Telefone Inválido", "O telefone deve ter 11 dígitos.\nFormato: (11) 99999-9999");
+                return false;
+            }
         }
         
         System.out.println("Validação de campos comuns OK");
@@ -167,25 +257,25 @@ public class ModalNovoUsuarioController {
         
         if (txtUsername.getText().trim().isEmpty()) {
             System.out.println("Username vazio!");
-            mostrarErro("Username é obrigatório para administrador");
+            mostrarErroPopup("Username Obrigatório", "Por favor, preencha o username para login.");
             return false;
         }
         
         if (txtUsername.getText().length() < 4) {
             System.out.println("Username muito curto: " + txtUsername.getText().length());
-            mostrarErro("Username deve ter no mínimo 4 caracteres");
+            mostrarErroPopup("Username Inválido", "O username deve ter no mínimo 4 caracteres.");
             return false;
         }
         
         if (txtSenha.getText().trim().isEmpty()) {
             System.out.println("Senha vazia!");
-            mostrarErro("Senha é obrigatória");
+            mostrarErroPopup("Senha Obrigatória", "Por favor, defina uma senha.");
             return false;
         }
         
         if (txtSenha.getText().length() < 6) {
             System.out.println("Senha muito curta: " + txtSenha.getText().length());
-            mostrarErro("Senha deve ter no mínimo 6 caracteres");
+            mostrarErroPopup("Senha Inválida", "A senha deve ter no mínimo 6 caracteres.");
             return false;
         }
         
@@ -196,15 +286,21 @@ public class ModalNovoUsuarioController {
             Adm adm = new Adm();
             adm.setFullName(txtNome.getText().trim());
             adm.setUsername(txtUsername.getText().trim());
-            adm.setPasswordHash(BCrypt.hashpw(txtSenha.getText(), BCrypt.gensalt()));
+            
+            String senhaOriginal = txtSenha.getText();
+            String senhaCriptografada = BCrypt.hashpw(senhaOriginal, BCrypt.gensalt());
+            adm.setPasswordHash(senhaCriptografada);
+            
             adm.setEmail(txtEmail.getText().trim());
-            adm.setPhoneNumber(txtTelefone.getText().trim());
+            adm.setPhoneNumber(txtTelefone.getText().replaceAll("[^0-9]", ""));
             adm.setActive(chkAtivo.isSelected());
             adm.setNotes(txtObservacoes.getText().trim());
             
             System.out.println("=== CONTROLLER: Tentando salvar administrador ===");
             System.out.println("Nome: " + adm.getFullName());
             System.out.println("Username: " + adm.getUsername());
+            System.out.println("Senha Original: " + senhaOriginal);
+            System.out.println("Senha Criptografada: " + senhaCriptografada);
             System.out.println("Email: " + adm.getEmail());
             System.out.println("Telefone: " + adm.getPhoneNumber());
             System.out.println("Ativo: " + adm.isActive());
@@ -220,7 +316,7 @@ public class ModalNovoUsuarioController {
         } catch (Exception e) {
             System.err.println("ERRO no salvarAdministrador: " + e.getMessage());
             e.printStackTrace();
-            mostrarErro("Erro ao processar dados: " + e.getMessage());
+            mostrarErroPopup("Erro ao Salvar", "Erro ao processar dados do administrador:\n" + e.getMessage());
             return false;
         }
     }
@@ -234,25 +330,25 @@ public class ModalNovoUsuarioController {
         
         if (txtCpf.getText().trim().isEmpty()) {
             System.out.println("CPF vazio!");
-            mostrarErro("CPF é obrigatório para funcionário");
+            mostrarErroPopup("CPF Obrigatório", "Por favor, preencha o CPF do funcionário.");
             return false;
         }
         
         if (!validarCPF(txtCpf.getText().trim())) {
             System.out.println("CPF inválido!");
-            mostrarErro("CPF inválido");
+            mostrarErroPopup("CPF Inválido", "O CPF informado não é válido.\nVerifique os números digitados.");
             return false;
         }
         
         if (dpDataContratacao.getValue() == null) {
             System.out.println("Data de contratação não selecionada!");
-            mostrarErro("Data de contratação é obrigatória");
+            mostrarErroPopup("Data Obrigatória", "Por favor, selecione a data de contratação.");
             return false;
         }
         
         if (dpDataContratacao.getValue().isAfter(LocalDate.now())) {
             System.out.println("Data de contratação futura!");
-            mostrarErro("Data de contratação não pode ser futura");
+            mostrarErroPopup("Data Inválida", "A data de contratação não pode ser uma data futura.");
             return false;
         }
         
@@ -263,8 +359,8 @@ public class ModalNovoUsuarioController {
             Employee employee = new Employee();
             employee.setName(txtNome.getText().trim());
             employee.setEmail(txtEmail.getText().trim());
-            employee.setPhoneNumber(txtTelefone.getText().trim());
-            employee.setCpf(txtCpf.getText().trim());
+            employee.setPhoneNumber(txtTelefone.getText().replaceAll("[^0-9]", ""));
+            employee.setCpf(txtCpf.getText().replaceAll("[^0-9]", ""));
             employee.setHireDate(dpDataContratacao.getValue());
             employee.setActive(chkAtivo.isSelected());
             employee.setNotes(txtObservacoes.getText().trim());
@@ -281,10 +377,14 @@ public class ModalNovoUsuarioController {
             if (!txtSalarioBase.getText().trim().isEmpty()) {
                 try {
                     BigDecimal salario = new BigDecimal(txtSalarioBase.getText().trim().replace(",", "."));
+                    if (salario.compareTo(BigDecimal.ZERO) < 0) {
+                        mostrarErroPopup("Salário Inválido", "O salário base não pode ser negativo.");
+                        return false;
+                    }
                     employee.setBaseSalary(salario);
                 } catch (NumberFormatException e) {
                     System.out.println("Salário inválido: " + txtSalarioBase.getText());
-                    mostrarErro("Salário base inválido");
+                    mostrarErroPopup("Salário Inválido", "Por favor, insira um valor numérico válido.\nExemplo: 2500.00");
                     return false;
                 }
             }
@@ -295,13 +395,13 @@ public class ModalNovoUsuarioController {
                     BigDecimal comissao = new BigDecimal(txtComissao.getText().trim().replace(",", "."));
                     if (comissao.compareTo(BigDecimal.ZERO) < 0 || comissao.compareTo(BigDecimal.ONE) > 0) {
                         System.out.println("Comissão fora do range: " + comissao);
-                        mostrarErro("Comissão deve estar entre 0 e 1 (ex: 0.30 para 30%)");
+                        mostrarErroPopup("Comissão Inválida", "A comissão deve estar entre 0 e 1.\nExemplo: 0.30 = 30%");
                         return false;
                     }
                     employee.setCommissionRate(comissao);
                 } catch (NumberFormatException e) {
                     System.out.println("Comissão inválida: " + txtComissao.getText());
-                    mostrarErro("Comissão inválida");
+                    mostrarErroPopup("Comissão Inválida", "Por favor, insira um valor decimal válido.\nExemplo: 0.30");
                     return false;
                 }
             }
@@ -323,7 +423,7 @@ public class ModalNovoUsuarioController {
         } catch (Exception e) {
             System.err.println("ERRO no salvarFuncionario: " + e.getMessage());
             e.printStackTrace();
-            mostrarErro("Erro ao processar dados: " + e.getMessage());
+            mostrarErroPopup("Erro ao Salvar", "Erro ao processar dados do funcionário:\n" + e.getMessage());
             return false;
         }
     }
@@ -379,5 +479,13 @@ public class ModalNovoUsuarioController {
     private void mostrarErro(String mensagem) {
         lblErro.setText("⚠ " + mensagem);
         lblErro.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;");
+    }
+    
+    private void mostrarErroPopup(String titulo, String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("❌ " + titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 }
