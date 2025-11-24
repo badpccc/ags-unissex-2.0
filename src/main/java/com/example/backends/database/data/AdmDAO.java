@@ -68,7 +68,7 @@ public class AdmDAO {
         String sql = """
             UPDATE adm SET
                 full_name = ?, username = ?, password_hash = ?,
-                email = ?, phone_number = ?, notes = ?,
+                email = ?, phone_number = ?, notes = ?, is_active = ?,
                 updated_at = CURRENT_TIMESTAMP
             WHERE id = ?
             """;
@@ -84,7 +84,8 @@ public class AdmDAO {
                 pstmt.setString(4, adm.getEmail());
                 pstmt.setString(5, adm.getPhoneNumber());
                 pstmt.setString(6, adm.getNotes());
-                pstmt.setLong(7, adm.getId());
+                pstmt.setBoolean(7, adm.isActive());
+                pstmt.setLong(8, adm.getId());
 
                 int affected = pstmt.executeUpdate();
                 conn.commit();

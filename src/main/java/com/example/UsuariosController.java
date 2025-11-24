@@ -142,6 +142,7 @@ public class UsuariosController {
         // BOTÕES
         Button editar = new Button("Editar");
         editar.getStyleClass().add("btn-editar");
+        editar.setOnAction(e -> editarAdministrador(adm));
 
         Button excluir = new Button("Excluir");
         excluir.getStyleClass().add("btn-excluir");
@@ -194,6 +195,7 @@ public class UsuariosController {
         // BOTÕES
         Button editar = new Button("Editar");
         editar.getStyleClass().add("btn-editar");
+        editar.setOnAction(e -> editarFuncionario(emp));
 
         Button excluir = new Button("Excluir");
         excluir.getStyleClass().add("btn-excluir");
@@ -240,6 +242,50 @@ public class UsuariosController {
             
             // Recarregar dados após fechar o modal
             carregarDados();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void editarAdministrador(Adm adm) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarUsuario.fxml"));
+            Parent root = loader.load();
+            
+            EditarUsuarioController controller = loader.getController();
+            controller.carregarAdministrador(adm);
+            controller.setCallback(this::carregarDados);
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Administrador");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void editarFuncionario(Employee emp) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarUsuario.fxml"));
+            Parent root = loader.load();
+            
+            EditarUsuarioController controller = loader.getController();
+            controller.carregarFuncionario(emp);
+            controller.setCallback(this::carregarDados);
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Funcionário");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+
+            stage.showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();
