@@ -158,7 +158,7 @@ public class EmployeeDAO {
     
 
     public static boolean delete(Long employeeID) {
-        String sql = "UPDATE employees SET is_active = false, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+        String sql = "DELETE FROM employees WHERE id = ?";
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -168,11 +168,11 @@ public class EmployeeDAO {
             
             pstmt.setLong(1, employeeID);
             int affectedRows = pstmt.executeUpdate();
-            System.out.println("Linhas afetadas na remoção de funcionário: " + affectedRows);
+            System.out.println("Linhas afetadas na exclusão de funcionário: " + affectedRows);
             
             if (affectedRows > 0) {
                 conn.commit();
-                System.out.println("Transação commitada! Funcionário removido com sucesso.");
+                System.out.println("Transação commitada! Funcionário excluído com sucesso.");
                 return true;
             } else {
                 conn.rollback();
@@ -180,7 +180,7 @@ public class EmployeeDAO {
             }
             
         } catch (SQLException e) {
-            System.err.println("Erro ao remover funcionário: " + e.getMessage());
+            System.err.println("Erro ao excluir funcionário: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -212,7 +212,7 @@ public class EmployeeDAO {
 
     public static List<Employee> getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
-        String sql = "SELECT * FROM employees WHERE is_active = true ORDER BY name";
+        String sql = "SELECT * FROM employees ORDER BY name";
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -228,6 +228,11 @@ public class EmployeeDAO {
         }
         
         return employees;
+    }
+    
+    // Alias para manter compatibilidade
+    public static List<Employee> getAll() {
+        return getAllEmployees();
     }
     
 

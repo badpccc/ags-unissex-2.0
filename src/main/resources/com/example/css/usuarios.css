@@ -45,6 +45,37 @@
 }
 
 /* ======================================= */
+/*           BOTÕES DE FILTRO              */
+/* ======================================= */
+
+.toggle-filter {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #999;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-border-color: #333;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+}
+
+.toggle-filter:selected {
+    -fx-background-color: #4dd2ff;
+    -fx-text-fill: #111;
+    -fx-border-color: #4dd2ff;
+}
+
+.toggle-filter:hover {
+    -fx-background-color: #252525;
+}
+
+.toggle-filter:selected:hover {
+    -fx-background-color: #5de0ff;
+}
+
+/* ======================================= */
 /*               CARDS                     */
 /* ======================================= */
 

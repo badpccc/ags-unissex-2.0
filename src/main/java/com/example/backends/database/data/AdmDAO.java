@@ -150,6 +150,29 @@ public class AdmDAO {
 
         return null;
     }
+    
+    // ============================================================
+    // GET ALL
+    // ============================================================
+    public static java.util.List<Adm> getAll() {
+        String sql = "SELECT * FROM adm ORDER BY full_name";
+        java.util.List<Adm> lista = new java.util.ArrayList<>();
+
+        try (Connection conn = Connect.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(map(rs));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar todos os administradores: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
 
     // ============================================================
     // LOGIN → buscar por username

@@ -15,15 +15,27 @@
     <!--  CABEÇALHO / TÍTULO DA TELA   -->
     <!-- ============================= -->
     <top>
-        <HBox styleClass="header-usuarios">
-            <Label text="👤 Usuários" styleClass="titulo-usuarios"/>
-            <Region HBox.hgrow="ALWAYS"/>
+        <VBox spacing="20" styleClass="header-usuarios">
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label text="👤 Usuários" styleClass="titulo-usuarios"/>
+                <Region HBox.hgrow="ALWAYS"/>
 
-            <Button text="+ Novo Usuário"
-                    styleClass="btn-novo-usuario"
-                    onAction="#novoUsuario"/>
-
-        </HBox>
+                <Button text="+ Novo Usuário"
+                        styleClass="btn-novo-usuario"
+                        onAction="#novoUsuario"/>
+            </HBox>
+            
+            <!-- FILTROS -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Label text="Exibir:" style="-fx-font-size: 16px; -fx-text-fill: #ccc;"/>
+                <ToggleButton fx:id="btnMostrarAdmins" 
+                             text="👤 Administradores" 
+                             styleClass="toggle-filter"/>
+                <ToggleButton fx:id="btnMostrarFuncionarios" 
+                             text="💼 Funcionários" 
+                             styleClass="toggle-filter"/>
+            </HBox>
+        </VBox>
     </top>
 
     <!-- ============================= -->
