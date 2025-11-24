@@ -93,11 +93,6 @@ public class PrimaryController {
             showError("❌ Erro ao conectar ao banco: " + e.getMessage());
         }
     }
-
-    @FXML
-    private void handleRegister() throws IOException {
-        App.setRoot("registro");
-    }
     
     private void showError(String msg) {
         if (lblMessage != null) {

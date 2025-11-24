@@ -93,7 +93,6 @@
 
 /* ===== Box de botões ===== */
 .button-box {
-  -fx-spacing: 25;
   -fx-alignment: center;
 }
 
@@ -160,7 +159,6 @@
 /* ===== Box de botões centralizado ===== */
 .button-box {
   -fx-alignment: center;
-  -fx-spacing: 20;
   -fx-padding: 15 0 0 0;
 }
 
