@@ -114,7 +114,7 @@ public class ServicesDAO {
     
 
     public static boolean delete(Long serviceID) {
-        String sql = "UPDATE services SET is_active = false, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+        String sql = "DELETE FROM services WHERE id = ?";
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -124,11 +124,11 @@ public class ServicesDAO {
             
             pstmt.setLong(1, serviceID);
             int affectedRows = pstmt.executeUpdate();
-            System.out.println("Linhas afetadas na remoção de serviço: " + affectedRows);
+            System.out.println("Linhas afetadas na exclusão de serviço: " + affectedRows);
             
             if (affectedRows > 0) {
                 conn.commit();
-                System.out.println("Transação commitada! Serviço removido com sucesso.");
+                System.out.println("Transação commitada! Serviço excluído permanentemente do banco de dados.");
                 return true;
             } else {
                 conn.rollback();
@@ -136,7 +136,7 @@ public class ServicesDAO {
             }
             
         } catch (SQLException e) {
-            System.err.println("Erro ao remover serviço: " + e.getMessage());
+            System.err.println("Erro ao excluir serviço: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -144,7 +144,8 @@ public class ServicesDAO {
     
 
     public static Service getServiceByID(Long serviceID) {
-        String sql = "SELECT * FROM services WHERE id = ? AND is_active = true";
+        // Remove filtro is_active para carregar serviços mesmo que tenham sido desativados
+        String sql = "SELECT * FROM services WHERE id = ?";
         
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

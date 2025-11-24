@@ -87,27 +87,50 @@ public class EditarAgendamentoController {
     public void carregarAgendamento(Appointment agendamento) {
         this.agendamentoOriginal = agendamento;
         
+        System.out.println("=== DEBUG: Carregando agendamento para edição ===");
+        System.out.println("ID do agendamento: " + agendamento.getId());
+        System.out.println("IDs de serviços no objeto: " + agendamento.getServiceIds());
+        
         new Thread(() -> {
             // Buscar cliente
             final Client cliente = ClientDAO.getClientByID(agendamento.getClientId());
+            System.out.println("Cliente carregado: " + (cliente != null ? cliente.getName() : "null"));
             
             // Buscar funcionário
             Employee funcionario = null;
             if (agendamento.getStylistId() != null) {
                 funcionario = EmployeeDAO.getEmployeeByID(agendamento.getStylistId());
+                System.out.println("Funcionário carregado: " + (funcionario != null ? funcionario.getName() : "null"));
             }
             final Employee funcFinal = funcionario;
             
-            // Buscar serviços selecionados
+            // Buscar serviços selecionados - FORÇAR RECARGA DO BANCO
             final List<Service> servicosCarregados = new ArrayList<>();
-            if (agendamento.getServiceIds() != null) {
-                for (Long serviceId : agendamento.getServiceIds()) {
+            List<Long> serviceIds = agendamento.getServiceIds();
+            
+            // Se não houver IDs no objeto, buscar diretamente do banco
+            if (serviceIds == null || serviceIds.isEmpty()) {
+                System.out.println("⚠️ Service IDs vazios no objeto, buscando do banco...");
+                serviceIds = AppointmentDAO.getServiceIDsByAppointment(agendamento.getId());
+                System.out.println("Service IDs do banco: " + serviceIds);
+            }
+            
+            if (serviceIds != null && !serviceIds.isEmpty()) {
+                for (Long serviceId : serviceIds) {
+                    System.out.println("Buscando serviço ID: " + serviceId);
                     Service s = ServicesDAO.getServiceByID(serviceId);
                     if (s != null) {
                         servicosCarregados.add(s);
+                        System.out.println("✅ Serviço carregado: " + s.getName());
+                    } else {
+                        System.out.println("❌ Serviço não encontrado para ID: " + serviceId);
                     }
                 }
+            } else {
+                System.out.println("⚠️ Nenhum serviço encontrado para este agendamento");
             }
+            
+            System.out.println("Total de serviços carregados: " + servicosCarregados.size());
             
             Platform.runLater(() -> {
                 // Preencher cliente
@@ -136,10 +159,12 @@ public class EditarAgendamentoController {
                 for (Service s : servicosCarregados) {
                     servicosSelecionados.add(s);
                     criarTagServico(s);
+                    System.out.println("Tag criada para serviço: " + s.getName());
                 }
                 
                 // Atualizar preço total
                 atualizarPrecoTotal();
+                System.out.println("=== FIM DEBUG ===");
             });
         }).start();
     }
