@@ -19,7 +19,6 @@ O objetivo é trazer praticidade e organização para o dia a dia, centralizando
 | 🧑‍💻 IntelliJ  | IDE Utilizada para o Desenvolvimento         |
 | 🎨 JavaFX      | Framework para Criação de Interfaces Gráficas |
 | ☕ Java         | Linguagem Principal do Projeto                |
-| 🛠️ Gradle      | Gerenciador de Dependências e Build           |
 | 🗄️ PostgreSQL  | Banco de Dados Relacional                     |
 
 ---
@@ -36,7 +35,9 @@ O objetivo é trazer praticidade e organização para o dia a dia, centralizando
 ## 👨‍💻 Autor
 
 Desenvolvido por [João Anderson](https://github.com/badpccc), [Arthur Ivo](https://github.com/ryzemebom), [Jonas Thiago](https://github.com/Jonasth0), [Antonio Moreira](https://github.com/400Mhz), Diego Delgado e Bruno Henrique.<br> 
-Estudante de Sistemas de Informação - UniRios
+Estudantes de Sistemas de Informação - UniRios.<br> 
+Com auxilio de [Rafael Souza Reis](https://github.com/RafaSouzaReis).
 
 ---
+
 
