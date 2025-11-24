@@ -16,11 +16,11 @@ public class EmployeeDAO {
     public static boolean insert(Employee employee) {
         String sql = """
             INSERT INTO employees (
-                name, email, phone_number, cpf, notes,
+                name, username, password_hash, email, phone_number, cpf, notes,
                 specialties, experience_level, base_salary, commission_rate,
                 working_hours, working_days, position, certificates,
                 can_perform_chemical_treatments, preferred_client_type
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
         try (Connection conn = Connect.getConnection();
@@ -30,35 +30,37 @@ public class EmployeeDAO {
             conn.setAutoCommit(false);
             
             pstmt.setString(1, employee.getName());
-            pstmt.setString(2, employee.getEmail());
-            pstmt.setString(3, employee.getPhoneNumber());
-            pstmt.setString(4, employee.getCpf());
-            pstmt.setString(5, employee.getNotes());
+            pstmt.setString(2, employee.getUsername());
+            pstmt.setString(3, employee.getPasswordHash());
+            pstmt.setString(4, employee.getEmail());
+            pstmt.setString(5, employee.getPhoneNumber());
+            pstmt.setString(6, employee.getCpf());
+            pstmt.setString(7, employee.getNotes());
             
-            pstmt.setString(6, employee.getSpecialties());
-            pstmt.setString(7, employee.getExperienceLevel());
+            pstmt.setString(8, employee.getSpecialties());
+            pstmt.setString(9, employee.getExperienceLevel());
             
             if (employee.getBaseSalary() != null) {
-                pstmt.setBigDecimal(8, employee.getBaseSalary());
+                pstmt.setBigDecimal(10, employee.getBaseSalary());
             } else {
-                pstmt.setNull(8, Types.DECIMAL);
+                pstmt.setNull(10, Types.DECIMAL);
             }
             
             if (employee.getCommissionRate() != null) {
-                pstmt.setBigDecimal(9, employee.getCommissionRate());
+                pstmt.setBigDecimal(11, employee.getCommissionRate());
             } else {
-                pstmt.setNull(9, Types.DECIMAL);
+                pstmt.setNull(11, Types.DECIMAL);
             }
             
-            pstmt.setString(10, employee.getWorkingHours());
+            pstmt.setString(12, employee.getWorkingHours());
             
             String workingDaysJson = convertListToJson(employee.getWorkingDays());
-            pstmt.setString(11, workingDaysJson);
+            pstmt.setString(13, workingDaysJson);
             
-            pstmt.setString(12, employee.getPosition());
-            pstmt.setString(13, employee.getCertificates());
-            pstmt.setBoolean(14, employee.isCanPerformChemicalTreatments());
-            pstmt.setString(15, employee.getPreferredClientType());
+            pstmt.setString(14, employee.getPosition());
+            pstmt.setString(15, employee.getCertificates());
+            pstmt.setBoolean(16, employee.isCanPerformChemicalTreatments());
+            pstmt.setString(17, employee.getPreferredClientType());
             
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Linhas afetadas na inserção de funcionário: " + affectedRows);
@@ -90,7 +92,7 @@ public class EmployeeDAO {
     public static boolean update(Employee employee) {
         String sql = """
             UPDATE employees SET 
-                name = ?, email = ?, phone_number = ?, cpf = ?, notes = ?,
+                name = ?, username = ?, password_hash = ?, email = ?, phone_number = ?, cpf = ?, notes = ?,
                 specialties = ?, experience_level = ?, base_salary = ?, commission_rate = ?,
                 working_hours = ?, working_days = ?, position = ?, certificates = ?,
                 can_perform_chemical_treatments = ?, preferred_client_type = ?,
@@ -105,37 +107,39 @@ public class EmployeeDAO {
             conn.setAutoCommit(false);
             
             pstmt.setString(1, employee.getName());
-            pstmt.setString(2, employee.getEmail());
-            pstmt.setString(3, employee.getPhoneNumber());
-            pstmt.setString(4, employee.getCpf());
-            pstmt.setString(5, employee.getNotes());
+            pstmt.setString(2, employee.getUsername());
+            pstmt.setString(3, employee.getPasswordHash());
+            pstmt.setString(4, employee.getEmail());
+            pstmt.setString(5, employee.getPhoneNumber());
+            pstmt.setString(6, employee.getCpf());
+            pstmt.setString(7, employee.getNotes());
             
-            pstmt.setString(6, employee.getSpecialties());
-            pstmt.setString(7, employee.getExperienceLevel());
+            pstmt.setString(8, employee.getSpecialties());
+            pstmt.setString(9, employee.getExperienceLevel());
             
             if (employee.getBaseSalary() != null) {
-                pstmt.setBigDecimal(8, employee.getBaseSalary());
+                pstmt.setBigDecimal(10, employee.getBaseSalary());
             } else {
-                pstmt.setNull(8, Types.DECIMAL);
+                pstmt.setNull(10, Types.DECIMAL);
             }
             
             if (employee.getCommissionRate() != null) {
-                pstmt.setBigDecimal(9, employee.getCommissionRate());
+                pstmt.setBigDecimal(11, employee.getCommissionRate());
             } else {
-                pstmt.setNull(9, Types.DECIMAL);
+                pstmt.setNull(11, Types.DECIMAL);
             }
             
-            pstmt.setString(10, employee.getWorkingHours());
+            pstmt.setString(12, employee.getWorkingHours());
             
             String workingDaysJson = convertListToJson(employee.getWorkingDays());
-            pstmt.setString(11, workingDaysJson);
+            pstmt.setString(13, workingDaysJson);
             
-            pstmt.setString(12, employee.getPosition());
-            pstmt.setString(13, employee.getCertificates());
-            pstmt.setBoolean(14, employee.isCanPerformChemicalTreatments());
-            pstmt.setString(15, employee.getPreferredClientType());
+            pstmt.setString(14, employee.getPosition());
+            pstmt.setString(15, employee.getCertificates());
+            pstmt.setBoolean(16, employee.isCanPerformChemicalTreatments());
+            pstmt.setString(17, employee.getPreferredClientType());
             
-            pstmt.setLong(16, employee.getId());
+            pstmt.setLong(18, employee.getId());
             
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Linhas afetadas na atualização de funcionário: " + affectedRows);
@@ -306,6 +310,31 @@ public class EmployeeDAO {
         return employees;
     }
     
+    /**
+     * Busca funcionário por username para login
+     */
+    public static Employee getByUsername(String username) {
+        String sql = "SELECT * FROM employees WHERE username = ?";
+
+        try (Connection conn = Connect.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToEmployee(rs);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar funcionário por username: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    
 
     public static boolean updateLastTraining(Long employeeID, LocalDateTime lastTrainingDate) {
         String sql = "UPDATE employees SET last_training_date = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
@@ -344,6 +373,8 @@ public class EmployeeDAO {
         // Campos básicos
         employee.setId(rs.getLong("id"));
         employee.setName(rs.getString("name"));
+        employee.setUsername(rs.getString("username"));
+        employee.setPasswordHash(rs.getString("password_hash"));
         employee.setEmail(rs.getString("email"));
         employee.setPhoneNumber(rs.getString("phone_number"));
         employee.setCpf(rs.getString("cpf"));

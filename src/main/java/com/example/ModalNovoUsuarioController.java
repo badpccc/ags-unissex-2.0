@@ -31,6 +31,8 @@ public class ModalNovoUsuarioController {
 
     // Campos específicos de Funcionário
     @FXML private VBox camposFuncionario;
+    @FXML private TextField txtUsernameFuncionario;
+    @FXML private PasswordField txtSenhaFuncionario;
     @FXML private TextField txtCpf;
     @FXML private DatePicker dpDataContratacao;
     @FXML private TextField txtEspecialidades;
@@ -325,8 +327,34 @@ public class ModalNovoUsuarioController {
         System.out.println("=== ENTRANDO EM salvarFuncionario ===");
         
         // Validações específicas de Funcionário
+        System.out.println("Username: '" + txtUsernameFuncionario.getText() + "'");
+        System.out.println("Senha: '" + txtSenhaFuncionario.getText() + "'");
         System.out.println("CPF: '" + txtCpf.getText() + "'");
         System.out.println("Data Contratação: " + dpDataContratacao.getValue());
+        
+        if (txtUsernameFuncionario.getText().trim().isEmpty()) {
+            mostrarErroPopup("Campo Obrigatório", "Por favor, digite o username do funcionário!");
+            txtUsernameFuncionario.requestFocus();
+            return false;
+        }
+        
+        if (txtUsernameFuncionario.getText().length() < 4) {
+            mostrarErroPopup("Username Inválido", "O username deve ter no mínimo 4 caracteres!");
+            txtUsernameFuncionario.requestFocus();
+            return false;
+        }
+        
+        if (txtSenhaFuncionario.getText().trim().isEmpty()) {
+            mostrarErroPopup("Campo Obrigatório", "Por favor, digite a senha do funcionário!");
+            txtSenhaFuncionario.requestFocus();
+            return false;
+        }
+        
+        if (txtSenhaFuncionario.getText().length() < 6) {
+            mostrarErroPopup("Senha Inválida", "A senha deve ter no mínimo 6 caracteres!");
+            txtSenhaFuncionario.requestFocus();
+            return false;
+        }
         
         if (txtCpf.getText().trim().isEmpty()) {
             System.out.println("CPF vazio!");
@@ -355,9 +383,24 @@ public class ModalNovoUsuarioController {
         System.out.println("Validações de funcionário OK, criando objeto...");
         
         try {
+            // Criptografar senha com BCrypt
+            String senhaCriptografada = BCrypt.hashpw(txtSenhaFuncionario.getText(), BCrypt.gensalt());
+            
+            // Print no terminal
+            System.out.println("\n======== NOVO FUNCIONÁRIO ========");
+            System.out.println("Nome: " + txtNome.getText().trim());
+            System.out.println("Username: " + txtUsernameFuncionario.getText().trim());
+            System.out.println("Senha Digitada: " + txtSenhaFuncionario.getText());
+            System.out.println("Senha Criptografada: " + senhaCriptografada);
+            System.out.println("Email: " + txtEmail.getText().trim());
+            System.out.println("CPF: " + txtCpf.getText());
+            System.out.println("==================================\n");
+            
             // Criar objeto Employee
             Employee employee = new Employee();
             employee.setName(txtNome.getText().trim());
+            employee.setUsername(txtUsernameFuncionario.getText().trim());
+            employee.setPasswordHash(senhaCriptografada);
             employee.setEmail(txtEmail.getText().trim());
             employee.setPhoneNumber(txtTelefone.getText().replaceAll("[^0-9]", ""));
             employee.setCpf(txtCpf.getText().replaceAll("[^0-9]", ""));

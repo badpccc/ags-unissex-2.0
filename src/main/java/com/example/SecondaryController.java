@@ -22,7 +22,30 @@ public class SecondaryController {
 
     @FXML
     private void initialize() {
+        configurarMenuPorPermissoes();
         carregarTela("dashboard"); // Tela inicial
+    }
+    
+    /**
+     * Oculta menus baseado no tipo de usuário
+     * Funcionários não podem acessar Finanças e Usuários
+     */
+    private void configurarMenuPorPermissoes() {
+        UserSession session = UserSession.getInstance();
+        
+        if (session.isEmployee()) {
+            // Ocultar menu de Finanças
+            if (menuFinancas != null) {
+                menuFinancas.setVisible(false);
+                menuFinancas.setManaged(false);
+            }
+            
+            // Ocultar menu de Usuários
+            if (menuUsuarios != null) {
+                menuUsuarios.setVisible(false);
+                menuUsuarios.setManaged(false);
+            }
+        }
     }
 
     @FXML
@@ -62,6 +85,8 @@ public class SecondaryController {
 
     @FXML
     private void handleLogout(MouseEvent e) throws IOException {
+        // Encerrar sessão do usuário
+        UserSession.getInstance().logout();
         App.setRoot("primary");
     }
 

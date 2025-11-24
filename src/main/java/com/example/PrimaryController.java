@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.example.backends.database.data.AdmDAO;
+import com.example.backends.database.data.EmployeeDAO;
 import com.example.backends.classes.Adm;
+import com.example.backends.classes.Employee;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class PrimaryController {
@@ -17,6 +19,7 @@ public class PrimaryController {
 
     /**
      * Método de login com validação no banco de dados e senha criptografada
+     * Permite login tanto de Administradores quanto de Funcionários
      */
     @FXML
     private void switchToSecondary() throws IOException {
@@ -41,36 +44,66 @@ public class PrimaryController {
             return;
         }
         
-        // Buscar administrador no banco
+        // Tentar login como Administrador ou Funcionário
         try {
+            boolean loginSucesso = false;
+            String tipoUsuario = "";
+            String passwordHash = "";
+            Long userId = null;
+            String fullName = "";
+            
+            // Primeiro tenta buscar como Admin
             Adm adm = AdmDAO.getByUsername(username);
             
-            if (adm == null) {
-                showError("❌ Usuário não encontrado!");
-                usernameField.requestFocus();
-                return;
+            if (adm != null) {
+                // Verificar senha com BCrypt
+                loginSucesso = BCrypt.checkpw(password, adm.getPasswordHash());
+                tipoUsuario = "Administrador";
+                passwordHash = adm.getPasswordHash();
+                userId = adm.getId();
+                fullName = adm.getFullName();
+            } else {
+                // Se não encontrou admin, tenta como Funcionário
+                Employee employee = EmployeeDAO.getByUsername(username);
+                
+                if (employee != null) {
+                    // Verificar senha com BCrypt
+                    loginSucesso = BCrypt.checkpw(password, employee.getPasswordHash());
+                    tipoUsuario = "Funcionário";
+                    passwordHash = employee.getPasswordHash();
+                    userId = employee.getId();
+                    fullName = employee.getName();
+                } else {
+                    showError("❌ Usuário não encontrado!");
+                    usernameField.requestFocus();
+                    return;
+                }
             }
-            
-            // Verificar senha com BCrypt
-            boolean senhaCorreta = BCrypt.checkpw(password, adm.getPasswordHash());
             
             // Print no terminal para debug
             System.out.println("\n======== TENTATIVA DE LOGIN ========");
             System.out.println("Usuário: " + username);
+            System.out.println("Tipo: " + tipoUsuario);
             System.out.println("Senha Digitada: " + password);
-            System.out.println("Hash no Banco: " + adm.getPasswordHash());
-            System.out.println("Senha Correta: " + senhaCorreta);
+            System.out.println("Hash no Banco: " + passwordHash);
+            System.out.println("Senha Correta: " + loginSucesso);
             System.out.println("====================================\n");
             
-            if (!senhaCorreta) {
+            if (!loginSucesso) {
                 showError("❌ Senha incorreta!");
                 passwordField.clear();
                 passwordField.requestFocus();
                 return;
             }
             
-            // Login bem-sucedido
-            showSuccess("✅ Login realizado com sucesso!");
+            // Login bem-sucedido - Iniciar sessão
+            UserSession session = UserSession.getInstance();
+            session.login(username, 
+                         adm != null ? "ADMIN" : "EMPLOYEE", 
+                         userId, 
+                         fullName);
+            
+            showSuccess("✅ Login realizado com sucesso! (" + tipoUsuario + ")");
             
             // Aguardar 500ms antes de redirecionar
             new Thread(() -> {

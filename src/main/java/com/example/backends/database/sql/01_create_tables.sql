@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS clients (
 CREATE TABLE IF NOT EXISTS employees (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE,
     phone_number VARCHAR(20) NOT NULL,
     cpf VARCHAR(14) UNIQUE NOT NULL,
@@ -163,6 +165,7 @@ CREATE INDEX IF NOT EXISTS idx_clients_registration_date ON clients(registration
 
 -- Índices para employees
 CREATE INDEX IF NOT EXISTS idx_employees_name ON employees(name);
+CREATE INDEX IF NOT EXISTS idx_employees_username ON employees(username);
 CREATE INDEX IF NOT EXISTS idx_employees_cpf ON employees(cpf);
 CREATE INDEX IF NOT EXISTS idx_employees_active ON employees(is_active);
 CREATE INDEX IF NOT EXISTS idx_employees_position ON employees(position);

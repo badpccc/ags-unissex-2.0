@@ -20,11 +20,19 @@ public class ServicosController {
 
     @FXML private VBox listaServicos;
     @FXML private TextField txtBuscar;
+    @FXML private Button btnNovoServico;
 
     @FXML
     private void initialize() {
         System.out.println("Tela SERVIÇOS carregada");
         carregarServicos();
+        
+        // Desabilitar botão para funcionários
+        UserSession session = UserSession.getInstance();
+        if (session.isEmployee() && btnNovoServico != null) {
+            btnNovoServico.setDisable(true);
+            btnNovoServico.setOpacity(0.5);
+        }
     }
 
     @FXML
@@ -146,6 +154,15 @@ public class ServicosController {
                 }
             });
         });
+        
+        // Desabilitar botões para funcionários
+        UserSession session = UserSession.getInstance();
+        if (session.isEmployee()) {
+            btnEditar.setDisable(true);
+            btnEditar.setOpacity(0.5);
+            btnExcluir.setDisable(true);
+            btnExcluir.setOpacity(0.5);
+        }
 
         HBox botoes = new HBox(10, btnEditar, btnExcluir);
 

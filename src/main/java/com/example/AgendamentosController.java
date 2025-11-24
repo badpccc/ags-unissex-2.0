@@ -24,6 +24,7 @@ import java.util.List;
 public class AgendamentosController {
 
     @FXML private VBox listaAgendamentos;
+    @FXML private Button btnNovoAgendamento;
 
     private final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -31,6 +32,13 @@ public class AgendamentosController {
     @FXML
     public void initialize() {
         carregarAgendamentos();
+        
+        // Desabilitar botão para funcionários
+        UserSession session = UserSession.getInstance();
+        if (session.isEmployee() && btnNovoAgendamento != null) {
+            btnNovoAgendamento.setDisable(true);
+            btnNovoAgendamento.setOpacity(0.5);
+        }
     }
 
 
@@ -150,6 +158,15 @@ public class AgendamentosController {
                 }
             });
         });
+        
+        // Desabilitar botões para funcionários
+        UserSession session = UserSession.getInstance();
+        if (session.isEmployee()) {
+            editar.setDisable(true);
+            editar.setOpacity(0.5);
+            excluir.setDisable(true);
+            excluir.setOpacity(0.5);
+        }
 
 
         // Caixa de botões (✔ AGORA CORRETO)

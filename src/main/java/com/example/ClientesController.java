@@ -28,6 +28,13 @@ public class ClientesController {
     public void initialize() {
         ClientDAO.getAllClients().forEach(this::adicionarCliente);
         btnAdicionarCliente.setOnAction(e -> abrirModalNovoCliente());
+        
+        // Desabilitar botão para funcionários
+        UserSession session = UserSession.getInstance();
+        if (session.isEmployee()) {
+            btnAdicionarCliente.setDisable(true);
+            btnAdicionarCliente.setOpacity(0.5);
+        }
     }
 
     // ---------------------------------------------------------------------
@@ -185,6 +192,15 @@ public class ClientesController {
                 ex.printStackTrace();
             }
         });
+        
+        // Desabilitar botões para funcionários
+        UserSession session = UserSession.getInstance();
+        if (session.isEmployee()) {
+            btnEditar.setDisable(true);
+            btnEditar.setOpacity(0.5);
+            btnExcluir.setDisable(true);
+            btnExcluir.setOpacity(0.5);
+        }
 
 
         VBox colunaAcoes = new VBox(8, btnDetalhes, btnEditar, btnExcluir);

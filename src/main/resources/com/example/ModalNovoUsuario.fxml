@@ -101,6 +101,18 @@
                     
                     <Label text="💼 Dados do Funcionário" style="-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #10b981;"/>
 
+                    <!-- Username -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Username *" styleClass="field-label"/>
+                        <TextField fx:id="txtUsernameFuncionario" promptText="Nome de usuário para login (mín. 4 caracteres)" styleClass="input-field"/>
+                    </VBox>
+
+                    <!-- Senha -->
+                    <VBox spacing="5" styleClass="field-group">
+                        <Label text="Senha *" styleClass="field-label"/>
+                        <PasswordField fx:id="txtSenhaFuncionario" promptText="Mínimo 6 caracteres" styleClass="input-field"/>
+                    </VBox>
+
                     <!-- CPF -->
                     <VBox spacing="5" styleClass="field-group">
                         <Label text="CPF *" styleClass="field-label"/>
