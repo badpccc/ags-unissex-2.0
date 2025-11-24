@@ -16,6 +16,7 @@ import com.example.backends.classes.Service;
 import com.example.backends.database.data.AppointmentDAO;
 import com.example.backends.database.data.ClientDAO;
 import com.example.backends.database.data.ServicesDAO;
+import com.example.backends.enums.AppointmentStatus;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -134,10 +135,15 @@ public class AgendamentosController {
         Label preco = new Label(String.format("💵 R$ %.2f", ag.getTotalPrice()));
         preco.setStyle("-fx-text-fill: #90ee90;");
 
-        Label status = new Label("📋 Status: " + ag.getStatus().name());
+        Label status = new Label("📋 Status: " + ag.getStatus().getDisplayName());
         status.setStyle("-fx-text-fill: #fbbf24;");
 
         info.getChildren().addAll(nome, servico, data, preco, status);
+
+// 🔵 Botão mudar status
+        Button mudarStatus = new Button("🔄 Status");
+        mudarStatus.getStyleClass().add("btn-status");
+        mudarStatus.setOnAction(e -> abrirMudarStatus(ag));
 
 // 🔵 Botão editar
         Button editar = new Button("Editar");
@@ -162,6 +168,8 @@ public class AgendamentosController {
         // Desabilitar botões para funcionários
         UserSession session = UserSession.getInstance();
         if (session.isEmployee()) {
+            mudarStatus.setDisable(true);
+            mudarStatus.setOpacity(0.5);
             editar.setDisable(true);
             editar.setOpacity(0.5);
             excluir.setDisable(true);
@@ -170,7 +178,7 @@ public class AgendamentosController {
 
 
         // Caixa de botões (✔ AGORA CORRETO)
-        HBox botoes = new HBox(10, editar, excluir);
+        HBox botoes = new HBox(10, mudarStatus, editar, excluir);
 
         Region espaco = new Region();
         HBox.setHgrow(espaco, Priority.ALWAYS);
@@ -180,6 +188,48 @@ public class AgendamentosController {
         return card;
     }
 
+    private void abrirMudarStatus(Appointment ag) {
+        // Criar lista de opções de status
+        List<AppointmentStatus> statusList = List.of(
+            AppointmentStatus.AGENDADO,
+            AppointmentStatus.EM_ANDAMENTO,
+            AppointmentStatus.CONCLUIDO,
+            AppointmentStatus.CANCELADO,
+            AppointmentStatus.NAO_COMPARECEU
+        );
+        
+        ChoiceDialog<AppointmentStatus> dialog = new ChoiceDialog<>(ag.getStatus(), statusList);
+        dialog.setTitle("Mudar Status");
+        dialog.setHeaderText("Alterar status do agendamento");
+        dialog.setContentText("Selecione o novo status:");
+        
+        // Customizar exibição dos itens
+        dialog.getDialogPane().setStyle("-fx-background-color: #1b1b1b;");
+        
+        dialog.showAndWait().ifPresent(novoStatus -> {
+            if (novoStatus != ag.getStatus()) {
+                ag.setStatus(novoStatus);
+                boolean sucesso = AppointmentDAO.update(ag);
+                
+                if (sucesso) {
+                    Alert confirmacao = new Alert(Alert.AlertType.INFORMATION);
+                    confirmacao.setTitle("Sucesso");
+                    confirmacao.setHeaderText(null);
+                    confirmacao.setContentText("Status atualizado para: " + novoStatus.getDisplayName());
+                    confirmacao.showAndWait();
+                    
+                    carregarAgendamentos();
+                } else {
+                    Alert erro = new Alert(Alert.AlertType.ERROR);
+                    erro.setTitle("Erro");
+                    erro.setHeaderText(null);
+                    erro.setContentText("Não foi possível atualizar o status.");
+                    erro.showAndWait();
+                }
+            }
+        });
+    }
+    
     private void abrirEdicao(Appointment ag) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarAgendamento.fxml"));

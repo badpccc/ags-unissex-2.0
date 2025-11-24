@@ -58,12 +58,18 @@
                 <!-- ========================= -->
                 <!--   LINHA DO TEMPO          -->
                 <!-- ========================= -->
-                <VBox spacing="20" styleClass="timeline-bloco">
+                <VBox spacing="20">
+                    <padding>
+                        <Insets top="10" right="30" bottom="10" left="30"/>
+                    </padding>
 
-                    <Label text="Movimentações Recentes" styleClass="section-title"/>
+                    <Label text="💰 Movimentações Recentes (Agendamentos Concluídos)" styleClass="section-title"/>
 
-                    <ScrollPane fitToWidth="true" styleClass="scroll-base">
+                    <ScrollPane fitToWidth="true" styleClass="scroll-base" prefHeight="400">
                         <VBox fx:id="listaTimeline" spacing="18" styleClass="timeline-container">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
                             <!-- Os cards serão carregados pelo controller -->
                         </VBox>
                     </ScrollPane>

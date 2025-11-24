@@ -146,24 +146,29 @@
 /*        LISTA DE MOVIMENTAÇÕES           */
 /* ======================================= */
 
-.mov-list {
+.mov-list,
+.timeline-container {
     -fx-padding: 10 20;
-    -fx-pref-width: 900;
+    -fx-spacing: 18;
 }
 
 /* CARD DE MOVIMENTO (igual ao usuário) */
 
 .mov-item {
-    -fx-background-color: #111;
+    -fx-background-color: #1a1a1a;
     -fx-padding: 20;
     -fx-background-radius: 14;
     -fx-spacing: 20;
     -fx-alignment: center-left;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 18, 0, 0, 6);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 18, 0, 0, 6);
+    -fx-border-color: #2a2a2a;
+    -fx-border-width: 1;
+    -fx-border-radius: 14;
 }
 
 .mov-item:hover {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #222222;
+    -fx-border-color: #4dd2ff;
 }
 
 /* Ícone */

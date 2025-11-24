@@ -113,12 +113,21 @@
 /*              BOTÕES AÇÃO                */
 /* ======================================= */
 
-.btn-editar, .btn-excluir {
+.btn-status, .btn-editar, .btn-excluir {
     -fx-font-weight: bold;
     -fx-background-radius: 8;
     -fx-padding: 6 14;
     -fx-font-size: 12px;
     -fx-cursor: hand;
+}
+
+.btn-status {
+    -fx-background-color: #f39c12;
+    -fx-text-fill: #fff;
+}
+
+.btn-status:hover {
+    -fx-background-color: #f4b350;
 }
 
 .btn-editar {
