@@ -202,12 +202,14 @@ public class AgendamentosController {
                 AppointmentStatus.CANCELADO,
                 AppointmentStatus.NAO_COMPARECEU
         );
-
         ChoiceDialog<AppointmentStatus> dialog = new ChoiceDialog<>(ag.getStatus(), statusList);
         dialog.setTitle("Mudar Status");
         dialog.setHeaderText("Alterar status do agendamento");
         dialog.setContentText("Selecione o novo status:");
-        dialog.getDialogPane().setStyle("-fx-background-color: #1b1b1b;");
+
+// Aplica o CSS dark
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("css/dark-dialog.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
         dialog.showAndWait().ifPresent(novoStatus -> {
             if (novoStatus != ag.getStatus()) {
@@ -224,6 +226,7 @@ public class AgendamentosController {
                 }
             }
         });
+
     }
 
     // ─── EDITAR AGENDAMENTO ───

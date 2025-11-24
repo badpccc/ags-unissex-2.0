@@ -166,3 +166,51 @@
     -fx-text-fill: #e74c3c;
     -fx-font-weight: bold;
 }
+/* ======================================= */
+/*           DIALOG DARK THEME             */
+/* ======================================= */
+
+.dialog-pane {
+    -fx-background-color: #1b1b1b;
+    -fx-font-family: "Inter";
+    -fx-text-fill: #f0f0f0;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #111111;
+    -fx-padding: 1em;
+}
+
+.dialog-pane .content.label {
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 1em;
+}
+
+.choice-box {
+    -fx-background-color: #242424;
+    -fx-border-color: #333;
+    -fx-border-radius: 0.5em;
+    -fx-background-radius: 0.5em;
+    -fx-padding: 0.3em 0.6em;
+    -fx-text-fill: #ffffff;
+}
+
+.button-bar .button {
+    -fx-background-radius: 0.5em;
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #111;
+    -fx-font-weight: bold;
+    -fx-padding: 0.5em 1em;
+}
+
+.button-bar .button:hover {
+    -fx-background-color: #46e68a;
+}
+
+.button-bar .button:cancel-button {
+    -fx-background-color: #e74c3c;
+}
+
+.button-bar .button:cancel-button:hover {
+    -fx-background-color: #ff6b61;
+}

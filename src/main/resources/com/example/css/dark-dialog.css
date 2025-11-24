@@ -1,0 +1,85 @@
+/* ======================================= */
+/*           DIALOG DARK RESPONSIVO        */
+/* ======================================= */
+
+.dialog-pane {
+    -fx-background-color: #1b1b1b;
+    -fx-font-family: "Inter";
+    -fx-text-fill: #f0f0f0;
+}
+
+/* Cabeçalho */
+.dialog-pane .header-panel {
+    -fx-background-color: #111111;
+    -fx-padding: 1em;
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4dd2ff;
+}
+
+/* Conteúdo */
+.dialog-pane .content.label {
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 1em;
+    -fx-wrap-text: true;
+}
+
+/* ChoiceBox responsivo */
+.choice-box {
+    -fx-background-color: #242424;
+    -fx-border-color: #333;
+    -fx-border-radius: 0.5em;
+    -fx-background-radius: 0.5em;
+    -fx-padding: 0.4em 0.8em;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* Botões */
+.button-bar .button {
+    -fx-background-radius: 0.6em;
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #111;
+    -fx-font-weight: bold;
+    -fx-font-size: 1em;
+    -fx-padding: 0.5em 1.2em;
+}
+
+.button-bar .button:hover {
+    -fx-background-color: #46e68a;
+}
+
+.button-bar .button:cancel-button {
+    -fx-background-color: #e74c3c;
+}
+
+.button-bar .button:cancel-button:hover {
+    -fx-background-color: #ff6b61;
+}
+
+/* Cores automáticas para status */
+.choice-box .list-cell[appointment-status="AGENDADO"] {
+    -fx-text-fill: #fbbf24;
+}
+.choice-box .list-cell[appointment-status="CONCLUIDO"] {
+    -fx-text-fill: #10b981;
+}
+.choice-box .list-cell[appointment-status="CANCELADO"] {
+    -fx-text-fill: #e74c3c;
+}
+.choice-box .list-cell[appointment-status="EM_ANDAMENTO"] {
+    -fx-text-fill: #3b82f6;
+}
+.choice-box .list-cell[appointment-status="NAO_COMPARECEU"] {
+    -fx-text-fill: #9ca3af;
+}
+
+/* Seleção e foco */
+.choice-box .list-cell:filled:selected {
+    -fx-background-color: #555555;
+    -fx-text-fill: #ffffff;
+}
+
+.choice-box .list-cell:filled:selected:focused {
+    -fx-background-color: #777777;
+}
