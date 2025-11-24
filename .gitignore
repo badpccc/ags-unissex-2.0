@@ -113,6 +113,7 @@ rebel.xml
 # Environment variables específicos
 .env
 .env.*
+.env.development
 !.env.example
 application-local.properties
 database.properties

@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.function.Consumer;
 
 import com.example.backends.classes.Service;
 import com.example.backends.database.data.ServicesDAO;
@@ -23,32 +24,29 @@ public class ModalNovoServicoController {
     @FXML private TextArea txtDescricao;
     @FXML private CheckBox chkAtivo;
 
-    private Runnable callback;
+    // Callback que recebe o objeto Service
+    private Consumer<Service> callback;
 
     @FXML
     public void initialize() {
-        // Inicializa o ComboBox com categorias
         cbCategoria.getItems().addAll(
-            "Corte",
-            "Barba",
-            "Corte e Barba",
-            "Coloração",
-            "Tratamento",
-            "Outros"
+                "Corte",
+                "Barba",
+                "Corte e Barba",
+                "Coloração",
+                "Tratamento",
+                "Outros"
         );
-        cbCategoria.setValue("Corte"); // Categoria padrão
-        
-        // Checkbox de ativo marcado por padrão
+        cbCategoria.setValue("Corte");
         chkAtivo.setSelected(true);
     }
 
-    public void setCallback(Runnable callback) {
+    public void setCallback(Consumer<Service> callback) {
         this.callback = callback;
     }
 
     @FXML
     public void salvarServico() {
-        // Validação dos campos obrigatórios
         if (txtNome.getText() == null || txtNome.getText().trim().isEmpty()) {
             mostrarAlerta("Erro", "Nome do serviço é obrigatório!");
             return;
@@ -70,48 +68,40 @@ public class ModalNovoServicoController {
         }
 
         try {
-            // Cria objeto Service com os dados do formulário
             Service service = new Service();
             service.setName(txtNome.getText().trim());
             service.setDescription(txtDescricao.getText() != null ? txtDescricao.getText().trim() : "");
-            
-            // Converte preço para BigDecimal
+
             BigDecimal preco = new BigDecimal(txtPreco.getText().trim().replace(",", "."));
             if (preco.compareTo(BigDecimal.ZERO) <= 0) {
                 mostrarAlerta("Erro", "Preço deve ser maior que zero!");
                 return;
             }
             service.setPrice(preco);
-            
-            // Converte duração para Duration (em minutos)
+
             int duracao = Integer.parseInt(txtDuracao.getText().trim());
             if (duracao <= 0) {
                 mostrarAlerta("Erro", "Duração deve ser maior que zero!");
                 return;
             }
             service.setDuration(Duration.ofMinutes(duracao));
-            
-            // Define categoria selecionada
+
             service.setCategory(cbCategoria.getValue());
-            
-            // Define se o serviço está ativo
             service.setActive(chkAtivo.isSelected());
 
-            // Salva no banco de dados
             boolean sucesso = ServicesDAO.insert(service);
-            
+
             if (sucesso) {
                 System.out.println("Serviço salvo com sucesso no banco de dados! ID: " + service.getId());
-                
-                // Executa callback para atualizar a lista
-                if (callback != null) callback.run();
-                
-                // Fecha o modal
+
+                // ✅ Executa callback passando o Service
+                if (callback != null) callback.accept(service);
+
                 fecharModal();
             } else {
                 mostrarAlerta("Erro", "Não foi possível salvar o serviço no banco de dados.");
             }
-            
+
         } catch (NumberFormatException e) {
             mostrarAlerta("Erro", "Preço ou duração inválidos! Verifique os valores digitados.");
         } catch (Exception e) {

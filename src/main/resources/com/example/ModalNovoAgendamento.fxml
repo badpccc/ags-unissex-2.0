@@ -72,7 +72,7 @@
                     </HBox>
                     
                     <!-- Tags dos serviços selecionados -->
-                    <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+                    <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #1b1b1b; -fx-background-radius: 8; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
                         <Label text="Serviços Selecionados:" style="-fx-font-size: 12px; -fx-text-fill: #666; -fx-font-weight: bold;"/>
                         <FlowPane fx:id="flowServicos"
                                   hgap="10"
@@ -109,7 +109,7 @@
                     <Label text="Preço Total" styleClass="field-label"/>
                     <Label fx:id="lblPrecoTotal"
                            text="R$ 0,00"
-                           style="-fx-font-size: 1.8em; -fx-font-weight: bold; -fx-text-fill: #10b981; -fx-padding: 10; -fx-background-color: #f0fdf4; -fx-background-radius: 8; -fx-border-color: #bbf7d0; -fx-border-radius: 8;"/>
+                           style="-fx-font-size: 1.8em; -fx-font-weight: bold; -fx-text-fill: #10b981; -fx-padding: 10; -fx-background-color: #1b1b1b; -fx-background-radius: 8; -fx-border-color: #bbf7d0; -fx-border-radius: 8;"/>
                 </VBox>
 
                 <!-- Observações -->

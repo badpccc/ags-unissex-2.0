@@ -15,7 +15,7 @@
 /*            CABEÇALHO SERVIÇOS          */
 /* ======================================= */
 
-.ag-header {
+.servicos-header {
     -fx-background-color: linear-gradient(to bottom, #111, #181818);
     -fx-padding: 28 40;
     -fx-spacing: 25;
@@ -23,14 +23,14 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 25, 0.3, 0, 6);
 }
 
-.ag-title {
+.servicos-title {
     -fx-font-size: 2.6em;
     -fx-font-weight: bold;
     -fx-text-fill: #4dd2ff;
 }
 
 /* Campo de busca */
-.ag-search {
+.servicos-search {
     -fx-background-color: #202020;
     -fx-text-fill: #fff;
     -fx-prompt-text-fill: #777;
@@ -42,7 +42,7 @@
     -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 1);
 }
 
-.ag-search:focused {
+.servicos-search:focused {
     -fx-border-color: #4dd2ff;
     -fx-effect: dropshadow(gaussian, rgba(77,210,255,0.4), 10, 0.5, 0, 0);
 }
@@ -67,12 +67,12 @@
 /*               LISTA                     */
 /* ======================================= */
 
-.ag-scroll,
-.ag-scroll .viewport {
+.scroll-servicos,
+.scroll-servicos .viewport {
     -fx-background-color: transparent;
 }
 
-.ag-lista {
+.lista-servicos {
     -fx-padding: 15 0;
     -fx-alignment: CENTER;
     -fx-spacing: 18;
@@ -82,7 +82,7 @@
 /*               CARD DO SERVIÇO           */
 /* ======================================= */
 
-.ag-card {
+.servico-card {
     -fx-background-color: #242424;
     -fx-background-radius: 14;
     -fx-padding: 22 26;
@@ -96,26 +96,26 @@
     -fx-border-width: 1.5;
 }
 
-.ag-card:hover {
+.servico-card:hover {
     -fx-background-color: #2c2c2c;
     -fx-effect: dropshadow(gaussian, rgba(77,210,255,0.25), 20, 0.3, 0, 0);
 }
 
 /* Nome do serviço */
-.ag-nome {
+.servico-nome {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
 }
 
-/* Infos do serviço (duração, detalhes) */
-.ag-info {
+/* Infos do serviço */
+.servico-info {
     -fx-font-size: 14px;
     -fx-text-fill: #cccccc;
 }
 
 /* Preço */
-.ag-preco {
+.servico-preco {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #90ee90;
@@ -134,6 +134,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 10, 0.3, 0, 2);
 }
 
+/* Editar (Azul) */
 .btn-editar {
     -fx-background-color: #3498db;
 }
@@ -141,6 +142,7 @@
     -fx-background-color: #5dade2;
 }
 
+/* Excluir (Vermelho) */
 .btn-excluir {
     -fx-background-color: #e74c3c;
 }
@@ -148,6 +150,7 @@
     -fx-background-color: #ff6b61;
 }
 
+/* Concluir (Verde) */
 .btn-concluir {
     -fx-background-color: #2ecc71;
     -fx-text-fill: #111;

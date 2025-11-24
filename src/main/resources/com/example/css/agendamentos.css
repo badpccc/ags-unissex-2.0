@@ -13,15 +13,15 @@
 /* ======================================= */
 
 .ag-header {
-    -fx-background-color: #1c1c1c;
-    -fx-padding: 20 30;
-    -fx-spacing: 20;
+    -fx-background-color: linear-gradient(to bottom, #111, #181818);
+    -fx-padding: 28 40;
+    -fx-spacing: 25;
     -fx-alignment: center-left;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 15, 0.3, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 25, 0.3, 0, 6);
 }
 
 .ag-title {
-    -fx-font-size: 24px;
+    -fx-font-size: 2.6em;
     -fx-font-weight: bold;
     -fx-text-fill: #4dd2ff;
 }
@@ -31,26 +31,29 @@
     -fx-background-color: #202020;
     -fx-text-fill: #fff;
     -fx-prompt-text-fill: #777;
-    -fx-padding: 8 12;
+    -fx-background-radius: 10;
+    -fx-padding: 10 16;
     -fx-border-color: #333;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-pref-width: 250;
+    -fx-border-radius: 10;
+    -fx-border-width: 1.3;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 1);
 }
 
 .ag-search:focused {
     -fx-border-color: #4dd2ff;
+    -fx-effect: dropshadow(gaussian, rgba(77,210,255,0.4), 10, 0.5, 0, 0);
 }
 
 /* Botão principal */
 .btn-primario {
     -fx-background-color: #2ecc71;
     -fx-text-fill: #111;
-    -fx-font-size: 14px;
+    -fx-font-size: 1.2em;
     -fx-font-weight: bold;
-    -fx-padding: 8 18;
-    -fx-background-radius: 10;
+    -fx-padding: 12 26;
+    -fx-background-radius: 12;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 12, 0.25, 0, 3);
 }
 
 .btn-primario:hover {

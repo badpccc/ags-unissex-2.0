@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.geometry.Pos;
+
 import javafx.application.Platform;
 
 import com.example.backends.classes.Appointment;
@@ -17,6 +19,7 @@ import com.example.backends.database.data.AppointmentDAO;
 import com.example.backends.database.data.ClientDAO;
 import com.example.backends.database.data.ServicesDAO;
 import com.example.backends.enums.AppointmentStatus;
+import com.example.utils.TelegramNotifier;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class AgendamentosController {
     @FXML
     public void initialize() {
         carregarAgendamentos();
-        
+
         // Desabilitar botão para funcionários
         UserSession session = UserSession.getInstance();
         if (session.isEmployee() && btnNovoAgendamento != null) {
@@ -42,15 +45,13 @@ public class AgendamentosController {
         }
     }
 
-
-    // 🔹 Abrir modal igual ao UsuariosController
+    // ─── NOVO AGENDAMENTO ───
     @FXML
     public void novoAgendamento() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ModalNovoAgendamento.fxml"));
             Parent root = loader.load();
 
-            // Controller do modal
             ModalNovoAgendamentoController controller = loader.getController();
             controller.setCallback(this::adicionarAgendamento);
 
@@ -58,29 +59,32 @@ public class AgendamentosController {
             stage.setTitle("Novo Agendamento");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(true); // Permitir redimensionamento
+            stage.setResizable(true);
             stage.setMinWidth(700);
             stage.setMinHeight(600);
 
             stage.showAndWait();
 
-            carregarAgendamentos();
-
         } catch (Exception e) {
             e.printStackTrace();
+            notificarErro("Erro ao abrir modal de novo agendamento:\n" + e.getMessage());
         }
     }
 
-    // Adicionar agendamento e recarregar lista
     private void adicionarAgendamento(Appointment a) {
         carregarAgendamentos();
+        notificarSucesso("📅 *Novo agendamento cadastrado!*\n" +
+                "👤 Cliente: " + getNomeCliente(a) + "\n" +
+                "💰 Total: R$ " + String.format("%.2f", a.getTotalPrice()) + "\n" +
+                "📅 Data/Hora: " + a.getAppointmentDateTime().format(formatoData) +
+                " | " + a.getAppointmentDateTime().format(formatoHora));
     }
 
-    // Carregar agendamentos do banco de dados
+    // ─── CARREGAR LISTA ───
     private void carregarAgendamentos() {
         new Thread(() -> {
             final List<Appointment> agendamentos = AppointmentDAO.getAllAppointments();
-            
+
             Platform.runLater(() -> {
                 listaAgendamentos.getChildren().clear();
 
@@ -99,58 +103,61 @@ public class AgendamentosController {
     }
 
     private HBox criarCardAgendamento(Appointment ag) {
-        HBox card = new HBox(20);
-        card.setStyle("-fx-background-color: #2a2a2a; -fx-padding: 18; -fx-background-radius: 12;");
+        HBox card = new HBox(25);
+        card.setAlignment(Pos.CENTER_LEFT);
+        card.getStyleClass().add("servico-card");
+        card.setStyle("-fx-padding: 18; -fx-background-radius: 12; -fx-background-color: #2a2a2a;");
+        card.setMaxWidth(700);
+        card.setPrefWidth(700);
+
+        HBox container = new HBox(card);
+        container.setAlignment(Pos.CENTER);
 
         VBox info = new VBox(6);
 
-        // Buscar nome do cliente
         Client cliente = ClientDAO.getClientByID(ag.getClientId());
-        String nomeCliente = cliente != null ? cliente.getName() : "Cliente não encontrado";
-        
-        Label nome = new Label("👤 " + nomeCliente);
-        nome.setStyle("-fx-font-size: 18; -fx-text-fill: white; -fx-font-weight: bold;");
+        Label nome = new Label(getNomeCliente(ag));
+        nome.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        // Buscar serviços (múltiplos)
         List<String> nomesServicos = new ArrayList<>();
         if (ag.getServiceIds() != null) {
             for (Long serviceId : ag.getServiceIds()) {
                 Service s = ServicesDAO.getServiceByID(serviceId);
-                if (s != null) {
-                    nomesServicos.add(s.getName());
-                }
+                if (s != null) nomesServicos.add(s.getName());
             }
         }
         String servicosTexto = nomesServicos.isEmpty() ? "Nenhum serviço" : String.join(", ", nomesServicos);
-        
-        Label servico = new Label("💈 Serviços: " + servicosTexto);
-        servico.setStyle("-fx-text-fill: #cccccc;");
+        Label servico = new Label(servicosTexto.length() > 50 ? servicosTexto.substring(0, 50) + "..." : servicosTexto);
+        servico.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 13px;");
+        Tooltip.install(servico, new Tooltip(servicosTexto));
 
-        Label data = new Label(
-                "🕒 " + ag.getAppointmentDateTime().format(formatoData) + 
-                " às " + ag.getAppointmentDateTime().format(formatoHora)
-        );
-        data.setStyle("-fx-text-fill: #bbbbbb;");
+        Label data = new Label(ag.getAppointmentDateTime().format(formatoData) +
+                " | " + ag.getAppointmentDateTime().format(formatoHora));
+        data.setStyle("-fx-text-fill: #bbbbbb; -fx-font-size: 13px;");
 
-        Label preco = new Label(String.format("💵 R$ %.2f", ag.getTotalPrice()));
-        preco.setStyle("-fx-text-fill: #90ee90;");
+        Label preco = new Label(String.format("R$ %.2f", ag.getTotalPrice()));
+        preco.setStyle("-fx-text-fill: #10b981; -fx-font-weight: bold; -fx-font-size: 16px;");
 
-        Label status = new Label("📋 Status: " + ag.getStatus().getDisplayName());
-        status.setStyle("-fx-text-fill: #fbbf24;");
+        Label status = new Label(ag.getStatus().getDisplayName());
+        status.setStyle("-fx-text-fill: #fbbf24; -fx-font-weight: bold; -fx-font-size: 13px;");
 
-        info.getChildren().addAll(nome, servico, data, preco, status);
+        Separator sep = new Separator();
+        sep.setStyle("-fx-background-color: #555555;");
 
-// 🔵 Botão mudar status
-        Button mudarStatus = new Button("🔄 Status");
+        info.getChildren().addAll(nome, servico, data, preco, status, sep);
+        HBox.setHgrow(info, Priority.ALWAYS);
+
+        VBox colunaBotoes = new VBox(8);
+        colunaBotoes.setAlignment(Pos.CENTER_RIGHT);
+
+        Button mudarStatus = new Button("Mudar Status");
         mudarStatus.getStyleClass().add("btn-status");
         mudarStatus.setOnAction(e -> abrirMudarStatus(ag));
 
-// 🔵 Botão editar
         Button editar = new Button("Editar");
         editar.getStyleClass().add("btn-editar");
         editar.setOnAction(e -> abrirEdicao(ag));
 
-// 🔴 Botão excluir
         Button excluir = new Button("Excluir");
         excluir.getStyleClass().add("btn-excluir");
         excluir.setOnAction(e -> {
@@ -159,83 +166,72 @@ public class AgendamentosController {
             confirmacao.setContentText("Deseja realmente excluir este agendamento?");
             confirmacao.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
-                    AppointmentDAO.delete(ag.getId());
-                    carregarAgendamentos();
+                    boolean sucesso = AppointmentDAO.delete(ag.getId());
+                    if (sucesso) {
+                        carregarAgendamentos();
+                        notificarSucesso("🗑️ *Agendamento excluído!*\n" +
+                                "👤 Cliente: " + getNomeCliente(ag));
+                    } else {
+                        notificarErro("❌ Falha ao excluir agendamento do cliente " + getNomeCliente(ag));
+                    }
                 }
             });
         });
-        
-        // Desabilitar botões para funcionários
+
         UserSession session = UserSession.getInstance();
         if (session.isEmployee()) {
-            mudarStatus.setDisable(true);
-            mudarStatus.setOpacity(0.5);
-            editar.setDisable(true);
-            editar.setOpacity(0.5);
-            excluir.setDisable(true);
-            excluir.setOpacity(0.5);
+            mudarStatus.setDisable(true); mudarStatus.setOpacity(0.5);
+            editar.setDisable(true); editar.setOpacity(0.5);
+            excluir.setDisable(true); excluir.setOpacity(0.5);
         }
 
+        HBox botoes = new HBox(8, mudarStatus, editar, excluir);
+        colunaBotoes.getChildren().add(botoes);
 
-        // Caixa de botões (✔ AGORA CORRETO)
-        HBox botoes = new HBox(10, mudarStatus, editar, excluir);
+        card.getChildren().addAll(info, colunaBotoes);
 
-        Region espaco = new Region();
-        HBox.setHgrow(espaco, Priority.ALWAYS);
-
-        card.getChildren().addAll(info, espaco, botoes);
-
-        return card;
+        return container;
     }
 
+    // ─── MUDAR STATUS ───
     private void abrirMudarStatus(Appointment ag) {
-        // Criar lista de opções de status
         List<AppointmentStatus> statusList = List.of(
-            AppointmentStatus.AGENDADO,
-            AppointmentStatus.EM_ANDAMENTO,
-            AppointmentStatus.CONCLUIDO,
-            AppointmentStatus.CANCELADO,
-            AppointmentStatus.NAO_COMPARECEU
+                AppointmentStatus.AGENDADO,
+                AppointmentStatus.EM_ANDAMENTO,
+                AppointmentStatus.CONCLUIDO,
+                AppointmentStatus.CANCELADO,
+                AppointmentStatus.NAO_COMPARECEU
         );
-        
+
         ChoiceDialog<AppointmentStatus> dialog = new ChoiceDialog<>(ag.getStatus(), statusList);
         dialog.setTitle("Mudar Status");
         dialog.setHeaderText("Alterar status do agendamento");
         dialog.setContentText("Selecione o novo status:");
-        
-        // Customizar exibição dos itens
         dialog.getDialogPane().setStyle("-fx-background-color: #1b1b1b;");
-        
+
         dialog.showAndWait().ifPresent(novoStatus -> {
             if (novoStatus != ag.getStatus()) {
                 ag.setStatus(novoStatus);
                 boolean sucesso = AppointmentDAO.update(ag);
-                
+
                 if (sucesso) {
-                    Alert confirmacao = new Alert(Alert.AlertType.INFORMATION);
-                    confirmacao.setTitle("Sucesso");
-                    confirmacao.setHeaderText(null);
-                    confirmacao.setContentText("Status atualizado para: " + novoStatus.getDisplayName());
-                    confirmacao.showAndWait();
-                    
                     carregarAgendamentos();
+                    notificarSucesso("✅ *Status atualizado!*\n" +
+                            "👤 Cliente: " + getNomeCliente(ag) + "\n" +
+                            "📌 Novo status: " + novoStatus.getDisplayName());
                 } else {
-                    Alert erro = new Alert(Alert.AlertType.ERROR);
-                    erro.setTitle("Erro");
-                    erro.setHeaderText(null);
-                    erro.setContentText("Não foi possível atualizar o status.");
-                    erro.showAndWait();
+                    notificarErro("❌ Falha ao atualizar status do agendamento do cliente " + getNomeCliente(ag));
                 }
             }
         });
     }
-    
+
+    // ─── EDITAR AGENDAMENTO ───
     private void abrirEdicao(Appointment ag) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarAgendamento.fxml"));
             Parent root = loader.load();
 
-            // Controller do modal
             EditarAgendamentoController controller = loader.getController();
             controller.carregarAgendamento(ag);
             controller.setCallback(atualizado -> carregarAgendamentos());
@@ -252,10 +248,29 @@ public class AgendamentosController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Alert erro = new Alert(Alert.AlertType.ERROR);
-            erro.setHeaderText("Erro ao abrir modal");
-            erro.setContentText("Não foi possível abrir a tela de edição.");
-            erro.show();
+            notificarErro("Erro ao abrir modal de edição:\n" + e.getMessage());
+        }
+    }
+
+    // ─── UTILITÁRIOS ───
+    private String getNomeCliente(Appointment ag) {
+        Client c = ClientDAO.getClientByID(ag.getClientId());
+        return c != null ? c.getName() : "Cliente não encontrado";
+    }
+
+    private void notificarSucesso(String msg) {
+        try {
+            TelegramNotifier.send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void notificarErro(String msg) {
+        try {
+            TelegramNotifier.sendError(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

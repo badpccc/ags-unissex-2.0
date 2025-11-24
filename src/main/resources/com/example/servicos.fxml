@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.ServicosController"
-            prefWidth="900" prefHeight="600"
             stylesheets="@css/servicos.css"
             styleClass="root">
 
@@ -17,21 +16,19 @@
     <top>
         <HBox spacing="20"
               alignment="CENTER_LEFT"
-              styleClass="ag-header">
+              styleClass="servicos-header">
 
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-            <Label text="Serviços"
-                   styleClass="ag-title"/>
+            <Label text="Serviços" styleClass="servicos-title"/>
 
             <Pane HBox.hgrow="ALWAYS"/>
 
-            <!-- Campo de busca -->
             <TextField fx:id="txtBuscar"
                        promptText="Buscar serviço..."
-                       styleClass="ag-search"/>
+                       styleClass="servicos-search"/>
 
             <Button fx:id="btnNovoServico"
                     text="Novo Serviço"
@@ -42,24 +39,50 @@
     </top>
 
     <!-- ===================================================== -->
-    <!--                    ÁREA PRINCIPAL                     -->
+    <!--                   ÁREA PRINCIPAL                      -->
     <!-- ===================================================== -->
     <center>
-        <ScrollPane fitToWidth="true"
-                    styleClass="ag-scroll">
+        <VBox styleClass="tabela-container">
 
-            <VBox fx:id="listaServicos"
-                  spacing="12"
-                  styleClass="ag-lista">
+            <ScrollPane fitToWidth="true"
+                        pannable="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        styleClass="scroll-servicos">
 
-                <padding>
-                    <Insets top="20" right="20" bottom="20" left="20"/>
-                </padding>
+                <VBox fx:id="listaServicos"
+                      spacing="8"
+                      styleClass="lista-servicos">
 
-                <!-- Os serviços serão carregados dinamicamente aqui -->
+                    <!-- Exemplo de card de serviço padronizado -->
+                    <HBox spacing="25" styleClass="servico-card" alignment="CENTER_LEFT">
 
-            </VBox>
-        </ScrollPane>
+                        <!-- Coluna de informações -->
+                        <VBox spacing="6" HBox.hgrow="ALWAYS">
+                            <Label text="💈 Corte de Cabelo" styleClass="servico-nome"/>
+                            <Label text="📝 Descrição: Sem descrição" styleClass="servico-info"/>
+                            <Label text="⏱️ Duração: 30 min" styleClass="servico-info"/>
+                            <Label text="🏷️ Categoria: Corte e Barba" styleClass="servico-info"/>
+                            <Label text="Status: ✅ ATIVO" styleClass="servico-info"/>
+                        </VBox>
+
+                        <!-- Coluna de preço e ações -->
+                        <VBox alignment="CENTER_RIGHT" spacing="8">
+                            <Label text="R$ 25,00"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #10b981;"/>
+                            <HBox spacing="8">
+                                <Button text="Editar" styleClass="btn-editar"/>
+                                <Button text="Excluir" styleClass="btn-excluir"/>
+                            </HBox>
+                        </VBox>
+
+                    </HBox>
+
+                </VBox>
+
+            </ScrollPane>
+
+        </VBox>
     </center>
 
 </BorderPane>
