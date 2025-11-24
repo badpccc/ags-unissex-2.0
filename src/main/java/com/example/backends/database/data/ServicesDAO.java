@@ -68,8 +68,8 @@ public class ServicesDAO {
         String sql = """
             UPDATE services SET 
                 name = ?, description = ?, price = ?, duration_minutes = ?, category = ?,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE id = ? AND is_active = true
+                is_active = ?, updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
             """;
 
         try (Connection conn = Connect.getConnection();
@@ -90,7 +90,8 @@ public class ServicesDAO {
             pstmt.setInt(4, durationMinutes);
             
             pstmt.setString(5, service.getCategory());
-            pstmt.setLong(6, service.getId());
+            pstmt.setBoolean(6, service.isActive());
+            pstmt.setLong(7, service.getId());
             
             int affectedRows = pstmt.executeUpdate();
             System.out.println("Linhas afetadas na atualização de serviço: " + affectedRows);
@@ -167,7 +168,7 @@ public class ServicesDAO {
 
     public static List<Service> getAllServices() {
         List<Service> services = new ArrayList<>();
-        String sql = "SELECT * FROM services WHERE is_active = true ORDER BY category, name";
+        String sql = "SELECT * FROM services ORDER BY is_active DESC, category, name";
 
         try (Connection conn = Connect.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);

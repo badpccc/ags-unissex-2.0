@@ -6,7 +6,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.NovoClienteController"
+            fx:controller="com.example.ModalNovoUsuarioController"
             stylesheets="@css/modal.css"
             styleClass="modal-root"
             prefWidth="520" prefHeight="600">
@@ -29,89 +29,69 @@
             </padding>
 
             <!-- TÍTULO DO MODAL -->
-            <Label text="➕ Novo Cliente" styleClass="modal-title"/>
+            <Label text="➕ Novo Usuário" styleClass="modal-title"/>
 
             <!-- FORMULÁRIO -->
             <VBox spacing="18" styleClass="form-wrapper">
 
                 <!-- Nome -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Nome" styleClass="field-label"/>
+                    <Label text="Nome Completo" styleClass="field-label"/>
                     <TextField fx:id="txtNome" promptText="Digite o nome completo" styleClass="input-field"/>
-                    <Label fx:id="lblErroNome" styleClass="error-label"/>
-                </VBox>
-
-                <!-- Telefone -->
-                <VBox spacing="5" styleClass="field-group">
-                    <Label text="Telefone" styleClass="field-label"/>
-                    <TextField fx:id="txtTelefone" promptText="(00) 00000-0000" styleClass="input-field"/>
-                    <Label fx:id="lblErroTelefone" styleClass="error-label"/>
                 </VBox>
 
                 <!-- Email -->
                 <VBox spacing="5" styleClass="field-group">
                     <Label text="Email" styleClass="field-label"/>
                     <TextField fx:id="txtEmail" promptText="exemplo@empresa.com" styleClass="input-field"/>
-                    <Label fx:id="lblErroEmail" styleClass="error-label"/>
                 </VBox>
 
-                <!-- Endereço -->
+                <!-- Senha -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Endereço" styleClass="field-label"/>
-                    <TextField fx:id="txtAddress" promptText="Rua, Número, Bairro" styleClass="input-field"/>
-                    <Label fx:id="lblErroEndereco" styleClass="error-label"/>
+                    <Label text="Senha" styleClass="field-label"/>
+                    <PasswordField fx:id="txtSenha" promptText="Digite a senha" styleClass="input-field"/>
                 </VBox>
 
-                <!-- Cliente Ativo -->
+                <!-- Tipo -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Ativo" styleClass="field-label"/>
-                    <CheckBox fx:id="chkAtivo" text="Cliente está ativo?"/>
+                    <Label text="Tipo de Usuário" styleClass="field-label"/>
+                    <ComboBox fx:id="cmbTipo" promptText="Selecione o tipo" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
                 </VBox>
 
-                <!-- Tipo de cabelo -->
+                <!-- Telefone -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Tipo de Cabelo" styleClass="field-label"/>
-                    <ComboBox fx:id="cbHairType" promptText="Selecione" styleClass="input-field"/>
-                    <Label fx:id="lblErroHairType" styleClass="error-label"/>
+                    <Label text="Telefone" styleClass="field-label"/>
+                    <TextField fx:id="txtTelefone" promptText="(00) 00000-0000" styleClass="input-field"/>
                 </VBox>
 
-                <!-- Textura -->
+                <!-- CPF -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Textura" styleClass="field-label"/>
-                    <ComboBox fx:id="cbHairTexture" promptText="Selecione" styleClass="input-field"/>
-                    <Label fx:id="lblErroHairTexture" styleClass="error-label"/>
+                    <Label text="CPF" styleClass="field-label"/>
+                    <TextField fx:id="txtCpf" promptText="000.000.000-00" styleClass="input-field"/>
                 </VBox>
 
-                <!-- Couro Cabeludo -->
+                <!-- Data de Contratação -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Couro Cabeludo" styleClass="field-label"/>
-                    <ComboBox fx:id="cbScalp" promptText="Selecione" styleClass="input-field"/>
-                    <Label fx:id="lblErroScalp" styleClass="error-label"/>
+                    <Label text="Data de Contratação" styleClass="field-label"/>
+                    <DatePicker fx:id="dpDataContratacao" promptText="Selecione a data" styleClass="input-field" prefWidth="Infinity" maxWidth="Infinity"/>
                 </VBox>
 
-                <!-- Alergias -->
+                <!-- Ativo -->
                 <VBox spacing="5" styleClass="field-group">
-                    <Label text="Alergias" styleClass="field-label"/>
-                    <TextField fx:id="txtAllergies" promptText="Alergias ou sensibilidades" styleClass="input-field"/>
-                </VBox>
-
-                <!-- Última Visita -->
-                <VBox spacing="5" styleClass="field-group">
-                    <Label text="Última Visita" styleClass="field-label"/>
-                    <DatePicker fx:id="dpLastVisit" promptText="Selecione a data" styleClass="input-field"/>
+                    <CheckBox fx:id="chkAtivo" text="Usuário ativo" selected="true"/>
                 </VBox>
 
                 <!-- Observações -->
                 <VBox spacing="5" styleClass="field-group">
                     <Label text="Observações" styleClass="field-label"/>
-                    <TextArea fx:id="txtObservations" promptText="Notas adicionais..." prefRowCount="3" styleClass="input-field"/>
+                    <TextArea fx:id="txtObservacoes" promptText="Notas adicionais..." prefRowCount="3" styleClass="input-field"/>
                 </VBox>
 
             </VBox>
 
             <!-- BOTÕES -->
             <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="modal-buttons">
-                <Button text="Cancelar" styleClass="btn-cancelar" onAction="#fechar"/>
+                <Button text="Cancelar" styleClass="btn-cancelar" onAction="#fecharModal"/>
                 <Button text="Salvar" styleClass="btn-salvar" onAction="#salvar"/>
             </HBox>
 

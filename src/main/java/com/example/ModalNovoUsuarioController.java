@@ -30,7 +30,7 @@ public class ModalNovoUsuarioController {
     }
 
     @FXML
-    private void salvarUsuario() {
+    private void salvar() {
 
         System.out.println("Usuário cadastrado:");
         System.out.println("Nome: " + txtNome.getText());

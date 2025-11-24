@@ -47,7 +47,7 @@
 /*                 CAMPOS DE TEXTO                 */
 /* ----------------------------------------------- */
 
-.text-field, .text-input {
+.text-field, .text-input, .text-area {
     -fx-background-color: #262626;
     -fx-background-radius: 14;
     -fx-padding: 12 16;
@@ -57,11 +57,46 @@
     -fx-border-color: transparent;
 }
 
-.text-field:focused, .text-input:focused {
+.text-field:focused, .text-input:focused, .text-area:focused {
     -fx-background-color: #2f2f2f;
     -fx-border-color: #f9d94a;
     -fx-border-width: 2;
     -fx-border-radius: 14;
+}
+
+.text-area {
+    -fx-control-inner-background: #262626;
+}
+
+.text-area .content {
+    -fx-background-color: #262626;
+}
+
+/* ----------------------------------------------- */
+/*                    CHECKBOX                     */
+/* ----------------------------------------------- */
+
+.check-box {
+    -fx-text-fill: #d6d6d6;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+}
+
+.check-box .box {
+    -fx-background-color: #262626;
+    -fx-border-color: #8b8b8b;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #28c76f;
+    -fx-border-color: #28c76f;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
 }
 
 /* ----------------------------------------------- */

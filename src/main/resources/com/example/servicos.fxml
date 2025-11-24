@@ -56,28 +56,7 @@
                     <Insets top="20" right="20" bottom="20" left="20"/>
                 </padding>
 
-                <!-- CARD EXEMPLO (remover depois) -->
-                <HBox spacing="20"
-                      styleClass="ag-card">
-
-                    <VBox spacing="4">
-                        <Label text="Corte Masculino"
-                               styleClass="ag-nome"/>
-
-                        <Label text="Duração: 30 min"
-                               styleClass="ag-info"/>
-                    </VBox>
-
-                    <Pane HBox.hgrow="ALWAYS"/>
-
-                    <Label text="R$ 25,00"
-                           styleClass="ag-preco"/>
-
-                    <Button text="Editar" styleClass="btn-editar" onAction="#editarServico"/>
-
-                    <Button text="Excluir" styleClass="btn-excluir"/>
-
-                </HBox>
+                <!-- Os serviços serão carregados dinamicamente aqui -->
 
             </VBox>
         </ScrollPane>
