@@ -15,120 +15,209 @@ public class AppointmentDAO {
     
 
     public static boolean insert(Appointment appointment) {
-        String sql = """
+        String sqlAppointment = """
             INSERT INTO appointments (
                 client_id, stylist_id, appointment_date_time, status, 
                 total_price, notes
             ) VALUES (?, ?, ?, ?, ?, ?)
             """;
 
-        try (Connection conn = Connect.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        Connection conn = null;
+        try {
+            conn = Connect.getConnection();
+            conn.setAutoCommit(false); // Iniciar transação
             
-            // Configura transação manual
-            conn.setAutoCommit(false);
-            
-            pstmt.setLong(1, appointment.getClientId());
-            
-            if (appointment.getStylistId() != null) {
-                pstmt.setLong(2, appointment.getStylistId());
-            } else {
-                pstmt.setNull(2, Types.BIGINT);
-            }
-            
-            pstmt.setTimestamp(3, Timestamp.valueOf(appointment.getAppointmentDateTime()));
-            
-            String statusString = appointment.getStatus() != null ? 
-                appointment.getStatus().name() : AppointmentStatus.AGENDADO.name();
-            pstmt.setString(4, statusString);
-            
-            if (appointment.getTotalPrice() != null) {
-                pstmt.setBigDecimal(5, appointment.getTotalPrice());
-            } else {
-                pstmt.setNull(5, Types.DECIMAL);
-            }
-            
-            pstmt.setString(6, appointment.getNotes());
-            
-            int affectedRows = pstmt.executeUpdate();
-            System.out.println("Linhas afetadas na inserção de agendamento: " + affectedRows);
-            
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        appointment.setId(generatedKeys.getLong(1));
-                    }
+            // 1. Inserir agendamento
+            long appointmentId;
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlAppointment, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setLong(1, appointment.getClientId());
+                
+                if (appointment.getStylistId() != null) {
+                    pstmt.setLong(2, appointment.getStylistId());
+                } else {
+                    pstmt.setNull(2, Types.BIGINT);
                 }
                 
-                conn.commit();
-                System.out.println("Transação commitada! Agendamento inserido com sucesso.");
-                return true;
-            } else {
-                conn.rollback();
-                return false;
+                pstmt.setTimestamp(3, Timestamp.valueOf(appointment.getAppointmentDateTime()));
+                
+                String statusString = appointment.getStatus() != null ? 
+                    appointment.getStatus().name() : AppointmentStatus.AGENDADO.name();
+                pstmt.setString(4, statusString);
+                
+                if (appointment.getTotalPrice() != null) {
+                    pstmt.setBigDecimal(5, appointment.getTotalPrice());
+                } else {
+                    pstmt.setNull(5, Types.DECIMAL);
+                }
+                
+                pstmt.setString(6, appointment.getNotes());
+                
+                int affectedRows = pstmt.executeUpdate();
+                System.out.println("Linhas afetadas na inserção de agendamento: " + affectedRows);
+                
+                if (affectedRows == 0) {
+                    conn.rollback();
+                    return false;
+                }
+                
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        appointmentId = generatedKeys.getLong(1);
+                        appointment.setId(appointmentId);
+                    } else {
+                        conn.rollback();
+                        return false;
+                    }
+                }
             }
+            
+            // 2. Inserir serviços na tabela appointment_services
+            if (appointment.getServiceIds() != null && !appointment.getServiceIds().isEmpty()) {
+                String sqlServices = """
+                    INSERT INTO appointment_services (appointment_id, service_id, service_price)
+                    SELECT ?, ?, price FROM services WHERE id = ?
+                    """;
+                
+                try (PreparedStatement pstmtServices = conn.prepareStatement(sqlServices)) {
+                    for (Long serviceId : appointment.getServiceIds()) {
+                        pstmtServices.setLong(1, appointmentId);
+                        pstmtServices.setLong(2, serviceId);
+                        pstmtServices.setLong(3, serviceId);
+                        pstmtServices.addBatch();
+                    }
+                    
+                    int[] results = pstmtServices.executeBatch();
+                    System.out.println("Serviços inseridos: " + results.length);
+                }
+            }
+            
+            conn.commit();
+            System.out.println("Transação commitada! Agendamento e serviços inseridos com sucesso.");
+            return true;
             
         } catch (SQLException e) {
             System.err.println("Erro ao inserir agendamento: " + e.getMessage());
             e.printStackTrace();
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             return false;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     
 
     public static boolean update(Appointment appointment) {
-        String sql = """
+        String sqlAppointment = """
             UPDATE appointments SET 
                 client_id = ?, stylist_id = ?, appointment_date_time = ?, status = ?,
                 total_price = ?, notes = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ?
             """;
 
-        try (Connection conn = Connect.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = null;
+        try {
+            conn = Connect.getConnection();
+            conn.setAutoCommit(false); // Iniciar transação
             
-            // Configura transação manual
-            conn.setAutoCommit(false);
-            
-            pstmt.setLong(1, appointment.getClientId());
-            
-            if (appointment.getStylistId() != null) {
-                pstmt.setLong(2, appointment.getStylistId());
-            } else {
-                pstmt.setNull(2, Types.BIGINT);
+            // 1. Atualizar agendamento
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlAppointment)) {
+                pstmt.setLong(1, appointment.getClientId());
+                
+                if (appointment.getStylistId() != null) {
+                    pstmt.setLong(2, appointment.getStylistId());
+                } else {
+                    pstmt.setNull(2, Types.BIGINT);
+                }
+                
+                pstmt.setTimestamp(3, Timestamp.valueOf(appointment.getAppointmentDateTime()));
+                
+                String statusString = appointment.getStatus() != null ? 
+                    appointment.getStatus().name() : AppointmentStatus.AGENDADO.name();
+                pstmt.setString(4, statusString);
+                
+                if (appointment.getTotalPrice() != null) {
+                    pstmt.setBigDecimal(5, appointment.getTotalPrice());
+                } else {
+                    pstmt.setNull(5, Types.DECIMAL);
+                }
+                
+                pstmt.setString(6, appointment.getNotes());
+                pstmt.setLong(7, appointment.getId());
+                
+                int affectedRows = pstmt.executeUpdate();
+                System.out.println("Linhas afetadas na atualização de agendamento: " + affectedRows);
+                
+                if (affectedRows == 0) {
+                    conn.rollback();
+                    return false;
+                }
             }
             
-            pstmt.setTimestamp(3, Timestamp.valueOf(appointment.getAppointmentDateTime()));
-            
-            String statusString = appointment.getStatus() != null ? 
-                appointment.getStatus().name() : AppointmentStatus.AGENDADO.name();
-            pstmt.setString(4, statusString);
-            
-            if (appointment.getTotalPrice() != null) {
-                pstmt.setBigDecimal(5, appointment.getTotalPrice());
-            } else {
-                pstmt.setNull(5, Types.DECIMAL);
+            // 2. Remover serviços antigos
+            String sqlDeleteServices = "DELETE FROM appointment_services WHERE appointment_id = ?";
+            try (PreparedStatement pstmtDelete = conn.prepareStatement(sqlDeleteServices)) {
+                pstmtDelete.setLong(1, appointment.getId());
+                int deletedRows = pstmtDelete.executeUpdate();
+                System.out.println("Serviços antigos removidos: " + deletedRows);
             }
             
-            pstmt.setString(6, appointment.getNotes());
-            pstmt.setLong(7, appointment.getId());
-            
-            int affectedRows = pstmt.executeUpdate();
-            System.out.println("Linhas afetadas na atualização de agendamento: " + affectedRows);
-            
-            if (affectedRows > 0) {
-                conn.commit();
-                System.out.println("Transação commitada! Agendamento atualizado com sucesso.");
-                return true;
-            } else {
-                conn.rollback();
-                return false;
+            // 3. Inserir novos serviços
+            if (appointment.getServiceIds() != null && !appointment.getServiceIds().isEmpty()) {
+                String sqlServices = """
+                    INSERT INTO appointment_services (appointment_id, service_id, service_price)
+                    SELECT ?, ?, price FROM services WHERE id = ?
+                    """;
+                
+                try (PreparedStatement pstmtServices = conn.prepareStatement(sqlServices)) {
+                    for (Long serviceId : appointment.getServiceIds()) {
+                        pstmtServices.setLong(1, appointment.getId());
+                        pstmtServices.setLong(2, serviceId);
+                        pstmtServices.setLong(3, serviceId);
+                        pstmtServices.addBatch();
+                    }
+                    
+                    int[] results = pstmtServices.executeBatch();
+                    System.out.println("Novos serviços inseridos: " + results.length);
+                }
             }
+            
+            conn.commit();
+            System.out.println("Transação commitada! Agendamento e serviços atualizados com sucesso.");
+            return true;
             
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar agendamento: " + e.getMessage());
             e.printStackTrace();
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             return false;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
     

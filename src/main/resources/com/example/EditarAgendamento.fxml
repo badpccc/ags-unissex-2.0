@@ -1,57 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.EditarAgendamentoController"
-      alignment="TOP_CENTER"
-      spacing="18"
-      stylesheets="@css/editar-agendamento.css">
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.EditarAgendamentoController"
+            stylesheets="@css/agendamento_modal.css"
+            styleClass="modal-root"
+            prefWidth="750" prefHeight="680"
+            minWidth="700" minHeight="620"
+            maxWidth="900" maxHeight="800">
 
-    <padding>
-        <Insets top="25" right="25" bottom="25" left="25"/>
-    </padding>
+    <ScrollPane AnchorPane.topAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                fitToWidth="true"
+                fitToHeight="true"
+                hbarPolicy="NEVER"
+                vbarPolicy="AS_NEEDED"
+                styleClass="scroll-pane">
 
-    <Label text="Editar Agendamento"
-           styleClass="titulo"/>
+        <VBox spacing="20"
+              alignment="TOP_CENTER"
+              style="-fx-padding: 20;">
 
-    <!-- Campo Cliente -->
-    <VBox spacing="6" maxWidth="350">
-        <Label text="Cliente" styleClass="label"/>
-        <TextField fx:id="txtCliente" styleClass="input"/>
-    </VBox>
+            <!-- TÍTULO -->
+            <Label text="✏️ Editar Agendamento" styleClass="modal-title"/>
 
-    <!-- Campo Serviço -->
-    <VBox spacing="6" maxWidth="350">
-        <Label text="Serviço" styleClass="label"/>
-        <TextField fx:id="txtServico" styleClass="input"/>
-    </VBox>
+            <!-- FORM -->
+            <VBox spacing="18" styleClass="form-wrapper" prefWidth="650">
 
-    <!-- Campo Data -->
-    <VBox spacing="6" maxWidth="350">
-        <Label text="Data" styleClass="label"/>
-        <DatePicker fx:id="dpData" styleClass="input"/>
-    </VBox>
+                <!-- Cliente -->
+                <VBox spacing="8" styleClass="field-group">
+                    <Label text="Cliente" styleClass="field-label"/>
+                    <ComboBox fx:id="cmbCliente"
+                              promptText="Selecione um cliente"
+                              styleClass="input-field"
+                              prefWidth="500"
+                              maxWidth="500"/>
+                </VBox>
 
-    <!-- Campo Hora -->
-    <VBox spacing="6" maxWidth="350">
-        <Label text="Hora" styleClass="label"/>
-        <TextField fx:id="txtHora" styleClass="input"/>
-    </VBox>
+                <!-- Funcionário -->
+                <VBox spacing="8" styleClass="field-group">
+                    <Label text="Funcionário" styleClass="field-label"/>
+                    <ComboBox fx:id="cmbFuncionario"
+                              promptText="Selecione um funcionário"
+                              styleClass="input-field"
+                              prefWidth="500"
+                              maxWidth="500"/>
+                </VBox>
 
-    <!-- Campo Preço -->
-    <VBox spacing="6" maxWidth="350">
-        <Label text="Preço" styleClass="label"/>
-        <TextField fx:id="txtPreco" styleClass="input"/>
-    </VBox>
+                <!-- Serviços -->
+                <VBox spacing="8" styleClass="field-group">
+                    <Label text="Serviços" styleClass="field-label"/>
+                    
+                    <!-- ComboBox para adicionar serviços -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <ComboBox fx:id="cmbServico"
+                                  promptText="Selecione um serviço para adicionar"
+                                  styleClass="input-field"
+                                  prefWidth="400"
+                                  maxWidth="400"/>
+                        <Button text="+ Adicionar"
+                                fx:id="btnAdicionarServico"
+                                onAction="#adicionarServico"
+                                styleClass="btn-salvar"
+                                prefWidth="120"/>
+                    </HBox>
+                    
+                    <!-- Tags dos serviços selecionados -->
+                    <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+                        <Label text="Serviços Selecionados:" style="-fx-font-size: 12px; -fx-text-fill: #666; -fx-font-weight: bold;"/>
+                        <FlowPane fx:id="flowServicos"
+                                  hgap="10"
+                                  vgap="10"
+                                  prefWrapLength="500"
+                                  style="-fx-padding: 5;"/>
+                    </VBox>
+                </VBox>
 
-    <!-- Botões -->
-    <HBox spacing="15" alignment="CENTER" maxWidth="350">
-        <Button text="Salvar" fx:id="btnSalvar" onAction="#salvar" styleClass="btn-salvar"/>
-        <Button text="Cancelar" fx:id="btnCancelar" onAction="#cancelar" styleClass="btn-cancelar"/>
-    </HBox>
+                <!-- Data e Hora -->
+                <VBox spacing="8" styleClass="field-group">
+                    <Label text="Data e Horário" styleClass="field-label"/>
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <VBox spacing="5">
+                            <Label text="Data" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+                            <DatePicker fx:id="dpData"
+                                       promptText="Selecione a data"
+                                       styleClass="input-field"
+                                       prefWidth="200"/>
+                        </VBox>
 
-</VBox>
+                        <VBox spacing="5">
+                            <Label text="Horário" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+                            <TextField fx:id="txtHora"
+                                      promptText="Ex: 14:30"
+                                      styleClass="input-field"
+                                      prefWidth="150"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Status do Agendamento -->
+                <VBox spacing="8" styleClass="field-group">
+                    <Label text="Status do Agendamento" styleClass="field-label"/>
+                    <ComboBox fx:id="cmbStatus"
+                              promptText="Selecione o status"
+                              styleClass="input-field"
+                              prefWidth="300"
+                              maxWidth="300"/>
+                    <Label text="💡 Altere o status conforme o andamento do atendimento" 
+                           style="-fx-font-size: 11px; -fx-text-fill: #888; -fx-font-style: italic;"/>
+                </VBox>
+
+                <!-- Preço Total -->
+                <VBox spacing="8" styleClass="field-group">
+                    <Label text="Preço Total" styleClass="field-label"/>
+                    <Label fx:id="lblPrecoTotal"
+                           text="R$ 0,00"
+                           style="-fx-font-size: 1.8em; -fx-font-weight: bold; -fx-text-fill: #10b981; -fx-padding: 10; -fx-background-color: #f0fdf4; -fx-background-radius: 8; -fx-border-color: #bbf7d0; -fx-border-radius: 8;"/>
+                </VBox>
+
+                <!-- Observações -->
+                <VBox spacing="8" styleClass="field-group">
+                    <Label text="Observações" styleClass="field-label"/>
+                    <TextArea fx:id="txtObservacoes"
+                             promptText="Observações sobre o atendimento..."
+                             prefRowCount="3"
+                             prefWidth="500"
+                             maxWidth="500"
+                             wrapText="true"
+                             styleClass="input-area"/>
+                </VBox>
+
+            </VBox>
+
+            <!-- BOTÕES -->
+            <HBox spacing="20"
+                  alignment="CENTER"
+                  styleClass="modal-buttons"
+                  style="-fx-padding: 15 0 20 0;">
+
+                <Button text="Cancelar"
+                        styleClass="btn-cancelar"
+                        onAction="#fecharModal"
+                        prefWidth="140"
+                        prefHeight="40"/>
+
+                <Button text="Salvar Alterações"
+                        styleClass="btn-salvar"
+                        onAction="#salvarAgendamento"
+                        prefWidth="160"
+                        prefHeight="40"/>
+
+            </HBox>
+
+        </VBox>
+
+    </ScrollPane>
+
+</AnchorPane>

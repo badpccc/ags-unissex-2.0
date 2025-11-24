@@ -164,10 +164,31 @@ public class AgendamentosController {
     }
 
     private void abrirEdicao(Appointment ag) {
-        // TODO: Implementar modal de edição de agendamento
-        Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setHeaderText("Em desenvolvimento");
-        info.setContentText("A funcionalidade de edição de agendamentos será implementada em breve.");
-        info.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditarAgendamento.fxml"));
+            Parent root = loader.load();
+
+            // Controller do modal
+            EditarAgendamentoController controller = loader.getController();
+            controller.carregarAgendamento(ag);
+            controller.setCallback(atualizado -> carregarAgendamentos());
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Agendamento");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.setMinWidth(700);
+            stage.setMinHeight(620);
+
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert erro = new Alert(Alert.AlertType.ERROR);
+            erro.setHeaderText("Erro ao abrir modal");
+            erro.setContentText("Não foi possível abrir a tela de edição.");
+            erro.show();
+        }
     }
 }
